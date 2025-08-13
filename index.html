@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Kenyan MMF Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Kenya Money Market Fund Calculator</h1>
+        <p>Select a fund, enter your investment details, and estimate your returns. Data is loaded from a CSV file you can update easily.</p>
+    </header>
+    <section>
+        <label for="fundSelect">Select Fund:</label>
+        <select id="fundSelect">
+            <option value="">-- Choose a Fund --</option>
+        </select>
+        <div id="fundDetails"></div>
+    </section>
+    <section>
+        <h2>Calculator</h2>
+        <form id="calcForm">
+            <label for="initial">Initial Investment (KSh):</label>
+            <input type="number" id="initial" min="0" required>
+            <label for="monthly">Monthly Contribution (KSh, optional):</label>
+            <input type="number" id="monthly" min="0" value="0">
+            <label for="months">Duration (Months):</label>
+            <input type="number" id="months" min="1" required>
+            <button type="button" onclick="calculateReturns()">Calculate Returns</button>
+        </form>
+        <div id="results"></div>
+    </section>
+    <footer>
+        <p>Note: Calculations are estimates based on current data. Actual returns may vary. 15% withholding tax applied to interest. Consult a financial advisor.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
