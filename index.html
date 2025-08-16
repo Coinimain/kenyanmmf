@@ -1,41 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Kenyan MMF Calculator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kenya Money Market Fund Calculator - Calculate MMF Returns</title>
+  <meta name="description" content="Calculate your returns with our Kenya Money Market Fund Calculator. Compare top MMF providers like Cytonn, Gulfcap, and Etica for 2025. Start investing today!">
+  <meta name="keywords" content="Kenya money market fund calculator, MMF returns, Kenya investments, money market funds Kenya, Cytonn, Gulfcap, Etica">
+  <meta name="author" content="Kenya MMF Calculator Team">
+  <meta name="robots" content="index, follow">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Kenya Money Market Fund Calculator - Calculate Your Returns">
+  <meta property="og:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator. Compare top funds and start investing smarter.">
+  <meta property="og:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
+  <meta property="og:url" content="https://kenyammfcalculator.co.ke">
+  <meta property="og:type" content="website">
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kenya Money Market Fund Calculator">
+  <meta name="twitter:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator.">
+  <meta name="twitter:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://kenyammfcalculator.co.ke">
+  <link rel="stylesheet" href="style.css">
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Kenya Money Market Fund Calculator",
+    "url": "https://kenyammfcalculator.co.ke",
+    "description": "A tool to calculate returns on money market funds in Kenya, comparing providers like Cytonn, Gulfcap, and Etica.",
+    "applicationCategory": "FinancialCalculator",
+    "operatingSystem": "All"
+  }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>Kenya Money Market Fund Calculator</h1>
-        <p>Calculate your potential returns from Kenya’s top money market funds in seconds. Select a fund, enter your investment, and see your estimated earnings.</p>
-    </header>
+  <header>
+    <h1>Kenya Money Market Fund Calculator</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
     <section>
-        <label for="fundSelect">Select Fund:</label>
-        <select id="fundSelect">
-            <option value="">-- Choose a Fund --</option>
-        </select>
-        <div id="fundDetails"></div>
+      <h2>Calculate Your MMF Returns in Kenya</h2>
+      <p>Use our Kenya money market fund calculator to estimate returns from top providers like Cytonn (13.44%), Gulfcap (13.11%), and Etica (12.49%). Input your investment details below.</p>
+      <form id="mmfCalculator">
+        <label for="provider">Select MMF Provider:</label>
+        <select id="provider" name="provider"></select>
+        <label for="initial">Initial Investment (KES):</label>
+        <input type="number" id="initial" name="initial" min="100" required>
+        <label for="monthly">Monthly Contribution (KES):</label>
+        <input type="number" id="monthly" name="monthly" min="0" value="0">
+        <label for="years">Investment Period (Years):</label>
+        <input type="number" id="years" name="years" min="0.1" step="0.1" required>
+        <button type="button" onclick="calculateReturns()">Calculate</button>
+      </form>
+      <div id="result"></div>
+      <img src="images/mmf-chart.jpg" alt="Graph of money market fund returns in Kenya" width="600">
     </section>
-    <section>
-        <h2>Calculator</h2>
-        <form id="calcForm">
-            <label for="initial">Initial Investment (KSh):</label>
-            <input type="number" id="initial" min="0" required>
-            <label for="monthly">Monthly Contribution (KSh, optional):</label>
-            <input type="number" id="monthly" min="0" value="0">
-            <label for="months">Duration (Months):</label>
-            <input type="number" id="months" min="1" required>
-            <button type="button" onclick="calculateReturns()">Calculate Returns</button>
-        </form>
-        <div id="results"></div>
-    </section>
-    <footer>
-        <p>Note: Calculations are estimates based on current data. Actual returns may vary. 15% withholding tax applied to interest. Consult a financial advisor.</p>
-    </footer>
-    <script src="script.js"></script>
+  </main>
+  <footer>
+    <p>&copy; 2025 Kenya MMF Calculator. All rights reserved.</p>
+  </footer>
+  <script src="script.js"></script>
 </body>
-
 </html>
