@@ -22,6 +22,8 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://kenyammfcalculator.co.ke">
   <link rel="stylesheet" href="style.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -40,7 +42,7 @@
   <header>
     <h1>Kenya MMF Calculator</h1>
     <nav>
-      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <button class="nav-toggle" aria-label="Toggle navigation" style="color:#2E7D32; font-size:1.5em; background:none; border:none;">☰</button>
       <ul class="nav-links">
         <li><a href="index.html" class="nav-button">Calculator</a></li>
         <li><a href="about.html" class="nav-button">About</a></li>
@@ -86,7 +88,6 @@
     <div id="result">
       <p>Results will appear here after calculation.</p>
     </div>
-    <img src="images/mmf-chart.jpg" alt="Graph of money market fund returns in Kenya">
   </section>
 
   <!-- Why Use This Tool -->
@@ -122,11 +123,36 @@
   <!-- JS Scripts -->
   <script src="script.js"></script>
   <script>
+  // Mobile nav toggle
   const toggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
 
   toggle.addEventListener('click', () => {
     navLinks.classList.toggle('show');
+  });
+
+  // Chart.js for MMF comparison
+  const ctx = document.getElementById('mmfChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Cytonn', 'Gulfcap', 'Etica', 'Kuza', 'Lofty Corban'],
+      datasets: [{
+        label: 'Interest Rate (%)',
+        data: [13.44, 13.11, 12.49, 12.8, 13.0],
+        backgroundColor: '#2E7D32'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: { display: true, text: 'Top MMF Providers (2025)' }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
   });
   </script>
 </body>
