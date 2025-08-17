@@ -36,50 +36,98 @@
   </script>
 </head>
 <body>
+  <!-- Header with Mobile Nav -->
   <header>
-  <h1>Kenya MMF Calculator</h1>
-  <nav>
-    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-button">Calculator</a></li>
-      <li><a href="about.html" class="nav-button">About</a></li>
-      <li><a href="contact.html" class="nav-button">Contact</a></li>
-      <li><a href="faq.html" class="faq-link">FAQ</a></li>
-    </ul>
-  </nav>
-</header>
-  <main>
-    <section>
-      <h2>Calculate Your MMF Returns in Kenya</h2>
-      <p>Use our Kenya money market fund calculator to estimate returns from top providers like Cytonn (13.44%), Gulfcap (13.11%), and Etica (12.49%). Input your investment details below.</p>
-      <form id="mmfCalculator">
-        <label for="provider">Select MMF Provider:</label>
-        <select id="provider" name="provider"></select>
-        <label for="initial">Initial Investment (KES):</label>
-        <input type="number" id="initial" name="initial" min="100" required>
-        <label for="monthly">Monthly Contribution (KES):</label>
-        <input type="number" id="monthly" name="monthly" min="0" value="0">
-        <label for="years">Investment Period (Years):</label>
-        <input type="number" id="years" name="years" min="0.1" step="0.1" required>
-        <button type="button" onclick="calculateReturns()">Calculate</button>
-      </form>
-      <div id="result"></div>
-      <img src="images/mmf-chart.jpg" alt="Graph of money market fund returns in Kenya">
-    </section>
-  </main>
+    <h1>Kenya MMF Calculator</h1>
+    <nav>
+      <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-button">Calculator</a></li>
+        <li><a href="about.html" class="nav-button">About</a></li>
+        <li><a href="contact.html" class="nav-button">Contact</a></li>
+        <li><a href="faq.html" class="faq-link">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Kenya's #1 Money Market Fund Calculator</h2>
+    <p>Compare returns from top MMFs instantly and make smarter investment decisions.</p>
+    <a href="#calculator" class="cta-button">Start Calculating</a>
+  </section>
+
+  <!-- Calculator Section -->
+  <section id="calculator">
+    <h2>Calculate Your MMF Returns</h2>
+    <form id="mmfCalculator">
+      <label for="provider">Select MMF Provider:</label>
+      <select id="provider" name="provider">
+        <option value="">Select a provider</option>
+        <option value="Cytonn">Cytonn</option>
+        <option value="Gulfcap">Gulfcap</option>
+        <option value="Etica">Etica</option>
+        <option value="Kuza">Kuza</option>
+        <option value="Lofty Corban">Lofty Corban</option>
+      </select>
+
+      <label for="initial">Initial Investment (KES):</label>
+      <input type="number" id="initial" name="initial" min="100" required>
+
+      <label for="monthly">Monthly Contribution (KES):</label>
+      <input type="number" id="monthly" name="monthly" min="0" value="0">
+
+      <label for="years">Investment Period (Years):</label>
+      <input type="number" id="years" name="years" min="0.1" step="0.1" required>
+
+      <button type="button" onclick="calculateReturns()">Calculate</button>
+    </form>
+
+    <div id="result">
+      <p>Results will appear here after calculation.</p>
+    </div>
+    <img src="images/mmf-chart.jpg" alt="Graph of money market fund returns in Kenya">
+  </section>
+
+  <!-- Why Use This Tool -->
+  <section class="why-use">
+    <h2>Why Use This Tool?</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Simple & Fast</h3>
+        <p>Get instant returns without complicated steps.</p>
+      </div>
+      <div class="feature">
+        <h3>Accurate Returns</h3>
+        <p>Based on actual interest rates from top providers.</p>
+      </div>
+      <div class="feature">
+        <h3>Compare Providers</h3>
+        <p>See which fund works best for your money.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sample Chart Section -->
+  <section class="chart-section">
+    <h2>Sample Comparison</h2>
+    <canvas id="mmfChart" width="400" height="200"></canvas>
+  </section>
+
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Kenya MMF Calculator. All rights reserved.</p>
   </footer>
+
+  <!-- JS Scripts -->
   <script src="script.js"></script>
   <script>
-const toggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
+  const toggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
 
-toggle.addEventListener('click', () => {
-  navLinks.classList.toggle('show');
-});
-</script>
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+  </script>
 </body>
-
 </html>
-
