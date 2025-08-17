@@ -61,3 +61,36 @@ img {
   display: block;
   margin: 20px auto;
 }
+nav ul {
+  list-style-type: none;   /* Remove bullets */
+  padding: 0;
+  margin: 0;
+  display: flex;           /* Align items horizontally */
+  gap: 20px;               /* Space between links */
+}
+
+nav ul li a {
+  text-decoration: none;   /* Remove underline */
+  color: #333;             /* Match existing text color */
+  font-weight: bold;       /* Make links stand out */
+  padding: 5px 10px;       /* Add clickable space */
+  transition: color 0.2s;
+}
+
+nav ul li a:hover {
+  color: #0077cc;          /* Highlight on hover */
+}
+/* Style the FAQ link as a button */
+nav ul li a.faq-link {
+  background-color: #4CAF50;  /* Same green as your main button */
+  color: white;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+nav ul li a.faq-link:hover {
+  background-color: #45a049;
+}
+
