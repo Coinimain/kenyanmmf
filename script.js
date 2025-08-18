@@ -1,28 +1,42 @@
 let funds = []; // Global array to store all fund data
 const exchangeRate = 129; // KES per USD as of August 18, 2025
 
+// Mapping of short provider names to full Provider names in data.csv
+const providerMapping = {
+  'Cytonn': 'Cytonn Unit Trust Scheme',
+  'Gulfcap': 'GCIB Unit Trust Funds',
+  'Etica': 'Etica Unit Trust Funds',
+  'Kuza': 'Kuza Asset Management Unit Trust Scheme',
+  'Lofty Corban': 'Lofty Corban Unit Trust Scheme'
+};
+
 async function loadProviders() {
   try {
+    console.log('Fetching data.csv at:', new Date().toISOString());
     const response = await fetch('data.csv');
     if (!response.ok) {
       throw new Error('Failed to load data.csv: ' + response.statusText);
     }
     const text = await response.text();
+    console.log('Raw CSV data (first 200 chars):', text.substring(0, 200));
     const rows = text.split('\n').slice(1); // Skip header
     const select = document.getElementById('provider');
     select.innerHTML = '<option>Select a provider</option>';
+    funds = [];
     rows.forEach((row, index) => {
       const [provider, fundName, rate, fees, minInvestment, payoutFrequency, lastUpdated, currency] = row.split(',').map(item => item.trim());
-      if (provider && fundName && rate && !isNaN(parseFloat(rate))) {
+      if (provider && fundName && rate && !isNaN(parseFloat(rate)) && currency) {
         funds.push({ provider, fundName, rate: parseFloat(rate), fees: parseFloat(fees), minInvestment: parseFloat(minInvestment), payoutFrequency, lastUpdated, currency });
         const option = document.createElement('option');
         option.value = index;
         option.textContent = `${provider} - ${fundName} (${rate}%) [${currency}]`;
         select.appendChild(option);
+      } else {
+        console.warn('Skipping invalid row:', row);
       }
     });
+    console.log('Parsed funds:', funds.map(f => ({ provider: f.provider, fundName: f.fundName, rate: f.rate, currency: f.currency })));
     select.addEventListener('change', updateCurrencyLabels);
-    // Generate comparison chart after loading funds
     generateComparisonChart();
   } catch (error) {
     console.error('Error loading providers:', error);
@@ -77,11 +91,18 @@ function calculateReturns() {
 }
 
 function generateComparisonChart() {
-  // Select providers for comparison (from index.html dropdown)
+  console.log('Generating chart at:', new Date().toISOString());
   const providersToCompare = ['Cytonn', 'Gulfcap', 'Etica', 'Kuza', 'Lofty Corban'];
-  const selectedFunds = funds.filter(fund => providersToCompare.some(provider => fund.provider.includes(provider)));
-  
-  // Calculate 1-year returns for $1000 (USD) or KES 100,000 (KES)
+  const selectedFunds = funds.filter(fund => 
+    providersToCompare.some(provider => fund.provider === providerMapping[provider])
+  );
+  if (selectedFunds.length === 0) {
+    console.error('No matching funds found for chart. Available providers:', [...new Set(funds.map(f => f.provider))]);
+    document.getElementById('mmfChart').style.display = 'none';
+    return;
+  }
+  console.log('Selected funds for chart:', selectedFunds.map(f => ({ provider: f.provider, fundName: f.fundName, rate: f.rate, currency: f.currency })));
+
   const initialInvestmentKES = 100000;
   const initialInvestmentUSD = 1000;
   const months = 12;
@@ -89,18 +110,23 @@ function generateComparisonChart() {
     const initial = fund.currency === 'USD' ? initialInvestmentUSD : initialInvestmentKES;
     let total = initial;
     for (let i = 0; i < months; i++) {
-      total *= (1 + fund.rate / 100 / 12); // Monthly compounding
+      total *= (1 + fund.rate / 100 / 12);
     }
+    const shortName = Object.keys(providerMapping).find(key => providerMapping[key] === fund.provider);
     return {
-      label: `${fund.fundName} [${fund.currency}]`,
+      label: `${shortName} [${fund.currency}]`,
       value: total,
       currency: fund.currency
     };
   });
+  console.log('Chart data:', returnsData);
 
-  // Create chart
   const ctx = document.getElementById('mmfChart').getContext('2d');
-  new Chart(ctx, {
+  if (window.mmfChartInstance) {
+    window.mmfChartInstance.destroy();
+    console.log('Destroyed existing chart instance');
+  }
+  window.mmfChartInstance = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: returnsData.map(data => data.label),
