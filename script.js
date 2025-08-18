@@ -13,7 +13,7 @@ const providerMapping = {
 async function loadProviders() {
   try {
     console.log('Fetching data.csv at:', new Date().toISOString());
-    const response = await fetch('data.csv');
+    const response = await fetch('data.csv?v=' + Date.now());
     if (!response.ok) {
       throw new Error('Failed to load data.csv: ' + response.statusText);
     }
