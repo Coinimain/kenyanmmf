@@ -3,15 +3,22 @@ name: IndexNow Submit
 on:
   push:
     branches:
-      - main   # change if your GitHub Pages branch is not "main"
-  workflow_dispatch: 
+      - main
+  workflow_dispatch:
+
 jobs:
   indexnow:
     runs-on: ubuntu-latest
     steps:
       - name: Submit all site pages to IndexNow
         run: |
-          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/&key=a97d106bad1647daa1a709214ed1a4ba"
-          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/faq.html&key=a97d106bad1647daa1a709214ed1a4ba"
-          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/about.html&key=a97d106bad1647daa1a709214ed1a4ba"
-          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/contact.html&key=a97d106bad1647daa1a709214ed1a4ba"
+          for url in \
+            "https://kenyammfcalculator.co.ke/" \
+            "https://kenyammfcalculator.co.ke/faq.html" \
+            "https://kenyammfcalculator.co.ke/about.html" \
+            "https://kenyammfcalculator.co.ke/contact.html"
+          do
+            echo "Submitting $url"
+            curl -i "https://www.bing.com/indexnow?url=$url&key=a97d106bad1647daa1a709214ed1a4ba"
+            echo ""
+          done
