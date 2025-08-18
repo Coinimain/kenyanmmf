@@ -36,7 +36,7 @@ async function loadProviders() {
       }
     });
     console.log('Parsed funds:', funds.map(f => ({ provider: f.provider, fundName: f.fundName, rate: f.rate, currency: f.currency })));
-    select.addEventListener('change', updateCurrencyLabels);
+    select.addEventListener('change', updateCurrencyLabels, { once: true });
     generateComparisonChart();
   } catch (error) {
     console.error('Error loading providers:', error);
@@ -92,81 +92,97 @@ function calculateReturns() {
 
 function generateComparisonChart() {
   console.log('Generating chart at:', new Date().toISOString());
+  const canvas = document.getElementById('mmfChart');
+  if (!canvas) {
+    console.error('Canvas element with ID "mmfChart" not found');
+    return;
+  }
+
+  // Destroy any existing Chart instance
+  if (window.mmfChartInstance) {
+    try {
+      window.mmfChartInstance.destroy();
+      console.log('Destroyed existing chart instance');
+    } catch (error) {
+      console.error('Error destroying chart instance:', error);
+    }
+  }
+
   const providersToCompare = ['Cytonn', 'Gulfcap', 'Etica', 'Kuza', 'Lofty Corban'];
   const selectedFunds = funds.filter(fund => 
     providersToCompare.some(provider => fund.provider === providerMapping[provider])
   );
   if (selectedFunds.length === 0) {
     console.error('No matching funds found for chart. Available providers:', [...new Set(funds.map(f => f.provider))]);
-    document.getElementById('mmfChart').style.display = 'none';
+    canvas.style.display = 'none';
     return;
   }
   console.log('Selected funds for chart:', selectedFunds.map(f => ({ provider: f.provider, fundName: f.fundName, rate: f.rate, currency: f.currency })));
 
-  const initialInvestmentKES = 100000;
-  const initialInvestmentUSD = 1000;
-  const months = 12;
   const returnsData = selectedFunds.map(fund => {
-    const initial = fund.currency === 'USD' ? initialInvestmentUSD : initialInvestmentKES;
-    let total = initial;
-    for (let i = 0; i < months; i++) {
-      total *= (1 + fund.rate / 100 / 12);
-    }
     const shortName = Object.keys(providerMapping).find(key => providerMapping[key] === fund.provider);
     return {
       label: `${shortName} [${fund.currency}]`,
-      value: total,
+      value: fund.rate, // Use raw percentage rate
       currency: fund.currency
     };
   });
   console.log('Chart data:', returnsData);
 
-  const ctx = document.getElementById('mmfChart').getContext('2d');
-  if (window.mmfChartInstance) {
-    window.mmfChartInstance.destroy();
-    console.log('Destroyed existing chart instance');
-  }
-  window.mmfChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: returnsData.map(data => data.label),
-      datasets: [{
-        label: '1-Year Returns',
-        data: returnsData.map(data => data.value),
-        backgroundColor: ['#2E7D32', '#FFB300', '#4CAF50', '#FFCA28', '#66BB6A', '#1B5E20', '#FFA000', '#388E3C'],
-        borderColor: ['#1B5E20', '#FFA000', '#388E3C', '#FFB300', '#4CAF50', '#2E7D32', '#FFCA28', '#66BB6A'],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: false,
-          title: {
-            display: true,
-            text: 'Returns (KES or USD)'
-          }
-        }
+  // Dynamic y-axis max based on highest rate
+  const maxRate = Math.max(...returnsData.map(data => data.value));
+  const yAxisMax = Math.max(15, maxRate * 1.1); // At least 15%, or 10% above highest rate
+
+  const ctx = canvas.getContext('2d');
+  try {
+    window.mmfChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: returnsData.map(data => data.label),
+        datasets: [{
+          label: 'Annualized Return (%)',
+          data: returnsData.map(data => data.value),
+          backgroundColor: '#2E7D32',
+          borderColor: '#1B5E20',
+          borderWidth: 1
+        }]
       },
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(context) {
-              const index = context.dataIndex;
-              const currency = returnsData[index].currency;
-              const value = context.parsed.y.toFixed(2);
-              return `Returns: ${currency === 'USD' ? '$' : 'KES '}${value}`;
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Top MMF Providers (2025)' },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const index = context.dataIndex;
+                const value = context.parsed.y.toFixed(2);
+                return `Annual Return: ${value}%`;
+              }
             }
           }
         },
-        legend: {
-          display: false
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: yAxisMax,
+            title: {
+              display: true,
+              text: 'Annualized Return (%)'
+            }
+          }
         }
       }
-    }
-  });
+    });
+    console.log('Chart created successfully');
+  } catch (error) {
+    console.error('Error creating chart:', error);
+  }
 }
 
-window.onload = loadProviders;
+window.onload = function() {
+  console.log('Window loaded, calling loadProviders');
+  loadProviders();
+};
