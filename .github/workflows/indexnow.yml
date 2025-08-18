@@ -1,0 +1,17 @@
+name: IndexNow Submit
+
+on:
+  push:
+    branches:
+      - main   # change if your GitHub Pages branch is not "main"
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit all site pages to IndexNow
+        run: |
+          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/&key=a97d106bad1647daa1a709214ed1a4ba"
+          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/faq.html&key=a97d106bad1647daa1a709214ed1a4ba"
+          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/about.html&key=a97d106bad1647daa1a709214ed1a4ba"
+          curl "https://www.bing.com/indexnow?url=https://kenyammfcalculator.co.ke/contact.html&key=a97d106bad1647daa1a709214ed1a4ba"
