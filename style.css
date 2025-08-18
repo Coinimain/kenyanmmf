@@ -295,4 +295,7 @@ header {
     display: flex; /* show when toggled */
   }
 }
+#mmfChart {
+  max-height: 400px;
+}
 
