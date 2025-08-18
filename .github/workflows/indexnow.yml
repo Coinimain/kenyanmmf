@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main   # change if your GitHub Pages branch is not "main"
-workflow_dispatch: 
+  workflow_dispatch: 
 jobs:
   indexnow:
     runs-on: ubuntu-latest
