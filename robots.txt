@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kenyammfcalculator.co.ke/sitemap.xml
+Sitemap: https://kenyammfcalculator.co.ke/sitemap_index.xml
