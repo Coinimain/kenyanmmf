@@ -186,3 +186,22 @@ window.onload = function() {
   console.log('Window loaded, calling loadProviders');
   loadProviders();
 };
+document.addEventListener('DOMContentLoaded', () => {
+    const calculateButton = document.getElementById('calculateButton');
+    if (calculateButton) {
+        calculateButton.addEventListener('click', calculateReturns);
+    } else {
+        console.error('Calculate button not found');
+    }
+    const select = document.getElementById('provider');
+    if (select) select.addEventListener('change', updateCurrencyLabels);
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (toggle && navLinks) {
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+    } else {
+        console.error('Navigation toggle or links not found');
+    }
+});
