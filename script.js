@@ -13,7 +13,7 @@ const providerMapping = {
 async function loadProviders() {
   try {
     console.log('Fetching data.csv at:', new Date().toISOString());
-    const response = await fetch('data.csv?v=' + Date.now());
+    const response = await fetch('data.csv');
     if (!response.ok) {
       throw new Error('Failed to load data.csv: ' + response.statusText);
     }
@@ -36,7 +36,7 @@ async function loadProviders() {
       }
     });
     console.log('Parsed funds:', funds.map(f => ({ provider: f.provider, fundName: f.fundName, rate: f.rate, currency: f.currency })));
-    select.addEventListener('change', updateCurrencyLabels, { once: true });
+    select.addEventListener('change', updateCurrencyLabels); // Removed { once: true }
     generateComparisonChart();
   } catch (error) {
     console.error('Error loading providers:', error);
