@@ -298,4 +298,9 @@ header {
 #mmfChart {
   max-height: 400px;
 }
-
+.menu-button {
+    color: #2E7D32;
+    font-size: 1.5em;
+    background: none;
+    border: none;
+}
