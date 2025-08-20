@@ -1,0 +1,4 @@
+Contact: mailto:security@kenyammfcalculator.co.ke
+Expires: 2026-08-20T23:59:59Z
+Preferred-Languages: en
+Canonical: https://kenyammfcalculator.co.ke/.well-known/security.txt
