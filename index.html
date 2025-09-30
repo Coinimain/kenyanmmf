@@ -163,6 +163,23 @@
     } catch (e) { /* no-op */ }
   })();
 </script>
+<script>
+  (async () => {
+    try {
+      const r = await fetch("/footer.html", { cache: "no-store" });
+      const html = await r.text();
+      const f = document.querySelector("footer");
+      if (f) {
+        f.outerHTML = html;   // replace the entire <footer> with shared footer.html
+      } else {
+        const d = document.createElement("div");
+        d.innerHTML = html;
+        document.body.appendChild(d);
+      }
+    } catch (e) {}
+  })();
+</script>
 </body>
 </html>
+
 
