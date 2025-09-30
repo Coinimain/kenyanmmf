@@ -1,17 +1,29 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-<meta http-equiv="Referrer-Policy" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self';
-script-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com;
-connect-src 'self' https://cdn.jsdelivr.net https://*.google.com https://*.g.doubleclick.net https://*.googlesyndication.com https://*.adtrafficquality.google;
-img-src 'self' data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-style-src 'self' 'unsafe-inline';
-frame-src https://googleads.g.doubleclick.net;">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Content Security Policy (works via meta on GitHub Pages) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    form-action 'self';
+    img-src 'self' data: https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data:;
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://www.googletagservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google;
+    connect-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://adservice.google.com https://adservice.google.co.ke;
+    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+    child-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+    upgrade-insecure-requests;
+  ">
+
+  <!-- (These http-equiv headers don’t take effect as meta on GH Pages; harmless but optional) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <meta http-equiv="Referrer-Policy" content="no-referrer">
+
   <title>Kenya Money Market Fund Calculator - Calculate MMF Returns</title>
   <meta name="description" content="Calculate your returns with our Kenya Money Market Fund Calculator. Compare top MMF providers like Cytonn, Gulfcap, and Etica for 2025. Start investing today!">
   <meta name="keywords" content="Kenya money market fund calculator, MMF returns, Kenya investments, money market funds Kenya, Cytonn, Gulfcap, Etica">
@@ -43,10 +55,10 @@ frame-src https://googleads.g.doubleclick.net;">
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Chart.js -->
+  <!-- Chart.js (jsDelivr allowed by CSP) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Structured Data -->
+  <!-- Structured Data (needs 'unsafe-inline' in script-src) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -56,28 +68,38 @@ frame-src https://googleads.g.doubleclick.net;">
     "description": "A tool to calculate returns on money market funds in Kenya, comparing providers like Cytonn, Gulfcap, and Etica.",
     "applicationCategory": "FinancialCalculator",
     "operatingSystem": "All",
-    "author": {
-      "@type": "Organization",
-      "name": "Kenya MMF Calculator Team"
-    }
+    "author": { "@type": "Organization", "name": "Kenya MMF Calculator Team" }
   }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452"
-     crossorigin="anonymous"></script>
+
+  <!-- AdSense (domains allowed by CSP) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+
+  <!-- Your shared JS (toggler etc.) -->
+  <script src="main.js" defer></script>
 </head>
 <body>
   <!-- Header with Mobile Nav -->
   <header>
   <h1>Kenya MMF Calculator</h1>
-  <nav>
-    <button class="nav-toggle" aria-label="Toggle navigation">â˜°</button>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-button">Calculator</a></li>
-      <li><a href="about.html" class="nav-button">About</a></li>
-      <li><a href="contact.html" class="nav-button">Contact</a></li>
-      <li><a href="faq.html" class="nav-button">FAQ</a></li>
-    </ul>
-  </nav>
+  <nav role="navigation" aria-label="Primary">
+  <button class="nav-toggle" type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <ul id="primary-nav" class="nav-links">
+    <li><a href="index.html" class="nav-button">Calculator</a></li>
+    <li><a href="about.html" class="nav-button">About</a></li>
+    <li><a href="contact.html" class="nav-button">Contact</a></li>
+    <li><a href="faq.html" class="nav-button">FAQ</a></li>
+  </ul>
+</nav>
 </header>
 
   <!-- Hero Section -->

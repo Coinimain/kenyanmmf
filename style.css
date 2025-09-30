@@ -1,258 +1,228 @@
-/* ----------------- General Body ----------------- */
+/* ===== Global reset / base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
-    font-family: 'Roboto', sans-serif;
-    color: #1E293B;
-    background-color: #F9FAFB;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #1E293B;
+  background-color: #F9FAFB;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-/* Headings */
 h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
-    color: #1E293B;
+  font-family: 'Poppins', sans-serif;
+  color: #1E293B;
 }
 
-/* ----------------- Header & Navigation ----------------- */
+/* ===== Header & Navigation ===== */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f5f5f5;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 header h1 {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    font-size: 1.5em;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  font-size: 1.5em;
 }
 
-/* Nav List */
-nav ul.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
+/* Nav list (desktop default) */
+nav .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
 }
 
-/* Buttons */
-nav ul.nav-links li a.nav-button,
-nav ul.nav-links li a.faq-link {
-    text-decoration: none;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    transition: background-color 0.2s;
+/* Nav buttons */
+nav .nav-links a.nav-button,
+nav .nav-links a.faq-link {
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  display: inline-block;
 }
 
-/* Button colors */
-nav ul.nav-links li a.nav-button {
-    background-color: #2E7D32;
-}
+nav .nav-links a.nav-button,
+nav .nav-links a.faq-link { background-color: #2E7D32; }
+nav .nav-links a.nav-button:hover { background-color: #FFB300; }
+nav .nav-links a.faq-link:hover { background-color: #45a049; }
 
-nav ul.nav-links li a.nav-button:hover {
-    background-color: #FFB300;
-}
-
-nav ul.nav-links li a.faq-link {
-    background-color: #2E7D32;
-}
-
-nav ul.nav-links li a.faq-link:hover {
-    background-color: #45a049;
-}
-
-/* Hamburger toggle */
+/* Hamburger toggle (hidden on desktop) */
 .nav-toggle {
-    color: #2E7D32 !important;
-    font-size: 1.5em;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: none;
+  display: none;
+  background: transparent;
+  border: 0;
+  color: #2E7D32;
+  padding: .5rem;
+  line-height: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.nav-toggle svg { width: 28px; height: 28px; display: block; }
+
+/* ===== Forms & buttons (don’t affect the hamburger) ===== */
+section { margin-bottom: 30px; }
+
+label { display: block; margin-bottom: 5px; }
+
+/* Limit the 100% width to form controls and non-hamburger buttons */
+input, select, button:not(.nav-toggle) {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
-/* ----------------- Responsive ----------------- */
-@media screen and (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .nav-toggle {
-        color: #2E7D32 !important;
-        font-size: 1.5em;
-        background: none;
-        border: none;
-        display: block;
-        margin-top: 10px;
-    }
-
-    nav ul.nav-links {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-        display: none;
-    }
-
-    nav ul.nav-links.show {
-        display: flex;
-    }
-
-    nav ul.nav-links li a {
-        width: 100%;
-        text-align: left;
-    }
+button:not(.nav-toggle) {
+  background-color: #2E7D32;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
+button:not(.nav-toggle):hover { background-color: #FFB300; }
 
-/* ----------------- Sections & Inputs ----------------- */
-section {
-    margin-bottom: 30px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: #2E7D32;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #FFB300;
-}
-
-/* ----------------- Calculator & Results Boxes ----------------- */
+/* ===== Boxes ===== */
 #fundDetails, #results {
-    background-color: #fff;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
+#results p { margin: 5px 0; }
 
-#results p {
-    margin: 5px 0;
-}
-
-/* ----------------- Footer ----------------- */
+/* ===== Footer ===== */
 footer {
-    text-align: center;
-    font-size: 0.9em;
-    color: #666;
-    padding: 20px 0;
-    margin-top: 40px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  padding: 20px 0;
+  margin-top: 40px;
 }
 
-/* ----------------- Images ----------------- */
+/* ===== Images ===== */
 img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 20px auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
 }
 
-/* ----------------- Hero Section ----------------- */
+/* ===== Hero ===== */
 .hero {
-    text-align: center;
-    padding: 40px 20px;
-    background-color: #F9FAFB;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #F9FAFB;
 }
-
-.hero h2 {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    margin-bottom: 20px;
-    font-size: 1.1em;
-}
+.hero h2 { font-size: 2em; margin-bottom: 10px; }
+.hero p { margin-bottom: 20px; font-size: 1.1em; }
 
 .cta-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #2E7D32;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: bold;
-    transition: background-color 0.2s;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2E7D32;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
 }
+.cta-button:hover { background-color: #FFB300; }
 
-.cta-button:hover {
-    background-color: #FFB300;
-}
-
-/* ----------------- Why Use This Tool ----------------- */
-.why-use {
-    padding: 30px 20px;
-    background-color: #FFFFFF;
-}
+/* ===== Why Use This Tool ===== */
+.why-use { padding: 30px 20px; background-color: #FFFFFF; }
 
 .features {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
 }
-
 .feature {
-    flex: 1 1 250px;
-    background-color: #F9FAFB;
-    padding: 15px;
-    border-radius: 6px;
-    text-align: center;
+  flex: 1 1 250px;
+  background-color: #F9FAFB;
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
 }
+.feature h3 { margin-bottom: 10px; color: #2E7D32; }
+.feature p { margin: 0; }
 
-.feature h3 {
-    margin-bottom: 10px;
-    color: #2E7D32;
-}
-
-.feature p {
-    margin: 0;
-}
-
-/* ----------------- Chart Section ----------------- */
+/* ===== Charts ===== */
 .chart-section {
-    padding: 30px 20px;
-    background-color: #FFFFFF;
-    margin-top: 20px;
+  padding: 30px 20px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
+}
+.chart-section canvas { max-width: 100%; height: 200px; }
+@media (max-width: 768px) { .chart-section canvas { height: 300px; } }
+#mmfChart { max-height: 400px; }
+
+/* ===== Desktop vs Mobile nav behavior ===== */
+
+/* Desktop (>=768px): show links inline, hide hamburger */
+@media (min-width: 769px){
+  .nav-toggle { display: none !important; }
+  nav .nav-links {
+    display: flex !important;
+    position: static;
+    background: transparent;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
 }
 
-.chart-section canvas {
-    max-width: 100%;
-    height: 200px;
-}
+/* Mobile (<=768px): show hamburger, dropdown panel hidden by default */
+@media (max-width: 768px){
+  header { flex-direction: column; align-items: flex-start; }
 
-@media (max-width: 768px) {
-    .chart-section canvas {
-        height: 300px;
-    }
-}
+  .nav-toggle { display: inline-flex !important; }
 
-#mmfChart {
-    max-height: 400px;
+  nav { position: relative; }
+  nav .nav-links {
+    display: none;                    /* hidden until expanded */
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 220px;
+    max-width: calc(100vw - 40px);    /* prevent overflow */
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+  }
+
+  /* Show dropdown when the button is expanded (set by JS) */
+  .nav-toggle[aria-expanded="true"] + .nav-links { display: flex !important; }
+
+  /* Make the green pills fit inside the white panel */
+  nav .nav-links a.nav-button,
+  nav .nav-links a.faq-link {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    text-align: left;
+  }
 }
