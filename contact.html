@@ -1,17 +1,30 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-<meta http-equiv="Referrer-Policy" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self';
-script-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com;
-connect-src 'self' https://cdn.jsdelivr.net https://*.google.com https://*.g.doubleclick.net https://*.googlesyndication.com https://*.adtrafficquality.google;
-img-src 'self' data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
-style-src 'self' 'unsafe-inline';
-frame-src https://googleads.g.doubleclick.net;">
+  <!-- Put these first -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Content Security Policy (works via meta on GitHub Pages) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    form-action 'self';
+    img-src 'self' data: https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data:;
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://www.googletagservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google;
+    connect-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://adservice.google.com https://adservice.google.co.ke;
+    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+    child-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
+    upgrade-insecure-requests;
+  ">
+
+  <!-- (FYI: these http-equiv security headers don’t take effect as meta on GH Pages; optional) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <meta http-equiv="Referrer-Policy" content="no-referrer">
+
   <title>Contact Kenya Money Market Fund Calculator</title>
   <meta name="description" content="Get in touch with the Kenya MMF Calculator team for support, feedback, or questions about MMFs in Kenya.">
   <meta name="keywords" content="Kenya MMF calculator, contact, support, questions, feedback">
@@ -40,6 +53,7 @@ frame-src https://googleads.g.doubleclick.net;">
 
   <link rel="stylesheet" href="style.css">
 
+  <!-- JSON-LD (allowed by 'unsafe-inline' in script-src) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -47,27 +61,38 @@ frame-src https://googleads.g.doubleclick.net;">
     "name": "Contact Kenya Money Market Fund Calculator",
     "url": "https://kenyammfcalculator.co.ke/contact.html",
     "description": "Get in touch with the Kenya MMF Calculator team for support, feedback, or questions about MMFs in Kenya.",
-    "author": {
-      "@type": "Organization",
-      "name": "Kenya MMF Calculator Team"
-    }
+    "author": { "@type": "Organization", "name": "Kenya MMF Calculator Team" }
   }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452"
-     crossorigin="anonymous"></script>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+
+  <!-- Shared JS (hamburger toggler, etc.) -->
+  <script src="main.js" defer></script>
 </head>
 <body>
   <header>
   <h1>Kenya MMF Calculator</h1>
-  <nav>
-    <button class="nav-toggle" aria-label="Toggle navigation">â˜°</button>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-button">Calculator</a></li>
-      <li><a href="about.html" class="nav-button">About</a></li>
-      <li><a href="contact.html" class="nav-button">Contact</a></li>
-      <li><a href="faq.html" class="nav-button">FAQ</a></li>
-    </ul>
-  </nav>
+  <nav role="navigation" aria-label="Primary">
+  <button class="nav-toggle" type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="primary-nav">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <ul id="primary-nav" class="nav-links">
+    <li><a href="index.html" class="nav-button">Calculator</a></li>
+    <li><a href="about.html" class="nav-button">About</a></li>
+    <li><a href="contact.html" class="nav-button">Contact</a></li>
+    <li><a href="faq.html" class="nav-button">FAQ</a></li>
+  </ul>
+</nav>
+
 </header>
   <main>
     <h2>Contact Us</h2>
