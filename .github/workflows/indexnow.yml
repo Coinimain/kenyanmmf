@@ -10,15 +10,35 @@ jobs:
   indexnow:
     runs-on: ubuntu-latest
     steps:
-      - name: Submit all site pages to IndexNow
+      - name: Submit changed pages to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: |
-          for url in \
-            "https://kenyammfcalculator.co.ke/" \
-            "https://kenyammfcalculator.co.ke/faq.html" \
-            "https://kenyammfcalculator.co.ke/about.html" \
-            "https://kenyammfcalculator.co.ke/contact.html"
-          do
+          set -e
+          # Get changed files in the push (HTML + sitemaps)
+          changed=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E '\.html$|sitemap.*\.xml(\.gz)?$' || true)
+          declare -a urls=()
+          if [ -n "$changed" ]; then
+            while IFS= read -r f; do
+              # strip leading ./ and map to site URL
+              path="${f#./}"
+              # Skip partials/includes like footer.html
+              case "$path" in
+                footer.html|header.html|nav.html) continue;;
+              esac
+              # If docs/ is your site root, adjust here:
+              if [[ "$path" == docs/* ]]; then
+                path="${path#docs/}"
+              fi
+              urls+=("https://kenyammfcalculator.co.ke/${path}")
+            done <<< "$changed"
+          fi
+          # Always include homepage and privacy as safety
+          urls+=("https://kenyammfcalculator.co.ke/" "https://kenyammfcalculator.co.ke/privacy.html")
+
+          printf "Submitting %d URL(s)\n" "${#urls[@]}"
+          for url in "${urls[@]}"; do
             echo "Submitting $url"
-            curl -i "https://www.bing.com/indexnow?url=$url&key=a97d106bad1647daa1a709214ed1a4ba"
+            curl -s -D- "https://www.bing.com/indexnow?url=$url&key=${INDEXNOW_KEY}" -o /dev/null
             echo ""
           done
