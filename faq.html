@@ -1,13 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
 <meta http-equiv="Referrer-Policy" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self';; frame-src https://googleads.g.doubleclick.net">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self';
+script-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com;
+connect-src 'self' https://cdn.jsdelivr.net https://*.google.com https://*.g.doubleclick.net https://*.googlesyndication.com https://*.adtrafficquality.google;
+img-src 'self' data: https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net;
+style-src 'self' 'unsafe-inline';
+frame-src https://googleads.g.doubleclick.net;">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQs – Kenya Money Market Fund Calculator</title>
+  <title>FAQs â€“ Kenya Money Market Fund Calculator</title>
   <meta name="description" content="Frequently asked questions about Money Market Funds (MMFs) in Kenya. Learn about compounding, taxes, fees, withdrawals, and more.">
   <meta name="keywords" content="Kenya MMF calculator, MMF FAQs, money market fund Kenya, compounding, tax, withdrawals">
   <meta name="author" content="Kenya MMF Calculator Team">
@@ -17,7 +22,7 @@
   <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="FAQs – Kenya Money Market Fund Calculator">
+  <meta property="og:title" content="FAQs â€“ Kenya Money Market Fund Calculator">
   <meta property="og:description" content="Frequently asked questions about Money Market Funds in Kenya: compounding, fees, taxes, withdrawals.">
   <meta property="og:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
   <meta property="og:image:width" content="1200">
@@ -27,7 +32,7 @@
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FAQs – Kenya Money Market Fund Calculator">
+  <meta name="twitter:title" content="FAQs â€“ Kenya Money Market Fund Calculator">
   <meta name="twitter:description" content="Answers to common questions about Money Market Funds in Kenya: compounding, fees, taxes, and withdrawals.">
   <meta name="twitter:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
 
@@ -39,7 +44,7 @@
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "name": "FAQs – Kenya Money Market Fund Calculator",
+    "name": "FAQs â€“ Kenya Money Market Fund Calculator",
     "url": "https://kenyammfcalculator.co.ke/faq.html",
     "author": {
       "@type": "Organization",
@@ -48,7 +53,7 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "In Kenya’s MMFs, is compounding done monthly?",
+        "name": "In Kenyaâ€™s MMFs, is compounding done monthly?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "No. Interest accrues daily, not monthly. Compounding is effectively daily, with returns credited monthly."
@@ -80,7 +85,7 @@
   <header>
   <h1>Kenya MMF Calculator</h1>
   <nav>
-    <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+    <button class="nav-toggle" aria-label="Toggle navigation">â˜°</button>
     <ul class="nav-links">
       <li><a href="index.html" class="nav-button">Calculator</a></li>
       <li><a href="about.html" class="nav-button">About</a></li>
@@ -92,7 +97,7 @@
   <main>
     <h2>Frequently Asked Questions (FAQs)</h2>
     
-    <h3>1. In Kenya’s MMFs, is compounding done monthly?</h3>
+    <h3>1. In Kenyaâ€™s MMFs, is compounding done monthly?</h3>
     <p>
       Interest in MMFs accrues daily, not monthly. The rate you see (e.g., 13% p.a.)
       is annualized, but funds calculate it on a daily basis. Compounding is effectively
@@ -109,7 +114,7 @@
     <h3>3. Is the highest rate always the best?</h3>
     <p>
       Not always. A higher rate may come with higher risk or less liquidity.
-      Always compare the provider’s reputation, stability, and withdrawal terms.
+      Always compare the providerâ€™s reputation, stability, and withdrawal terms.
     </p>
 
     <h3>4. How much tax is charged on MMF returns?</h3>
@@ -122,7 +127,7 @@
     <p>
       Most MMFs in Kenya allow free monthly withdrawals, but some may impose limits
       (e.g., one free withdrawal per month) or small admin charges. Always check the
-      fund’s terms.
+      fundâ€™s terms.
     </p>
 
     <h3>6. How do MMFs compare to banks or SACCOs?</h3>
@@ -138,38 +143,12 @@
 
 
 
-<script>
-  (function () {
-    function inject() {
-      (async () => {
-        try {
-          const v = Date.now(); // cache-buster
-          const r = await fetch(`/footer.html?v=${v}`, { cache: "no-store" });
-          if (!r.ok) throw new Error(`footer fetch ${r.status}`);
-          const html = await r.text();
-          const f = document.querySelector("footer");
-          if (f) {
-            f.outerHTML = html; // replace whole footer
-          } else {
-            const d = document.createElement("div");
-            d.innerHTML = html;
-            document.body.appendChild(d);
-          }
-          console.log("Footer loaded OK");
-        } catch (e) {
-          console.error("Footer load failed:", e);
-        }
-      })();
-    }
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", inject);
-    } else {
-      inject();
-    }
-  })();
-</script>
+<script src="./faq-inline.js" defer></script>
 </body>
 </html>
+
+
+
 
 
 
