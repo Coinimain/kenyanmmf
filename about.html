@@ -97,6 +97,23 @@
     <p>&copy; 2025 Kenya MMF Calculator. All rights reserved.</p>
   </footer>
   <script src="script.js"></script>
-<div id="site-footer"></div><script>(async()=>{try{const r=await fetch("/footer.html",{cache:"no-store"});document.getElementById("site-footer").innerHTML=await r.text()}catch(e){}})();</script>
+
+<script>
+  (async () => {
+    try {
+      const r = await fetch("/footer.html", { cache: "no-store" });
+      const html = await r.text();
+      const f = document.querySelector("footer");
+      if (f) {
+        f.innerHTML = html;
+      } else {
+        const d = document.createElement("div");
+        d.innerHTML = html;
+        document.body.appendChild(d);
+      }
+    } catch (e) { /* no-op */ }
+  })();
+</script>
 </body>
 </html>
+
