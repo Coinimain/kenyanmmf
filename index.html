@@ -154,7 +154,7 @@
       const html = await r.text();
       const f = document.querySelector("footer");
       if (f) {
-        f.innerHTML = html;
+        f.outerHTML = html;
       } else {
         const d = document.createElement("div");
         d.innerHTML = html;
@@ -181,5 +181,6 @@
 </script>
 </body>
 </html>
+
 
 
