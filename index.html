@@ -1,72 +1,105 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Start cookieyes banner -->
-  <script
-    id="cookieyes" 
-    type="text/javascript" 
-    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
-    ></script> 
-<!-- End cookieyes banner -->
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Content Security Policy (works via meta on GitHub Pages) -->
+  <!-- CookieYes banner -->
+  <script
+    id="cookieyes"
+    type="text/javascript"
+    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
+  ></script>
+
+  <!-- Content Security Policy (meta CSP for GitHub Pages) -->
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     base-uri 'self';
     form-action 'self';
-    img-src 'self' data: https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net;
-    style-src 'self' 'unsafe-inline';
-    font-src 'self' data:;
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://www.googletagservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google;
-    connect-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://adservice.google.com https://adservice.google.co.ke;
-    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
-    child-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
-    upgrade-insecure-requests;
-  ">
 
-  <!-- (These http-equiv headers don’t take effect as meta on GH Pages; harmless but optional) -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-  <meta http-equiv="Referrer-Policy" content="no-referrer">
+    img-src 'self' data: https:;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data: https:;
+
+    script-src
+      'self'
+      'unsafe-inline'
+      https://cdn.jsdelivr.net
+      https://cdn-cookieyes.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://www.googletagservices.com
+      https://tpc.googlesyndication.com
+      https://googleads.g.doubleclick.net
+      https://www.googletagmanager.com
+      https://ep2.adtrafficquality.google;
+
+    connect-src
+      'self'
+      https://cdn.jsdelivr.net
+      https://open.er-api.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://googleads.g.doubleclick.net
+      https://adservice.google.com
+      https://adservice.google.co.ke
+      https://www.google-analytics.com
+      https://region1.google-analytics.com
+      https://analytics.google.com
+      https://ep1.adtrafficquality.google
+      https://ep2.adtrafficquality.google;
+
+    frame-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
+
+    child-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
+
+    upgrade-insecure-requests;
+  " />
+
+  <!-- Optional meta headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="no-referrer" />
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
 
   <title>Kenya Money Market Fund Calculator - Calculate MMF Returns</title>
-  <meta name="description" content="Calculate your returns with our Kenya Money Market Fund Calculator. Compare top MMF providers like Cytonn, Gulfcap, and Etica for 2025. Start investing today!">
-  <meta name="keywords" content="Kenya money market fund calculator, MMF returns, Kenya investments, money market funds Kenya, Cytonn, Gulfcap, Etica">
-  <meta name="author" content="Kenya MMF Calculator Team">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#2E7D32">
+  <meta name="description" content="Calculate your returns with our Kenya Money Market Fund Calculator. Compare top MMF providers like Cytonn, Gulfcap, and Etica for 2025. Start investing today!" />
+  <meta name="keywords" content="Kenya money market fund calculator, MMF returns, Kenya investments, money market funds Kenya, Cytonn, Gulfcap, Etica" />
+  <meta name="author" content="Kenya MMF Calculator Team" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#2E7D32" />
 
-  <!-- Favicon -->
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  <link rel="canonical" href="https://kenyammfcalculator.co.ke" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Kenya Money Market Fund Calculator - Calculate Your Returns">
-  <meta property="og:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator. Compare top funds and start investing smarter.">
-  <meta property="og:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://kenyammfcalculator.co.ke">
-  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kenya Money Market Fund Calculator - Calculate Your Returns" />
+  <meta property="og:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator. Compare top funds and start investing smarter." />
+  <meta property="og:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://kenyammfcalculator.co.ke" />
+  <meta property="og:type" content="website" />
 
   <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kenya Money Market Fund Calculator">
-  <meta name="twitter:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator.">
-  <meta name="twitter:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kenya Money Market Fund Calculator" />
+  <meta name="twitter:description" content="Estimate your MMF returns in Kenya with our easy-to-use calculator." />
+  <meta name="twitter:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg" />
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://kenyammfcalculator.co.ke">
+  <link rel="stylesheet" href="style.css" />
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Chart.js (jsDelivr allowed by CSP) -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Structured Data (needs 'unsafe-inline' in script-src) -->
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -80,46 +113,46 @@
   }
   </script>
 
-  <!-- AdSense (domains allowed by CSP) -->
+  <!-- AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1110082069590452">
+  <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
 
-  <!-- Your shared JS (toggler etc.) -->
+  <!-- Site JS -->
   <script src="main.js" defer></script>
 
-  
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSQKT9KEM1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-TSQKT9KEM1');
-</script>
+  <!-- GA4 (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSQKT9KEM1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-TSQKT9KEM1');
+  </script>
 </head>
+
 <body>
   <!-- Header with Mobile Nav -->
   <header>
-  <h1>Kenya MMF Calculator</h1>
-  <nav role="navigation" aria-label="Primary">
-  <button class="nav-toggle" type="button"
-          aria-label="Toggle navigation"
-          aria-expanded="false"
-          aria-controls="primary-nav">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M3 6h18M3 12h18M3 18h18"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+    <h1>Kenya MMF Calculator</h1>
+    <nav role="navigation" aria-label="Primary">
+      <button class="nav-toggle" type="button"
+              aria-label="Toggle navigation"
+              aria-expanded="false"
+              aria-controls="primary-nav">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
 
-  <ul id="primary-nav" class="nav-links">
-    <li><a href="index.html" class="nav-button">Calculator</a></li>
-    <li><a href="about.html" class="nav-button">About</a></li>
-    <li><a href="contact.html" class="nav-button">Contact</a></li>
-    <li><a href="faq.html" class="nav-button">FAQ</a></li>
-  </ul>
-</nav>
-</header>
+      <ul id="primary-nav" class="nav-links">
+        <li><a href="index.html" class="nav-button">Calculator</a></li>
+        <li><a href="about.html" class="nav-button">About</a></li>
+        <li><a href="contact.html" class="nav-button">Contact</a></li>
+        <li><a href="faq.html" class="nav-button">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -131,6 +164,9 @@
   <!-- Calculator Section -->
   <section id="calculator">
     <h2>Calculate Your MMF Returns</h2>
+
+    <!-- NOTE: Equivalent display dropdown removed completely (as requested) -->
+
     <form id="mmfCalculator">
       <label for="provider">Select MMF Provider:</label>
       <select id="provider" name="provider">
@@ -143,20 +179,18 @@
       </select>
 
       <label id="initialLabel">Initial Investment (KES):</label>
-<input type="number" id="initial" min="0" step="100">
+      <input type="number" id="initial" min="0" step="100" />
 
-<label id="monthlyLabel">Monthly Contribution (KES):</label>
-<input type="number" id="monthly" min="0" step="100">
+      <label id="monthlyLabel">Monthly Contribution (KES):</label>
+      <input type="number" id="monthly" min="0" step="100" />
 
-<label>Investment Period (Years):</label>
-<input type="number" id="years" min="1" step="1">
+      <label>Investment Period (Years):</label>
+      <input type="number" id="years" min="1" step="1" />
 
       <button type="button" id="calculateButton">Calculate</button>
     </form>
 
-    <div id="results">
-  Results will appear here after calculation.
-</div>
+    <div id="results">Results will appear here after calculation.</div>
   </section>
 
   <!-- Why Use This Tool -->
@@ -184,27 +218,17 @@
     <canvas id="mmfChart" width="400" height="200"></canvas>
   </section>
 
-  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Kenya MMF Calculator. All rights reserved.</p>
   </footer>
 
-  <!-- JS Scripts -->
+  <!-- App logic -->
   <script src="script.js"></script>
+
+  <!-- Footer loader -->
+  <script src="/index-inline.js" defer></script>
+
+  <!-- FX loader -->
   
-
-
-
-<script src="/index-inline.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
