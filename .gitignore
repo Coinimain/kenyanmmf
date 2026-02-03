@@ -1,0 +1,8 @@
+# local backups
+*.bak
+*.bak*
+*.csp.bak
+
+# local temp copies
+fx-frankfurter.js
+update_fx.sh
