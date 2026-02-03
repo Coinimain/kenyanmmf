@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<main style="max-width: 760px; margin: 2rem auto; padding: 0 1rem;">
+  <article>
+
+    <h1>{{ page.title }}</h1>
+
+    {% if page.date %}
+      <p style="color:#666; font-size:0.9rem;">
+        {{ page.date | date: "%B %d, %Y" }}
+      </p>
+    {% endif %}
+
+    <hr />
+
+    {{ content }}
+
+  </article>
+</main>
