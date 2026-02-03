@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CookieYes banner -->
+  <script
+    id="cookieyes"
+    type="text/javascript"
+    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
+  ></script>
+
+  <!-- Content Security Policy (meta CSP for GitHub Pages) -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    form-action 'self';
+
+    img-src 'self' data: https:;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data: https:;
+
+    script-src
+      'self'
+      'unsafe-inline'
+      https://cdn.jsdelivr.net
+      https://cdn-cookieyes.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://www.googletagservices.com
+      https://tpc.googlesyndication.com
+      https://googleads.g.doubleclick.net
+      https://www.googletagmanager.com
+      https://ep2.adtrafficquality.google;
+
+    connect-src
+      'self'
+      https://cdn.jsdelivr.net
+      https://open.er-api.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://googleads.g.doubleclick.net
+      https://adservice.google.com
+      https://adservice.google.co.ke
+      https://www.google-analytics.com
+      https://region1.google-analytics.com
+      https://analytics.google.com
+      https://ep1.adtrafficquality.google
+      https://ep2.adtrafficquality.google;
+
+    frame-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
+
+    child-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
+
+    upgrade-insecure-requests;
+  " />
+
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="Referrer-Policy" content="no-referrer" />
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
+
+  <title>{% if page.title %}{{ page.title }} | {% endif %}Kenya MMF Calculator</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#2E7D32" />
+
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+  <link rel="canonical" href="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
+
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Chart.js (safe to include globally) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
+</head>
+
+<body>
+  {{ content }}
+</body>
+</html>
