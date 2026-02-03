@@ -2,20 +2,35 @@
 layout: default
 ---
 
-<main style="max-width: 760px; margin: 2rem auto; padding: 0 1rem;">
-  <article>
+<main class="post-wrap">
+  <article class="post">
 
-    <h1>{{ page.title }}</h1>
+    <nav class="post-nav">
+      <a href="/blog/" class="post-nav-link">← Back to Blog</a>
+      <span class="post-nav-separator">|</span>
+      <a href="/" class="post-nav-link">Home</a>
+    </nav>
 
-    {% if page.date %}
-      <p style="color:#666; font-size:0.9rem;">
-        {{ page.date | date: "%B %d, %Y" }}
-      </p>
+    <header class="post-header">
+      <h1>{{ page.title }}</h1>
+
+      {% if page.date %}
+        <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+      {% endif %}
+    </header>
+
+    
+    <div class="post-content">
+      {{ content }}
+    </div> 
+
+
+    {% if page.disclaimer != false %}
+     <hr class="post-divider" />
+     {% include disclaimer.html %}
     {% endif %}
 
-    <hr />
 
-    {{ content }}
 
   </article>
 </main>
