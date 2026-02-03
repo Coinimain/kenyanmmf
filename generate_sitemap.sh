@@ -77,8 +77,12 @@ done < <(
     ! -name "sitemap.xml" \
     ! -name "sitemap_index.xml" \
     ! -name "404.html" \
+    ! -name "footer.html" \
+    ! -name "header.html" \
+    ! -name "nav.html" \
     | sort
 )
+
 
 # Close sitemap.xml
 echo "</urlset>" >> sitemap.xml
