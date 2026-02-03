@@ -3,3 +3,7 @@ description: Tools and guides for money market funds and personal finance in Ken
 url: https://kenyammfcalculator.co.ke
 baseurl: ""
 markdown: kramdown
+
+kramdown:
+  input: GFM
+  hard_wrap: false
