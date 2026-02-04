@@ -1,191 +1,74 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- Start cookieyes banner -->
-  <script
-    id="cookieyes" 
-    type="text/javascript" 
-    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
-    ></script> 
-<!-- End cookieyes banner -->
-  
-  <!-- Put these first -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+---
+layout: default
+title: FAQs
+description: Frequently asked questions about Money Market Funds (MMFs) in Kenya, including compounding, fees, taxes, withdrawals, and risks.
+permalink: /faq.html
+---
 
-  <!-- Content Security Policy (meta works on GitHub Pages) -->
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    base-uri 'self';
-    form-action 'self';
-    img-src 'self' data: https://pagead2.googlesyndication.com https://tpc.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net;
-    style-src 'self' 'unsafe-inline';
-    font-src 'self' data:;
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://www.googletagservices.com https://tpc.googlesyndication.com https://googleads.g.doubleclick.net https://ep2.adtrafficquality.google;
-    connect-src 'self' https://cdn.jsdelivr.net https://pagead2.googlesyndication.com https://securepubads.g.doubleclick.net https://googleads.g.doubleclick.net https://adservice.google.com https://adservice.google.co.ke;
-    frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
-    child-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com;
-    upgrade-insecure-requests;
-  ">
-
-  <!-- (FYI: these http-equiv security headers don’t take effect as meta on GH Pages; optional) -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-  <meta http-equiv="Referrer-Policy" content="no-referrer">
-
-  <title>FAQs - Kenya Money Market Fund Calculator</title>
-  <meta name="description" content="Frequently asked questions about Money Market Funds (MMFs) in Kenya. Learn about compounding, taxes, fees, withdrawals, and more.">
-  <meta name="keywords" content="Kenya MMF calculator, MMF FAQs, money market fund Kenya, compounding, tax, withdrawals">
-  <meta name="author" content="Kenya MMF Calculator Team">
-  <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#2E7D32">
-
-  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="FAQs - Kenya Money Market Fund Calculator">
-  <meta property="og:description" content="Frequently asked questions about Money Market Funds in Kenya: compounding, fees, taxes, withdrawals.">
-  <meta property="og:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://kenyammfcalculator.co.ke/faq.html">
-  <meta property="og:type" content="website">
-
-  <!-- Twitter Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="FAQs - Kenya Money Market Fund Calculator">
-  <meta name="twitter:description" content="Answers to common questions about Money Market Funds in Kenya: compounding, fees, taxes, and withdrawals.">
-  <meta name="twitter:image" content="https://kenyammfcalculator.co.ke/images/logo.jpg">
-
-  <link rel="canonical" href="https://kenyammfcalculator.co.ke/faq.html">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- JSON-LD (allowed by 'unsafe-inline' in script-src) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "name": "FAQs - Kenya Money Market Fund Calculator",
-    "url": "https://kenyammfcalculator.co.ke/faq.html",
-    "author": { "@type": "Organization", "name": "Kenya MMF Calculator Team" },
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "In Kenya's MMFs, is compounding done monthly?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Interest accrues daily, not monthly. Compounding is effectively daily, with returns credited monthly." }
-      },
-      {
-        "@type": "Question",
-        "name": "Are fees deducted monthly or annually?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Management fees are prorated daily and deducted before returns are credited. The published yield is usually net of fees but before withholding tax." }
-      },
-      {
-        "@type": "Question",
-        "name": "Is the highest rate always the best?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Not always. Compare provider reputation, stability, and withdrawal terms." }
-      }
-    ]
-  }
-  </script>
-
-  <!-- AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1110082069590452">
-
-  <!-- Shared JS (hamburger toggler, etc.) -->
-  <script src="main.js" defer></script>
-    
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSQKT9KEM1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-TSQKT9KEM1');
-</script>
-</head>
-<body>
-  <header>
+<header>
   <h1>Kenya MMF Calculator</h1>
+
   <nav role="navigation" aria-label="Primary">
-  <button class="nav-toggle" type="button"
-          aria-label="Toggle navigation"
-          aria-expanded="false"
-          aria-controls="primary-nav">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M3 6h18M3 12h18M3 18h18"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-  </button>
+    <button class="nav-toggle" type="button"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="primary-nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h18"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
 
-  <ul id="primary-nav" class="nav-links">
-    <li><a href="index.html" class="nav-button">Calculator</a></li>
-    <li><a href="about.html" class="nav-button">About</a></li>
-    <li><a href="contact.html" class="nav-button">Contact</a></li>
-    <li><a href="faq.html" class="nav-button">FAQ</a></li>
-  </ul>
-</nav>
+    <ul id="primary-nav" class="nav-links">
+      <li><a href="/" class="nav-button">Calculator</a></li>
+      <li><a href="/about.html" class="nav-button">About</a></li>
+      <li><a href="/contact.html" class="nav-button">Contact</a></li>
+      <li><a href="/faq.html" class="nav-button">FAQ</a></li>
+      <li><a href="/blog/" class="nav-button">Blog</a></li>
+    </ul>
+  </nav>
 </header>
-  <main>
-    <h2>Frequently Asked Questions (FAQs)</h2>
-    
-    <h3>1. In Kenya's MMFs, is compounding done monthly?</h3>
-    <p>
-      Interest in MMFs accrues daily, not monthly. The rate you see (e.g., 13% p.a.)
-      is annualized, but funds calculate it on a daily basis. Compounding is effectively
-      daily, with returns credited monthly.
-    </p>
 
-    <h3>2. Are fees deducted monthly or annually?</h3>
-    <p>
-      Management fees (e.g., 2% p.a.) are prorated daily and deducted before returns
-      are credited. This means the published yield is usually net of fees, but before
-      withholding tax.
-    </p>
+<main>
+  <h2>Frequently Asked Questions (FAQs)</h2>
 
-    <h3>3. Is the highest rate always the best?</h3>
-    <p>
-      Not always. A higher rate may come with higher risk or less liquidity.
-      Always compare the provider's reputation, stability, and withdrawal terms.
-    </p>
+  <h3>1. In Kenya's MMFs, is compounding done monthly?</h3>
+  <p>
+    Interest in MMFs accrues daily, not monthly. The rate you see (for example, 13% per annum)
+    is annualized, but funds calculate returns on a daily basis. Compounding is therefore
+    effectively daily, with returns credited monthly.
+  </p>
 
-    <h3>4. How much tax is charged on MMF returns?</h3>
-    <p>
-      In Kenya, interest earned from MMFs is subject to a 15% withholding tax,
-      applied when your returns are paid out.
-    </p>
+  <h3>2. Are fees deducted monthly or annually?</h3>
+  <p>
+    Management fees are prorated daily and deducted before returns are credited.
+    This means the published yield is usually net of fees, but before withholding tax.
+  </p>
 
-    <h3>5. Are there penalties for withdrawing monthly?</h3>
-    <p>
-      Most MMFs in Kenya allow free monthly withdrawals, but some may impose limits
-      (e.g., one free withdrawal per month) or small admin charges. Always check the
-      fund's terms.
-    </p>
+  <h3>3. Is the highest rate always the best?</h3>
+  <p>
+    Not always. A higher rate may come with higher risk, lower liquidity, or operational issues.
+    Always consider the provider’s reputation, stability, and withdrawal terms.
+  </p>
 
-    <h3>6. How do MMFs compare to banks or SACCOs?</h3>
-    <p>
-      MMFs usually offer higher returns than savings accounts, and more liquidity
-      than SACCO fixed deposits. They are also regulated by the CMA in Kenya.
-    </p>
-  </main>
-  <footer>
-    <p>&copy; 2025 Kenya MMF Calculator. All rights reserved.</p>
-  </footer>
-  <script src="script.js"></script>
+  <h3>4. How much tax is charged on MMF returns?</h3>
+  <p>
+    In Kenya, interest earned from Money Market Funds is subject to a 15% withholding tax,
+    which is applied when returns are paid out.
+  </p>
 
+  <h3>5. Are there penalties for withdrawing monthly?</h3>
+  <p>
+    Most MMFs allow free monthly withdrawals. However, some funds may limit the number of
+    free withdrawals or charge small administrative fees. Always review the fund’s terms.
+  </p>
 
+  <h3>6. How do MMFs compare to banks or SACCOs?</h3>
+  <p>
+    MMFs typically offer higher returns than bank savings accounts and greater liquidity
+    than SACCO fixed deposits. They are regulated by the Capital Markets Authority (CMA) in Kenya.
+  </p>
+</main>
 
-<script src="./faq-inline.js" defer></script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
+<script src="/script.js"></script>
+<script src="/faq-inline.js" defer></script>
