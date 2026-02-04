@@ -10,5 +10,5 @@ update_fx.sh
 # Jekyll build output
 _site/
 .jekyll-cache/
-footer.html
+/footer.html
 _LOCAL_BACKUP/
