@@ -39,8 +39,8 @@ EOL
 add_url "${base}/" "1.0" "weekly"
 
 # Find HTML pages in _site, excluding internal/undesired paths
-# - exclude feed.xml, sitemap files, assets, and any dot folders
-# - convert /index.html to trailing slash URLs
+# - excludes Jekyll internals, assets, sitemap files, and common partial pages
+# - converts /index.html to trailing slash URLs
 while IFS= read -r file; do
   # Skip root index.html (already added as /)
   if [ "$file" = "_site/index.html" ]; then
@@ -71,6 +71,8 @@ done < <(
     ! -path "_site/assets/*" \
     ! -path "_site/images/*" \
     ! -path "_site/scripts/*" \
+    ! -path "_site/_includes/*" \
+    ! -path "_site/_layouts/*" \
     ! -path "_site/.jekyll-cache/*" \
     ! -path "_site/_site/*" \
     ! -name "feed.xml" \
@@ -82,7 +84,6 @@ done < <(
     ! -name "nav.html" \
     | sort
 )
-
 
 # Close sitemap.xml
 echo "</urlset>" >> sitemap.xml
