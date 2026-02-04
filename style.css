@@ -106,13 +106,9 @@ button:not(.nav-toggle):hover { background-color: #FFB300; }
 }
 #results p { margin: 5px 0; }
 
-/* ===== Footer ===== */
-footer {
+/* ===== Footer (legacy rule updated to canonical footer class) ===== */
+.site-footer {
   text-align: center;
-  font-size: 0.9em;
-  color: #666;
-  padding: 20px 0;
-  margin-top: 40px;
 }
 
 /* ===== Images ===== */
@@ -275,6 +271,10 @@ img {
   border-top: 1px solid #eee;
 }
 
+/* =========================
+   BLOG + POST STYLES
+   ========================= */
+
 /* Bottom-of-post disclaimer (extra dainty, italic, unobtrusive) */
 .post-disclaimer {
   font-size: 0.72rem;
@@ -389,7 +389,6 @@ img {
   margin: 0 0 0.65rem 0;
   color: #374151;
   line-height: 1.45;
-
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -438,4 +437,63 @@ img {
     font-size: 0.7rem;
     padding: 0.15rem 0.45rem;
   }
+}
+
+/* =========================
+   FOOTER (CANONICAL — FINAL)
+   ========================= */
+
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.5rem 1rem 2rem;
+  border-top: 1px solid #eef0f3;
+}
+
+.site-footer__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.site-footer__text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Controlled middle dot separator */
+.site-footer__sep {
+  margin: 0 0.4rem;
+  opacity: 0.6;
+}
+
+/* Footer links inherit color, no surprises */
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* 🔥 HARD KILL any legacy punctuation injected via CSS */
+.site-footer a::after,
+.site-footer a::before {
+  content: "" !important;
+  display: none !important;
+}
+
+/* Discoverable but invisible (ads.txt) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Hide any visible ads.txt links if they exist on legacy pages */
+a[href$="ads.txt"],
+a[href="/ads.txt"],
+a[href="./ads.txt"] {
+  display: none !important;
 }
