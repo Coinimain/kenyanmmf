@@ -11,3 +11,4 @@ update_fx.sh
 _site/
 .jekyll-cache/
 footer.html
+_LOCAL_BACKUP/
