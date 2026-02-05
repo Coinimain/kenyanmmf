@@ -101,7 +101,7 @@
 
   <title>{% if page.title %}{{ page.title }} | {% endif %}Kenya MMF Calculator</title>
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="{{ page.robots | default: 'index, follow' }}" />
   <meta name="theme-color" content="#2E7D32" />
 
   <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon" />
