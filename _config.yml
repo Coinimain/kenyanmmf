@@ -7,3 +7,21 @@ markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
+
+plugins:
+  - jekyll-sitemap
+
+exclude:
+  - vendor
+  - node_modules
+  - scripts
+  - .github
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - package.json
+  - package-lock.json
+  - yarn.lock
+  - pnpm-lock.yaml
+  - _LOCAL_BACKUP
+
