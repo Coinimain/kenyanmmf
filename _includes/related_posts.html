@@ -1,0 +1,65 @@
+{% comment %}
+Tag-based related posts.
+- Shows only if page.tags exists
+- Excludes current page
+- Scores by number of shared tags
+- MMF posts prioritize other MMF-tagged posts
+- Shows up to 3 posts
+- Renders nothing if no related posts are found
+{% endcomment %}
+
+{% if page.tags and page.tags.size > 0 %}
+  {% assign scored = "" | split: "" %}
+  {% assign is_mmf_page = page.tags contains "mmf" %}
+
+  {% for p in site.posts %}
+    {% if p.url != page.url and p.tags and p.tags.size > 0 %}
+      {% assign score = 0 %}
+
+      {% for t in page.tags %}
+        {% if p.tags contains t %}
+          {% assign score = score | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+
+      {% comment %}
+      If current page is MMF-related and the candidate post is also MMF-related,
+      boost its score slightly so it appears first.
+      {% endcomment %}
+      {% if is_mmf_page and p.tags contains "mmf" %}
+        {% assign score = score | plus: 2 %}
+      {% endif %}
+
+      {% if score > 0 %}
+        {% capture item %}{{ score }}|||{{ p.date | date: "%s" }}|||{{ p.url }}{% endcapture %}
+        {% assign scored = scored | push: item %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% if scored.size > 0 %}
+    {% assign scored_sorted = scored | sort %}
+
+    <hr class="post-divider" />
+
+    <section class="related-posts">
+      <h2 class="related-heading">Related reading</h2>
+
+      <div class="related-links">
+        {% assign shown = 0 %}
+        {% for item in scored_sorted reversed %}
+          {% if shown >= 3 %}{% break %}{% endif %}
+          {% assign parts = item | split: "|||" %}
+          {% assign url = parts[2] %}
+          {% assign relpost = site.posts | where: "url", url | first %}
+          {% if relpost %}
+            <a class="related-link" href="{{ relpost.url | relative_url }}">
+              {{ relpost.title }}
+            </a>
+            {% assign shown = shown | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endif %}
