@@ -1,0 +1,49 @@
+name: Update homepage last_modified_at monthly
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at 03:17 UTC on the 1st day of every month
+    - cron: "17 3 1 * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    # Prevent loop if the bot commits
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update homepage last_modified_at
+        shell: bash
+        run: |
+          d=$(date -u +'%Y-%m-01')
+          echo "Setting homepage last_modified_at to $d"
+
+          file="index.html"
+          if [ ! -f "$file" ]; then
+            echo "ERROR: $file not found at repo root."
+            exit 1
+          fi
+
+          # Replace existing last_modified_at line
+          sed -i -E "s/^last_modified_at:.*/last_modified_at: ${d}/" "$file"
+
+      - name: Commit and push if changed
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add index.html
+          git commit -m "chore(home): monthly homepage last_modified_at"
+          git push

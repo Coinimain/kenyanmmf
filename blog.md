@@ -3,6 +3,7 @@ layout: default
 title: Blog
 description: Practical guides and updates on money market funds, savings, and personal finance in Kenya.
 permalink: /blog/
+last_modified_at: 2026-02-04
 ---
 
 <div class="blog-wrap">
