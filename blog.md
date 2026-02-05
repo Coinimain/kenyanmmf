@@ -21,8 +21,9 @@ last_modified_at: 2026-02-04
       {% for post in site.posts %}
 
         {% assign words = post.content | strip_html | number_of_words %}
-        {% assign minutes = words | divided_by: 200 %}
+        {% assign minutes = words | plus: 199 | divided_by: 200 %}
         {% if minutes < 1 %}{% assign minutes = 1 %}{% endif %}
+
 
         <a class="blog-card {% if forloop.first %}blog-card--featured{% endif %}" href="{{ post.url }}">
           <div class="blog-card-top">
