@@ -3,30 +3,46 @@ Tag-based related posts.
 - Shows only if page.tags exists
 - Excludes current page
 - Scores by number of shared tags
-- MMF posts prioritize other MMF-tagged posts
+- MMF boost only when current page is MMF-related
+- HARD RULE: if current page is NOT MMF-related, never show MMF-related posts
 - Shows up to 3 posts
 - Renders nothing if no related posts are found
+- Optional: include.show_title (default true). Use show_title=false to hide heading.
 {% endcomment %}
+
+{% assign show_title = include.show_title %}
+{% if show_title == nil %}{% assign show_title = true %}{% endif %}
 
 {% if page.tags and page.tags.size > 0 %}
   {% assign scored = "" | split: "" %}
-  {% assign is_mmf_page = page.tags contains "mmf" %}
+
+  {% assign mmf_tags = "mmf,money-market-funds,unit-trusts,savings,t-bills" | split: "," %}
+  {% assign current_mmf_overlap = page.tags | intersection: mmf_tags %}
+  {% assign is_mmf_page = current_mmf_overlap.size > 0 %}
 
   {% for p in site.posts %}
     {% if p.url != page.url and p.tags and p.tags.size > 0 %}
-      {% assign score = 0 %}
 
+      {%- comment -%}
+      HARD RULE: if current page is NOT MMF-related, never show MMF-related posts.
+      {%- endcomment -%}
+      {% assign candidate_mmf_overlap = p.tags | intersection: mmf_tags %}
+      {% assign candidate_is_mmf = candidate_mmf_overlap.size > 0 %}
+      {% if candidate_is_mmf and is_mmf_page == false %}
+        {% continue %}
+      {% endif %}
+
+      {% assign score = 0 %}
       {% for t in page.tags %}
         {% if p.tags contains t %}
           {% assign score = score | plus: 1 %}
         {% endif %}
       {% endfor %}
 
-      {% comment %}
-      If current page is MMF-related and the candidate post is also MMF-related,
-      boost its score slightly so it appears first.
-      {% endcomment %}
-      {% if is_mmf_page and p.tags contains "mmf" %}
+      {%- comment -%}
+      Boost ONLY if both current page and candidate are MMF-related.
+      {%- endcomment -%}
+      {% if is_mmf_page and candidate_is_mmf %}
         {% assign score = score | plus: 2 %}
       {% endif %}
 
@@ -40,26 +56,27 @@ Tag-based related posts.
   {% if scored.size > 0 %}
     {% assign scored_sorted = scored | sort %}
 
-    <hr class="post-divider" />
+    {% if show_title %}
+      <h3 class="related-reading__subtitle">Related reading</h3>
+    {% endif %}
 
-    <section class="related-posts">
-      <h2 class="related-heading">Related reading</h2>
-
-      <div class="related-links">
-        {% assign shown = 0 %}
-        {% for item in scored_sorted reversed %}
-          {% if shown >= 3 %}{% break %}{% endif %}
-          {% assign parts = item | split: "|||" %}
-          {% assign url = parts[2] %}
-          {% assign relpost = site.posts | where: "url", url | first %}
-          {% if relpost %}
-            <a class="related-link" href="{{ relpost.url | relative_url }}">
+    <ul class="related-reading__list">
+      {% assign shown = 0 %}
+      {% for item in scored_sorted reversed %}
+        {% if shown >= 3 %}{% break %}{% endif %}
+        {% assign parts = item | split: "|||" %}
+        {% assign url = parts[2] %}
+        {% assign relpost = site.posts | where: "url", url | first %}
+        {% if relpost %}
+          <li class="related-reading__item">
+            <a class="related-reading__link" href="{{ relpost.url | relative_url }}">
               {{ relpost.title }}
             </a>
-            {% assign shown = shown | plus: 1 %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </section>
+          </li>
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+
   {% endif %}
 {% endif %}

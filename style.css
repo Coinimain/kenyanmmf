@@ -545,3 +545,100 @@ a[href="./ads.txt"] {
   }
 }
 
+/* Blog tables: keep native table layout (fix alignment) */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto; /* important: keeps columns aligned */
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-content thead th {
+  font-weight: 600;
+  background: #f7f7f7;
+}
+
+/* Optional: prevent long words from breaking layout */
+.post-content td,
+.post-content th {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.post-content thead th {
+  font-weight: 600;
+  background: #f7f7f7;
+}
+
+/* =========================
+   Global Link Styling
+   ========================= */
+
+a {
+  color: #1f8f4a; /* fintech green */
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #e67e22; /* soft orange on hover */
+  text-decoration: underline;
+}
+
+/* Visited links */
+a:visited {
+  color: #176c38;
+}
+
+
+/* =========================
+   Related Reading Section
+   ========================= */
+
+.related-reading {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 2px dotted #d6d6d6;
+}
+
+.related-reading__title {
+  margin: 0 0 0.9rem 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1f2937;
+}
+
+/* List reset */
+.related-reading ul {
+  list-style: disc;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.related-reading li {
+  margin: 0.6rem 0;
+}
+
+/* Brand-aligned links (no Word-doc blue) */
+.related-reading a {
+  color: #1f8f4a;           /* fintech green */
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(31, 143, 74, 0.4);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.related-reading a:hover {
+  color: #e67e22;           /* soft orange */
+  border-bottom-color: #e67e22;
+}
+

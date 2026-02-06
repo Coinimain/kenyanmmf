@@ -19,19 +19,19 @@ layout: default
       {% endif %}
     </header>
 
-    
     <div class="post-content">
       {{ content }}
-    </div> 
-     
-    {% include related_posts.html %}  
+    </div>
+
+    <section class="related-reading" aria-label="Related reading">
+      <h2 class="related-reading__title">Related reading</h2>
+      {% include related_posts.html show_title=false %}
+    </section>
 
     {% if page.disclaimer != false %}
-     <hr class="post-divider" />
-     {% include disclaimer.html %}
+      <hr class="post-divider" />
+      {% include disclaimer.html %}
     {% endif %}
-
-
 
   </article>
 </main>
