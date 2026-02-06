@@ -4,7 +4,6 @@
       (async () => {
         try {
           const v = Date.now(); // cache-buster
-          const r = await fetch(`/footer.html?v=${v}`, { cache: "no-store" });
           if (!r.ok) throw new Error(`footer fetch ${r.status}`);
           const html = await r.text();
           const f = document.querySelector("footer");
