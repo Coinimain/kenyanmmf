@@ -48,6 +48,22 @@ With control of roughly 91 percent of Kenya’s refined petroleum transportation
 
 ---
 
+## Kenya Pipeline dividend outlook (2026)
+
+As of the IPO offer period, **Kenya Pipeline Company has not announced a fixed dividend per share**.
+
+However, the company has publicly indicated a **target dividend payout ratio of approximately 50 percent of earnings**, subject to:
+
+- Final board approval after listing  
+- Capital expenditure requirements  
+- Government dividend policy as a significant shareholder  
+
+Based on historical profitability, dividends are **expected to form a meaningful part of total shareholder returns**, particularly for long-term and income-focused investors.
+
+Importantly, dividend payments are **not guaranteed** and may vary year to year depending on policy and cash flow priorities.
+
+---
+
 ## Valuation considerations investors should weigh
 
 At the offer price of KES 9.00 per share, the IPO implies an equity valuation of roughly KES 163.6 billion. This pricing reflects optimism around KPC’s strategic importance, profitability, and long-term relevance to national energy security.
