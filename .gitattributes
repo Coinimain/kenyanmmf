@@ -1,5 +1,7 @@
-*.md  text eol=lf
+* text=auto
+
+*.md text eol=lf
 *.html text eol=lf
 *.css text eol=lf
-*.js  text eol=lf
+*.js text eol=lf
 *.yml text eol=lf
