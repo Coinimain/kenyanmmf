@@ -30,16 +30,18 @@ permalink: /
       <option value="Lofty Corban">Lofty Corban</option>
     </select>
 
-    <label id="initialLabel">Initial Investment (KES):</label>
+    <label id="initialLabel" for="initial">Initial Investment (KES):</label>
     <input type="number" id="initial" min="0" step="100" />
 
-    <label id="monthlyLabel">Monthly Contribution (KES):</label>
+    <label id="monthlyLabel" for="monthly">Monthly Contribution (KES):</label>
     <input type="number" id="monthly" min="0" step="100" />
 
-    <label>Investment Period (Years):</label>
+    <label for="years">Investment Period (Years):</label>
     <input type="number" id="years" min="1" step="1" />
 
     <button type="button" id="calculateButton">Calculate</button>
+
+
   </form>
 
   <div id="results">Results will appear here after calculation.</div>

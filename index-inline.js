@@ -1,3 +1,6 @@
+// Legacy footer injector disabled (footer is rendered by Jekyll include)
+return;
+
 ﻿// extracted from index.html
 (function () {
     function inject() {
