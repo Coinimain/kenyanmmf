@@ -465,3 +465,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (hasEl("calculateButton"))
     $id("calculateButton").addEventListener("click", calculateReturns);
 });
+
+// ---- Table overflow hint (only show on mobile when table actually overflows) ----
+(function () {
+  function updateTableOverflowHints() {
+    document.querySelectorAll(".table-wrap").forEach((wrap) => {
+      const table = wrap.querySelector("table");
+      if (!table) return;
+
+      const isOverflowing = wrap.scrollWidth > wrap.clientWidth + 1;
+      wrap.classList.toggle("is-overflowing", isOverflowing);
+    });
+  }
+
+  // Fast first paint (doesn't wait for ads/images)
+  document.addEventListener("DOMContentLoaded", updateTableOverflowHints);
+
+  // Safe fallback after everything finishes loading
+  window.addEventListener("load", updateTableOverflowHints);
+
+  // Re-check on resize/orientation changes
+  window.addEventListener("resize", updateTableOverflowHints);
+  window.addEventListener("orientationchange", updateTableOverflowHints);
+})();
