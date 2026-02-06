@@ -466,25 +466,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     $id("calculateButton").addEventListener("click", calculateReturns);
 });
 
-// ---- Table overflow hint (only show on mobile when table actually overflows) ----
+// ---- Auto-wrap post tables + show swipe hint only when overflowing ----
 (function () {
+  function wrapPostTables() {
+    document.querySelectorAll(".post-content table").forEach((table) => {
+      // Skip tables already wrapped or explicitly opted out
+      if (table.closest(".table-wrap")) return;
+      if (table.classList.contains("no-table-wrap")) return;
+
+      const wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    });
+  }
+
   function updateTableOverflowHints() {
     document.querySelectorAll(".table-wrap").forEach((wrap) => {
-      const table = wrap.querySelector("table");
-      if (!table) return;
-
       const isOverflowing = wrap.scrollWidth > wrap.clientWidth + 1;
       wrap.classList.toggle("is-overflowing", isOverflowing);
     });
   }
 
-  // Fast first paint (doesn't wait for ads/images)
-  document.addEventListener("DOMContentLoaded", updateTableOverflowHints);
+  function run() {
+    wrapPostTables();
+    updateTableOverflowHints();
+  }
 
-  // Safe fallback after everything finishes loading
-  window.addEventListener("load", updateTableOverflowHints);
+  // Fast first paint
+  document.addEventListener("DOMContentLoaded", run);
 
-  // Re-check on resize/orientation changes
+  // Safe fallback after all assets load
+  window.addEventListener("load", run);
+
+  // Re-check on resize/orientation change
   window.addEventListener("resize", updateTableOverflowHints);
   window.addEventListener("orientationchange", updateTableOverflowHints);
 })();
