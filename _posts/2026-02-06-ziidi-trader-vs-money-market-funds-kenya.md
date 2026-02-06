@@ -50,37 +50,39 @@ Best suited for:
 
 ## Risk & Liquidity Comparison
 
-<table>
-  <thead>
-    <tr>
-      <th>Feature</th>
-      <th>Ziidi Trader</th>
-      <th>Money Market Funds (MMFs)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Risk</td>
-      <td>Medium–High</td>
-      <td>Low</td>
-    </tr>
-    <tr>
-      <td>Volatility</td>
-      <td>Yes</td>
-      <td>Minimal</td>
-    </tr>
-    <tr>
-      <td>Liquidity</td>
-      <td>Market-based</td>
-      <td>24–72 hours</td>
-    </tr>
-    <tr>
-      <td>Best for</td>
-      <td>Growth</td>
-      <td>Capital protection</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Ziidi Trader</th>
+        <th>Money Market Funds (MMFs)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Risk</td>
+        <td>Medium–High</td>
+        <td>Low</td>
+      </tr>
+      <tr>
+        <td>Volatility</td>
+        <td>Yes</td>
+        <td>Minimal</td>
+      </tr>
+      <tr>
+        <td>Liquidity</td>
+        <td>Market-based</td>
+        <td>24–72 hours</td>
+      </tr>
+      <tr>
+        <td>Best for</td>
+        <td>Growth</td>
+        <td>Capital protection</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 ---
 
