@@ -1,0 +1,51 @@
+name: Update data.csv from Google Sheets
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # Runs daily at 06:00 UTC (09:00 EAT)
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-csv:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest CSV from Google Sheets
+        run: |
+          set -e
+
+          CSV_URL="https://docs.google.com/spreadsheets/d/e/2PACX-1vTc0EYGi-83FYqWxgR4pJ0j8q6ueQQESUftq_75xyE7la6zW4PCsQMrkxQuR3IXOM4uwRkbS2z0dQKe/pub?gid=1414057736&single=true&output=csv"
+          OUT_PATH="data.csv"
+
+          echo "Downloading CSV..."
+          curl -L "$CSV_URL" -o "$OUT_PATH.new"
+
+          if [ ! -s "$OUT_PATH.new" ]; then
+            echo "ERROR: Downloaded CSV is empty."
+            exit 1
+          fi
+
+          mv "$OUT_PATH.new" "$OUT_PATH"
+
+      - name: Commit and push if changed
+        run: |
+          set -e
+
+          if git diff --quiet; then
+            echo "No changes detected. Exiting."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add data.csv
+          git commit -m "Auto-update data.csv from Google Sheets"
+          git push
