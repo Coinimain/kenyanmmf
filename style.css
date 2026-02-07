@@ -679,3 +679,20 @@ a:visited {
     line-height: 1.2;
   }
 }
+
+/* Force CTA buttons to stay white even though links are green site-wide */
+a.cta-button,
+a.cta-button:visited,
+a.cta-button:hover,
+a.cta-button:active {
+  color: #fff;
+}
+
+/* Restore footer link color to footer text color */
+.site-footer a,
+.site-footer a:visited,
+.site-footer a:hover,
+.site-footer a:active {
+  color: inherit;
+  text-decoration: underline;
+}
