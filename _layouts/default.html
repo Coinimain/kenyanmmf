@@ -109,7 +109,7 @@
   <link rel="canonical" href="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
 
   <!-- Use relative_url so it works locally + on GitHub Pages -->
-  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260207" />
 
   <!-- Chart.js (safe to include globally) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -136,7 +136,8 @@
     <script src="{{ '/main.js' | relative_url }}" defer></script>
   {% endunless %}
 
-<script src="{{ '/share.js' | relative_url }}" defer></script>
+<script src="{{ '/share.js' | relative_url }}?v=20260207" defer></script>
+
 
 </body>
 </html>
