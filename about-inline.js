@@ -1,5 +1,5 @@
 // Legacy footer injector disabled (footer is rendered by Jekyll include)
-return;
+if (false) {
 
 ﻿// extracted from about.html
 (function () {
@@ -29,3 +29,4 @@ return;
       inject();
     }
   })();
+}
