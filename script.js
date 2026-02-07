@@ -503,3 +503,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   window.addEventListener("resize", updateTableOverflowHints);
   window.addEventListener("orientationchange", updateTableOverflowHints);
 })();
+

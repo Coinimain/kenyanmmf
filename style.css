@@ -696,3 +696,330 @@ a.cta-button:active {
   color: inherit;
   text-decoration: underline;
 }
+
+/* ===== SHARE (INLINE ICON + POPOVER) ===== */
+
+.post-title {
+  margin: 0;
+}
+
+/* Share sits inline at end of the title text */
+.share-wrap {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-left: 6px;
+}
+
+/* Icon-only trigger: do NOT restyle icon color */
+.share-btn-icon-only {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  color: inherit; /* icon uses same color as title text */
+}
+
+.share-btn-icon-only svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* CRITICAL: hidden must actually hide */
+.share-fallback[hidden] { display: none !important; }
+
+/* Popover */
+.share-fallback {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  z-index: 9999;
+}
+
+/* Perfect squares */
+.share-icon,
+.share-copy {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-sizing: border-box;
+
+  line-height: 0;
+  font-size: 0;
+}
+
+/* Consistent SVG sizing */
+.share-icon svg,
+.share-copy svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor;
+}
+
+/* Brand colors */
+#shareX { color: #000; }
+#shareWhatsApp { color: #25D366; }
+#shareFacebook { color: #1877F2; }
+#shareLinkedIn { color: #0A66C2; }
+
+/* Copy button styling */
+#copyLinkBtn {
+  background: #5f6368;
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Mobile: vertical stack */
+@media (max-width: 640px) {
+  .share-fallback {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Mobile: blog header should NOT be sticky */
+@media (max-width: 640px) {
+  header.post-header {
+    position: static !important;
+    top: auto !important;
+    padding: 10px 12px !important;
+  }
+
+  header.post-header h1 {
+    font-size: 1.35em !important;
+    line-height: 1.2 !important;
+  }
+}
+
+/* Title inline alignment */
+.post-title{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Prevent the button from messing with line height */
+.post-title .share-wrap{
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover/focus polish for share trigger */
+.share-btn-icon-only{
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.share-btn-icon-only:hover{
+  background: #f6f6f6;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+.share-btn-icon-only:active{
+  transform: scale(0.96);
+}
+
+.share-btn-icon-only:focus-visible{
+  outline: 2px solid #111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
+}
+
+/* Hover/focus polish for each share icon */
+.share-icon:focus-visible,
+.share-copy:focus-visible{
+  outline: 2px solid #111;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
+}
+
+/* ===== SHARE ICON: FORCE PLAIN INLINE (no green box) ===== */
+.post-title .share-wrap{
+  display: inline;
+  position: relative;
+  white-space: normal;
+}
+
+.post-title #shareBtn.share-btn-icon-only{
+  all: unset;                       /* nukes inherited button styles */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-left: 6px;
+  cursor: pointer;
+  color: inherit;                   /* same color as title text */
+}
+
+.post-title #shareBtn.share-btn-icon-only svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+}
+
+/* Keep popover hidden unless JS opens it */
+#shareFallback[hidden]{ display: none !important; }
+
+/* Popover layout (desktop: horizontal) */
+#shareFallback{
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  z-index: 9999;
+}
+
+/* Perfect squares + no squish */
+#shareFallback .share-icon,
+#shareFallback .share-copy{
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.12);
+  box-sizing: border-box;
+  line-height: 0;
+  font-size: 0;
+}
+
+#shareFallback .share-icon svg,
+#shareFallback .share-copy svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+  fill: currentColor;
+}
+
+/* Copy button style (white icon on grey) */
+#copyLinkBtn{
+  background: #5f6368;
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Mobile: vertical */
+@media (max-width: 640px){
+  #shareFallback{ flex-direction: column; align-items: center; }
+}
+
+/* ===== Fix share icon placement: inline after title text ===== */
+
+/* Make the title normal text flow (NOT flex) */
+.post-header .post-title{
+  display: block !important;
+}
+
+/* Make the share wrapper behave like a single inline character */
+.post-header .post-title .share-wrap{
+  display: inline !important;
+  position: static !important;      /* so it doesn't reserve a column */
+  margin-left: 0 !important;
+}
+
+/* The actual icon: inline with exactly ONE space separation */
+.post-header .post-title #shareBtn.share-btn-icon-only{
+  display: inline !important;
+  vertical-align: baseline;
+  margin-left: 0 !important;
+}
+
+/* The ONE space */
+.post-header .post-title #shareBtn.share-btn-icon-only::before{
+  content: " ";
+}
+
+/* Popover still needs positioning: anchor it relative to share-wrap */
+.post-header .post-title .share-wrap{
+  position: relative !important;    /* popover anchor */
+}
+
+/* Keep your popover positioning working */
+.post-header .post-title #shareFallback{
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  right: 0 !important;
+}
+
+/* Copy button: dark background, WHITE icon */
+#copyLinkBtn {
+  background: #5f6368;       /* dark gray box */
+  color: #ffffff;            /* icon color (currentColor) */
+  border-color: transparent;
+}
+
+/* Ensure SVG uses currentColor */
+#copyLinkBtn svg {
+  fill: currentColor;
+}
+
+/* Success state */
+#copyLinkBtn[data-copied] {
+  background: #4CAF50;
+  color: #ffffff;
+}
+
+/* Default copy button: fintech green + white icon */
+#copyLinkBtn {
+  background: #2E7D32 !important;   /* fintech green */
+  color: #ffffff !important;        /* drives SVG via currentColor */
+  border-color: #2E7D32 !important;
+}
+
+/* Mobile-only "More" share button */
+#shareNativeBtn { 
+  display: none;
+}
+
+@media (max-width: 640px) {
+  #shareNativeBtn {
+    display: inline-flex;
+  }
+}
+
+/* Slightly more subtle than the others */
+#shareNativeBtn {
+  color: #111; /* inherits your icon color style */
+}
