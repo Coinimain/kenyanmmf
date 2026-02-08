@@ -1,0 +1,36 @@
+name: Ping Google Sitemap on New Post
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ping-google:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new posts
+        id: detect
+        run: |
+          echo "Checking for new posts..."
+          NEW_POSTS=$(git diff --name-status HEAD~1 HEAD | grep '^A' | grep '_posts/' || true)
+          if [ -z "$NEW_POSTS" ]; then
+            echo "No new posts detected."
+            echo "new_posts=false" >> $GITHUB_OUTPUT
+          else
+            echo "New post(s) detected:"
+            echo "$NEW_POSTS"
+            echo "new_posts=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Ping Google Sitemap
+        if: steps.detect.outputs.new_posts == 'true'
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://kenyammfcalculator.co.ke/sitemap.xml"
+          echo "✅ Google sitemap ping sent"
