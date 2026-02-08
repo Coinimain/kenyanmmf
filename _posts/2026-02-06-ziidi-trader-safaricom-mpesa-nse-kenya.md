@@ -14,8 +14,6 @@ permalink: /blog/ziidi-trader-safaricom-mpesa-nse-kenya/
 
 ---
 
-## Ziidi Trader by Safaricom: How M-PESA Is Opening the NSE to Everyday Investors
-
 Safaricom’s **Ziidi Trader** represents a major shift in how Kenyans access the stock market. By integrating equity trading directly into **M-PESA**, the platform removes long-standing barriers that have historically limited retail participation on the **Nairobi Securities Exchange (NSE)**.
 
 For the first time, buying shares can feel as familiar as sending money or paying a bill.
