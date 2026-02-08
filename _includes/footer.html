@@ -3,7 +3,9 @@
     <p class="site-footer__text">
       © {{ site.time | date: "%Y" }} Kenya MMF Calculator. All rights reserved.
       <span class="site-footer__sep">·</span>
-      <a href="/privacy.html">Privacy Policy</a>
+      <a href="{{ '/privacy.html' | relative_url }}">Privacy Policy</a>
+      <span class="site-footer__sep">·</span>
+      <a href="{{ '/disclaimer/' | relative_url }}">Disclaimer</a>
     </p>
   </div>
 </footer>

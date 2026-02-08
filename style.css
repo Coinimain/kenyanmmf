@@ -1023,3 +1023,12 @@ a.cta-button:active {
 #shareNativeBtn {
   color: #111; /* inherits your icon color style */
 }
+
+.site-footer__text {
+  text-align: center;
+  line-height: 1.5;
+}
+
+.site-footer__sep {
+  white-space: nowrap;
+}
