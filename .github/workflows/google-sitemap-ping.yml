@@ -1,4 +1,4 @@
-name: Ping Google Sitemap on New Post
+name: Google Sitemap Ping (New Posts Only)
 
 on:
   push:
@@ -18,19 +18,45 @@ jobs:
       - name: Detect new posts
         id: detect
         run: |
-          echo "Checking for new posts..."
-          NEW_POSTS=$(git diff --name-status HEAD~1 HEAD | grep '^A' | grep '_posts/' || true)
+          set -e
+
+          echo "Checking for newly added posts in the last commit..."
+
+          NEW_POSTS=$(git diff --name-status HEAD~1 HEAD 2>/dev/null \
+            | awk '$1=="A" && $2 ~ /^_posts\// {print $2}' || true)
+
           if [ -z "$NEW_POSTS" ]; then
             echo "No new posts detected."
             echo "new_posts=false" >> $GITHUB_OUTPUT
           else
             echo "New post(s) detected:"
             echo "$NEW_POSTS"
+
             echo "new_posts=true" >> $GITHUB_OUTPUT
+            echo "post_list<<EOF" >> $GITHUB_OUTPUT
+            echo "$NEW_POSTS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           fi
 
       - name: Ping Google Sitemap
         if: steps.detect.outputs.new_posts == 'true'
         run: |
-          curl -s "https://www.google.com/ping?sitemap=https://kenyammfcalculator.co.ke/sitemap.xml"
-          echo "✅ Google sitemap ping sent"
+          SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
+          PING_URL="https://www.google.com/ping?sitemap=${SITEMAP_URL}"
+
+          echo "Pinging Google sitemap because these post(s) were added:"
+          echo "${{ steps.detect.outputs.post_list }}"
+          echo ""
+          echo "Sitemap: $SITEMAP_URL"
+          echo ""
+
+          # Print HTTP status for visibility
+          http_code=$(curl -s -o /dev/null -w "%{http_code}" "$PING_URL")
+          echo "Google ping HTTP status: $http_code"
+
+          if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 400 ]; then
+            echo "✅ Google sitemap ping sent successfully"
+          else
+            echo "⚠️ Google ping returned non-OK status: $http_code"
+            exit 1
+          fi
