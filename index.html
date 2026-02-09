@@ -7,7 +7,6 @@ changefreq: monthly
 permalink: /
 ---
 
-
 <!-- Hero Section -->
 <section class="hero">
   <h2>Kenya's #1 Money Market Fund Calculator</h2>
@@ -40,8 +39,6 @@ permalink: /
     <input type="number" id="years" min="1" step="1" />
 
     <button type="button" id="calculateButton">Calculate</button>
-
-
   </form>
 
   <div id="results">Results will appear here after calculation.</div>
@@ -72,8 +69,7 @@ permalink: /
   <canvas id="mmfChart" width="400" height="200"></canvas>
 </section>
 
-<!-- App logic -->
-<script src="/script.js"></script>
-
-<!-- Any page-specific helpers you already use -->
-<script src="/index-inline.js" defer></script>
+<!-- Scripts (homepage-only Chart.js + homepage chart init) -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="{{ '/script.js' | relative_url }}"></script>
+<script defer src="{{ '/index-inline.js' | relative_url }}"></script>

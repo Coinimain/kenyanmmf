@@ -1032,3 +1032,43 @@ a.cta-button:active {
 .site-footer__sep {
   white-space: nowrap;
 }
+
+/* ---- CookieYes: reduce banner footprint (LCP/UX) ---- */
+.cky-consent-bar,
+.cky-consent-container,
+.cky-consent {
+  padding: 10px 14px !important;
+}
+
+.cky-notice,
+.cky-notice-des,
+.cky-consent-bar p {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+.cky-notice-des {
+  max-height: 3.1em !important;  /* ~2 lines */
+  overflow: hidden !important;
+}
+
+.cky-btn,
+.cky-btn-accept,
+.cky-btn-reject,
+.cky-btn-customize {
+  padding: 7px 12px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+}
+
+@media (max-width: 480px) {
+  .cky-consent-bar,
+  .cky-consent-container,
+  .cky-consent {
+    padding: 8px 12px !important;
+  }
+
+  .cky-notice-des {
+    max-height: 2.7em !important; /* slightly tighter on phones */
+  }
+}
