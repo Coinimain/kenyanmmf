@@ -1072,3 +1072,44 @@ a.cta-button:active {
     max-height: 2.7em !important; /* slightly tighter on phones */
   }
 }
+
+/* ===== CookieYes — force a bottom bar layout (still compliant) ===== */
+.cky-consent-container.cky-box-bottom-left {
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+}
+
+.cky-consent-container .cky-consent-bar {
+  border-radius: 0 !important;
+  padding: 10px 12px !important;
+}
+
+.cky-consent-container .cky-notice-content-wrapper {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.cky-consent-container .cky-notice-des {
+  max-height: 2.8em !important;
+  overflow: hidden !important;
+}
+
+/* Put buttons in one row where possible */
+@media (min-width: 380px) {
+  .cky-consent-container .cky-notice-btn-wrapper {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 8px !important;
+  }
+}
+
+.cky-consent-container .cky-btn {
+  min-height: 44px !important;
+  padding: 8px 10px !important;
+  font-size: 13px !important;
+}
