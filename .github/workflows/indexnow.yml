@@ -1,75 +1,43 @@
-name: IndexNow Submit
+name: IndexNow Submit (Posts Only via Sitemap)
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "_posts/**"
   workflow_dispatch:
 
 jobs:
   indexnow:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
-      - name: Submit changed pages to IndexNow
+      - name: Submit sitemap to IndexNow
         env:
           INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
         run: |
           set -e
 
-          echo "Detecting changed files in the last commit..."
-          changed=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -E '\.html$|sitemap.*\.xml(\.gz)?$' || true)
-
-          declare -a urls=()
-
-          if [ -n "$changed" ]; then
-            echo "Changed files:"
-            echo "$changed"
-            echo ""
-
-            while IFS= read -r f; do
-              # strip leading ./ if present
-              path="${f#./}"
-
-              # Skip partials/includes (safety)
-              case "$path" in
-                footer.html|header.html|nav.html) continue;;
-              esac
-
-              # If docs/ is your site root, adjust here
-              if [[ "$path" == docs/* ]]; then
-                path="${path#docs/}"
-              fi
-
-              urls+=("https://kenyammfcalculator.co.ke/${path}")
-            done <<< "$changed"
-          else
-            echo "No matching changed HTML/sitemap files detected."
+          if [ -z "$INDEXNOW_KEY" ]; then
+            echo "❌ Missing INDEXNOW_KEY secret"
+            exit 1
           fi
 
-          # Always include homepage and privacy as safety
-          urls+=("https://kenyammfcalculator.co.ke/" "https://kenyammfcalculator.co.ke/privacy.html")
+          SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
 
-          # De-dupe URLs (preserve order)
-          deduped=()
-          for u in "${urls[@]}"; do
-            if [[ ! " ${deduped[*]} " =~ " ${u} " ]]; then
-              deduped+=("$u")
-            fi
-          done
-          urls=("${deduped[@]}")
-
-          echo "Submitting ${#urls[@]} unique URL(s) to IndexNow:"
-          printf '%s\n' "${urls[@]}"
+          echo "Submitting sitemap to IndexNow (posts-only trigger):"
+          echo "$SITEMAP_URL"
           echo ""
 
-          for url in "${urls[@]}"; do
-            echo "Submitting: $url"
-            encoded_url=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$url''', safe=''))")
-            curl -s -D- "https://www.bing.com/indexnow?url=${encoded_url}&key=${INDEXNOW_KEY}" -o /dev/null
-            echo ""
-          done
+          encoded_url=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$SITEMAP_URL''', safe=''))")
+
+          # Print headers + HTTP status for visibility
+          curl -s -D- "https://www.bing.com/indexnow?url=${encoded_url}&key=${INDEXNOW_KEY}" -o /dev/null
+          echo ""
+          echo "✅ IndexNow sitemap submit sent"
