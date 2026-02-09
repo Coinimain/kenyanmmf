@@ -1,6 +1,6 @@
-name: Google Sitemap Ping (Posts: New + Edited)
+name: Google Sitemap Ping Posts New and Edited
 
-on:
+"on":
   push:
     branches:
       - main
