@@ -7,11 +7,70 @@ robots: noindex, follow
 sitemap: false
 ---
 
-<main>
+<main class="contact-page">
   <h2>Contact Us</h2>
-  <p>Email: <a href="mailto:[redacted]">[redacted]</a></p>
-  <p>Phone: +254 123 456 789</p>
+  <p class="contact-intro">
+    For support, feedback, or questions, use the form below.
+  </p>
+
+  <form
+    id="contactForm"
+    class="contact-form"
+    action="https://formspree.io/f/xgolvrwa"
+    method="POST"
+    novalidate
+  >
+    <!-- Honeypot (spam trap) -->
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <!-- Optional: email subject in your inbox -->
+    <input type="hidden" name="_subject" value="New message — Kenya MMF Calculator" />
+
+    <!-- Optional: where to redirect after submit -->
+    <input type="hidden" name="_redirect" value="/contact-thanks.html" />
+
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" autocomplete="name" required minlength="2" />
+      <small class="error" data-for="name"></small>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required />
+      <small class="error" data-for="email"></small>
+    </div>
+
+    <div class="field">
+      <label for="topic">Topic</label>
+      <select id="topic" name="topic" required>
+        <option value="" selected disabled>Select one...</option>
+        <option>Support</option>
+        <option>Feedback</option>
+        <option>Partnership</option>
+        <option>Other</option>
+      </select>
+      <small class="error" data-for="topic"></small>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required minlength="10"></textarea>
+      <small class="error" data-for="message"></small>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="contactSubmit">
+      Send Message
+    </button>
+
+    <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+
+    <!-- Privacy note (intentionally subtle) -->
+    <small class="form-privacy">
+      We only use your details to respond to your message.
+      See our <a href="/privacy.html">Privacy Policy</a>.
+    </small>
+  </form>
 </main>
 
-<script src="/script.js"></script>
 <script src="/contact-inline.js" defer></script>
