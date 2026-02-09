@@ -1,9 +1,12 @@
-name: Google Sitemap Ping (New Posts Only)
+name: Google Sitemap Ping (Posts: New + Edited)
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "_posts/**"
+  workflow_dispatch:
 
 jobs:
   ping-google:
@@ -13,44 +16,42 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
-      - name: Detect new posts
+      - name: Detect changed posts (new + edited)
         id: detect
         run: |
           set -e
+          echo "Checking for changed posts (added or modified) in the last push..."
 
-          echo "Checking for newly added posts in the last commit..."
+          CHANGED_POSTS=$(git diff --name-status "${{ github.event.before }}" "${{ github.sha }}" 2>/dev/null \
+            | awk '($1=="A" || $1=="M") && $2 ~ /^_posts\// {print $2}' || true)
 
-          NEW_POSTS=$(git diff --name-status HEAD~1 HEAD 2>/dev/null \
-            | awk '$1=="A" && $2 ~ /^_posts\// {print $2}' || true)
-
-          if [ -z "$NEW_POSTS" ]; then
-            echo "No new posts detected."
-            echo "new_posts=false" >> $GITHUB_OUTPUT
+          if [ -z "$CHANGED_POSTS" ]; then
+            echo "No post changes detected."
+            echo "posts_changed=false" >> $GITHUB_OUTPUT
           else
-            echo "New post(s) detected:"
-            echo "$NEW_POSTS"
+            echo "Post change(s) detected:"
+            echo "$CHANGED_POSTS"
 
-            echo "new_posts=true" >> $GITHUB_OUTPUT
+            echo "posts_changed=true" >> $GITHUB_OUTPUT
             echo "post_list<<EOF" >> $GITHUB_OUTPUT
-            echo "$NEW_POSTS" >> $GITHUB_OUTPUT
+            echo "$CHANGED_POSTS" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           fi
 
       - name: Ping Google Sitemap
-        if: steps.detect.outputs.new_posts == 'true'
+        if: steps.detect.outputs.posts_changed == 'true'
         run: |
           SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
           PING_URL="https://www.google.com/ping?sitemap=${SITEMAP_URL}"
 
-          echo "Pinging Google sitemap because these post(s) were added:"
+          echo "Pinging Google sitemap because these post(s) changed:"
           echo "${{ steps.detect.outputs.post_list }}"
           echo ""
           echo "Sitemap: $SITEMAP_URL"
           echo ""
 
-          # Print HTTP status for visibility
           http_code=$(curl -s -o /dev/null -w "%{http_code}" "$PING_URL")
           echo "Google ping HTTP status: $http_code"
 
