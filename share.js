@@ -5,6 +5,10 @@ function initShareButtons() {
   const fallback = document.getElementById("shareFallback");
   if (!shareBtn || !fallback) return;
 
+  // Prevent double-init if script is included twice by mistake
+  if (shareBtn.dataset.shareInit === "1") return;
+  shareBtn.dataset.shareInit = "1";
+
   const copyBtn = document.getElementById("copyLinkBtn");
 
   const url = window.location.href;
@@ -32,6 +36,10 @@ function initShareButtons() {
     return !fallback.hidden;
   }
 
+  function open() {
+    setOpen(true);
+  }
+
   function close() {
     setOpen(false);
   }
@@ -43,45 +51,64 @@ function initShareButtons() {
   // Start closed
   close();
 
-// Click share icon: ALWAYS toggle popover (desktop + mobile)
-shareBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+  // Guard to stop "open then immediately close" on the same interaction
+  let justOpenedAt = 0;
 
-  toggle();
-  if (typeof trackShare === "function") trackShare("toggle", { url, title });
-});
-
-// Mobile-only "More" button inside popover: opens native share sheet
-const nativeBtn = document.getElementById("shareNativeBtn");
-if (nativeBtn) {
-  nativeBtn.addEventListener("click", async (e) => {
+  // ✅ Main share icon: ALWAYS toggle popover (your original UX)
+  shareBtn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!navigator.share) return;
+    const willOpen = !isOpen();
+    toggle();
 
-    try {
-      await navigator.share({ title, text: title, url });
-      if (typeof trackShare === "function") trackShare("native_more", { url, title });
-    } catch (_) {
-      // user cancelled
+    if (willOpen) justOpenedAt = Date.now();
+
+    if (typeof trackShare === "function") {
+      trackShare("toggle", { url, title });
     }
-
-    close();
   });
-}
 
+  // ✅ "More" button inside popover: opens native share sheet (if supported)
+  const nativeBtn = document.getElementById("shareNativeBtn");
+  if (nativeBtn) {
+    nativeBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-  // Close on outside click
-  document.addEventListener("click", (e) => {
-    if (!isOpen()) return;
-    if (fallback.contains(e.target) || shareBtn.contains(e.target)) return;
-    close();
-  });
+      if (!navigator.share) return;
+
+      try {
+        await navigator.share({ title, text: title, url });
+        if (typeof trackShare === "function") trackShare("native_more", { url, title });
+      } catch (_) {
+        // user cancelled
+      }
+
+      close();
+    });
+  }
+
+  // Close on outside click (use pointerdown so it behaves consistently across browsers)
+  document.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (!isOpen()) return;
+
+      // Ignore the same interaction that opened it
+      if (Date.now() - justOpenedAt < 150) return;
+
+      const t = e.target;
+      if (fallback.contains(t) || shareBtn.contains(t)) return;
+
+      close();
+    },
+    { capture: true }
+  );
 
   // Close on Escape
   document.addEventListener("keydown", (e) => {
+    if (!isOpen()) return;
     if (e.key === "Escape") close();
   });
 

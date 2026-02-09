@@ -1,10 +1,22 @@
-/* ===== Global reset / base ===== */
+/* =========================
+   Global reset / base
+   ========================= */
 *, *::before, *::after { box-sizing: border-box; }
+
+:root{
+  --green: #2E7D32;
+  --orange: #FFB300;
+  --text: #1E293B;
+  --muted: #6b7280;
+  --bg: #F9FAFB;
+  --card: #ffffff;
+  --border: #e5e7eb;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
-  color: #1E293B;
-  background-color: #F9FAFB;
+  color: var(--text);
+  background-color: var(--bg);
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
@@ -12,10 +24,21 @@ body {
 
 h1, h2, h3 {
   font-family: 'Poppins', sans-serif;
-  color: #1E293B;
+  color: var(--text);
 }
 
-/* ===== Header & Navigation ===== */
+section { margin-bottom: 30px; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+}
+
+/* =========================
+   Header & Navigation
+   ========================= */
 header {
   display: flex;
   justify-content: space-between;
@@ -29,7 +52,6 @@ header {
 }
 
 header h1 {
-  font-family: 'Poppins', sans-serif;
   margin: 0;
   font-size: 1.5em;
 }
@@ -54,19 +76,18 @@ nav .nav-links a.faq-link {
   font-weight: bold;
   transition: background-color 0.2s;
   display: inline-block;
+  background-color: var(--green);
 }
 
-nav .nav-links a.nav-button,
-nav .nav-links a.faq-link { background-color: #2E7D32; }
-nav .nav-links a.nav-button:hover { background-color: #FFB300; }
+nav .nav-links a.nav-button:hover { background-color: var(--orange); }
 nav .nav-links a.faq-link:hover { background-color: #45a049; }
 
-/* Hamburger toggle (hidden on desktop) */
+/* Hamburger toggle */
 .nav-toggle {
   display: none;
   background: transparent;
   border: 0;
-  color: #2E7D32;
+  color: var(--green);
   padding: .5rem;
   line-height: 0;
   cursor: pointer;
@@ -75,104 +96,7 @@ nav .nav-links a.faq-link:hover { background-color: #45a049; }
 }
 .nav-toggle svg { width: 28px; height: 28px; display: block; }
 
-/* ===== Forms & buttons (don’t affect the hamburger) ===== */
-section { margin-bottom: 30px; }
-
-label { display: block; margin-bottom: 5px; }
-
-/* Limit the 100% width to form controls and non-hamburger buttons */
-input, select, button:not(.nav-toggle) {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
-}
-
-button:not(.nav-toggle) {
-  background-color: #2E7D32;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-button:not(.nav-toggle):hover { background-color: #FFB300; }
-
-/* ===== Boxes ===== */
-#fundDetails, #results {
-  background-color: #fff;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-#results p { margin: 5px 0; }
-
-/* ===== Footer (legacy rule updated to canonical footer class) ===== */
-.site-footer {
-  text-align: center;
-}
-
-/* ===== Images ===== */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 20px auto;
-}
-
-/* ===== Hero ===== */
-.hero {
-  text-align: center;
-  padding: 40px 20px;
-  background-color: #F9FAFB;
-}
-.hero h2 { font-size: 2em; margin-bottom: 10px; }
-.hero p { margin-bottom: 20px; font-size: 1.1em; }
-
-.cta-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #2E7D32;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  transition: background-color 0.2s;
-}
-.cta-button:hover { background-color: #FFB300; }
-
-/* ===== Why Use This Tool ===== */
-.why-use { padding: 30px 20px; background-color: #FFFFFF; }
-
-.features {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-.feature {
-  flex: 1 1 250px;
-  background-color: #F9FAFB;
-  padding: 15px;
-  border-radius: 6px;
-  text-align: center;
-}
-.feature h3 { margin-bottom: 10px; color: #2E7D32; }
-.feature p { margin: 0; }
-
-/* ===== Charts ===== */
-.chart-section {
-  padding: 30px 20px;
-  background-color: #FFFFFF;
-  margin-top: 20px;
-}
-.chart-section canvas { max-width: 100%; height: 200px; }
-@media (max-width: 768px) { .chart-section canvas { height: 300px; } }
-#mmfChart { max-height: 400px; }
-
-/* ===== Desktop vs Mobile nav behavior ===== */
-
-/* Desktop (>=768px): show links inline, hide hamburger */
+/* Desktop (>=769px) */
 @media (min-width: 769px){
   .nav-toggle { display: none !important; }
   nav .nav-links {
@@ -185,20 +109,19 @@ img {
   }
 }
 
-/* Mobile (<=768px): show hamburger, dropdown panel hidden by default */
+/* Mobile (<=768px) */
 @media (max-width: 768px){
   header { flex-direction: column; align-items: flex-start; }
-
   .nav-toggle { display: inline-flex !important; }
-
   nav { position: relative; }
+
   nav .nav-links {
-    display: none;                    /* hidden until expanded */
+    display: none;
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
     min-width: 220px;
-    max-width: calc(100vw - 40px);    /* prevent overflow */
+    max-width: calc(100vw - 40px);
     background: #fff;
     padding: 10px;
     border: 1px solid #ddd;
@@ -209,10 +132,8 @@ img {
     z-index: 10000;
   }
 
-  /* Show dropdown when the button is expanded (set by JS) */
   .nav-toggle[aria-expanded="true"] + .nav-links { display: flex !important; }
 
-  /* Make the green pills fit inside the white panel */
   nav .nav-links a.nav-button,
   nav .nav-links a.faq-link {
     display: block;
@@ -223,14 +144,115 @@ img {
   }
 }
 
-/* Post wrapper */
+/* =========================
+   Calculator form styles
+   IMPORTANT: Scoped to #mmfCalculator so it doesn't hit share/copy buttons
+   ========================= */
+label { display: block; margin-bottom: 5px; }
+
+#mmfCalculator input,
+#mmfCalculator select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Only calculator buttons get the green styling */
+#mmfCalculator button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  background-color: var(--green);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+#mmfCalculator button:hover { background-color: var(--orange); }
+
+/* Result boxes */
+#fundDetails, #results {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#results p { margin: 5px 0; }
+
+/* =========================
+   Hero
+   ========================= */
+.hero {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--bg);
+}
+
+.hero h2 { font-size: 2em; margin-bottom: 10px; }
+.hero p { margin-bottom: 20px; font-size: 1.1em; }
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--green);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+.cta-button:hover { background-color: var(--orange); }
+
+/* Force CTA to stay white (site-wide links are green) */
+a.cta-button,
+a.cta-button:visited,
+a.cta-button:hover,
+a.cta-button:active { color: #fff; }
+
+/* =========================
+   Why Use This Tool
+   ========================= */
+.why-use { padding: 30px 20px; background-color: var(--card); }
+
+.features {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.feature {
+  flex: 1 1 250px;
+  background-color: var(--bg);
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
+}
+.feature h3 { margin-bottom: 10px; color: var(--green); }
+.feature p { margin: 0; }
+
+/* =========================
+   Charts
+   ========================= */
+.chart-section {
+  padding: 30px 20px;
+  background-color: var(--card);
+  margin-top: 20px;
+}
+.chart-section canvas { max-width: 100%; height: 200px; }
+@media (max-width: 768px) { .chart-section canvas { height: 300px; } }
+#mmfChart { max-height: 400px; }
+
+/* =========================
+   Blog + Post styles
+   ========================= */
 .post-wrap {
   max-width: 760px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-/* Editorial post navigation */
 .post-nav {
   margin: 0 0 1.25rem 0;
   display: flex;
@@ -238,44 +260,32 @@ img {
   gap: 0.6rem;
   font-size: 0.85rem;
   letter-spacing: 0.02em;
-  color: #6b7280;
-  border-bottom: 1px solid #e5e7eb;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 0.75rem;
 }
 
 .post-nav-link {
   text-decoration: none;
-  color: #6b7280;
+  color: var(--muted);
   font-weight: 500;
 }
+.post-nav-link:hover { color: #111; }
 
-.post-nav-link:hover {
-  color: #111;
-}
+.post-nav-separator { opacity: 0.35; }
 
-.post-nav-separator {
-  opacity: 0.35;
-}
-
-/* Post date */
 .post-date {
   color: #666;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
 
-/* Post divider before footer disclaimer */
 .post-divider {
   margin: 2rem 0 1.25rem 0;
   border: 0;
   border-top: 1px solid #eee;
 }
 
-/* =========================
-   BLOG + POST STYLES
-   ========================= */
-
-/* Bottom-of-post disclaimer (extra dainty, italic, unobtrusive) */
 .post-disclaimer {
   font-size: 0.72rem;
   color: #8a8a8a;
@@ -283,37 +293,26 @@ img {
   line-height: 1.5;
 }
 
-/* Blog page wrapper */
 .blog-wrap {
   max-width: 900px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-/* Refined "Back to Calculator" */
-.blog-back {
-  margin: 0 0 0.75rem 0;
-}
-
+.blog-back { margin: 0 0 0.75rem 0; }
 .blog-back a {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--muted);
   text-decoration: none;
 }
+.blog-back a:hover { color: #111; }
 
-.blog-back a:hover {
-  color: #111;
-  text-decoration: none;
-}
-
-/* Blog intro divider */
 .blog-divider {
   margin: 1rem 0 1.25rem 0;
   border: 0;
   border-top: 1px solid #eee;
 }
 
-/* Compact grid */
 .blog-list {
   margin-top: 1rem;
   display: grid;
@@ -321,34 +320,25 @@ img {
   gap: 0.85rem;
 }
 
-/* Two-column earlier so cards don’t feel huge */
 @media (min-width: 720px) {
-  .blog-list {
-    grid-template-columns: 1fr 1fr;
-  }
+  .blog-list { grid-template-columns: 1fr 1fr; }
 }
 
-/* Compact card */
 .blog-card {
   display: block;
   text-decoration: none;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.9rem 1rem;
   background: #fff;
   transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
 }
-
 .blog-card:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   border-color: #d1d5db;
 }
-
-/* Featured first post */
-.blog-card--featured {
-  border-color: #d1d5db;
-}
+.blog-card--featured { border-color: #d1d5db; }
 
 @media (min-width: 720px) {
   .blog-card--featured {
@@ -357,26 +347,17 @@ img {
   }
 }
 
-/* Meta row: date • read time */
 .blog-card-top {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   font-size: 0.78rem;
-  color: #6b7280;
+  color: var(--muted);
   letter-spacing: 0.01em;
   margin-bottom: 0.35rem;
 }
+.blog-card-dot { opacity: 0.5; }
 
-.blog-card-dot {
-  opacity: 0.5;
-}
-
-.blog-card-readtime {
-  color: #6b7280;
-}
-
-/* Title */
 .blog-card-title {
   margin: 0.15rem 0 0.4rem 0;
   font-size: 1.05rem;
@@ -384,7 +365,6 @@ img {
   color: #111827;
 }
 
-/* Excerpt (clamped to stay compact) */
 .blog-card-excerpt {
   margin: 0 0 0.65rem 0;
   color: #374151;
@@ -395,162 +375,64 @@ img {
   overflow: hidden;
 }
 
-/* Tags */
 .blog-card-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
 }
-
 .tag {
   font-size: 0.72rem;
   color: #4b5563;
   background: #f3f4f6;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
 }
 
-/* Tighter mobile layout */
 @media (max-width: 520px) {
-  .blog-card {
-    padding: 0.75rem 0.85rem;
-    border-radius: 10px;
-  }
-
-  .blog-card-title {
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  .blog-card-top {
-    font-size: 0.75rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .blog-card-excerpt {
-    -webkit-line-clamp: 1;
-    margin-bottom: 0.55rem;
-  }
-
-  .tag {
-    font-size: 0.7rem;
-    padding: 0.15rem 0.45rem;
-  }
+  .blog-card { padding: 0.75rem 0.85rem; border-radius: 10px; }
+  .blog-card-title { font-size: 1rem; line-height: 1.2; }
+  .blog-card-top { font-size: 0.75rem; margin-bottom: 0.25rem; }
+  .blog-card-excerpt { -webkit-line-clamp: 1; margin-bottom: 0.55rem; }
+  .tag { font-size: 0.7rem; padding: 0.15rem 0.45rem; }
 }
 
 /* =========================
-   FOOTER (CANONICAL — FINAL)
+   Related posts
    ========================= */
-
-.site-footer {
-  margin-top: 3rem;
-  padding: 1.5rem 1rem 2rem;
-  border-top: 1px solid #eef0f3;
-}
-
-.site-footer__inner {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.site-footer__text {
-  margin: 0;
-  font-size: 0.9rem;
-  color: #6b7280;
-  line-height: 1.6;
-}
-
-/* Controlled middle dot separator */
-.site-footer__sep {
-  margin: 0 0.4rem;
-  opacity: 0.6;
-}
-
-/* Footer links inherit color, no surprises */
-.site-footer a {
-  color: inherit;
-  text-decoration: underline;
-}
-
-/* 🔥 HARD KILL any legacy punctuation injected via CSS */
-.site-footer a::after,
-.site-footer a::before {
-  content: "" !important;
-  display: none !important;
-}
-
-/* Discoverable but invisible (ads.txt) */
-.visually-hidden {
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
-}
-
-/* Hide any visible ads.txt links if they exist on legacy pages */
-a[href$="ads.txt"],
-a[href="/ads.txt"],
-a[href="./ads.txt"] {
-  display: none !important;
-}
-
-.related-posts {
-  margin-top: 2rem;
-}
-
+.related-posts { margin-top: 2rem; }
 .related-heading {
   font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
 }
-
 .related-links {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .related-link {
-  color: #0f172a; /* same tone as body headings */
+  color: #0f172a;
   text-decoration: none;
   font-size: 0.95rem;
 }
+.related-link:hover { text-decoration: underline; }
 
-.related-link:hover {
-  text-decoration: underline;
-}
-
-/* Related reading – mobile refinement */
 @media (max-width: 640px) {
-  .related-posts {
-    margin-top: 1.5rem;
-  }
-
-  .related-heading {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .related-links {
-    gap: 0.4rem;
-  }
-
-  .related-link {
-    font-size: 0.9rem;
-    line-height: 1.35;
-  }
+  .related-posts { margin-top: 1.5rem; }
+  .related-heading { font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .related-links { gap: 0.4rem; }
+  .related-link { font-size: 0.9rem; line-height: 1.35; }
 }
 
-/* Blog tables: keep native table layout (fix alignment) */
+/* =========================
+   Tables (blog)
+   ========================= */
 .post-content table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  table-layout: auto; /* important: keeps columns aligned */
+  table-layout: auto;
 }
 
 .post-content th,
@@ -559,16 +441,6 @@ a[href="./ads.txt"] {
   border: 1px solid #e0e0e0;
   text-align: left;
   vertical-align: top;
-}
-
-.post-content thead th {
-  font-weight: 600;
-  background: #f7f7f7;
-}
-
-/* Optional: prevent long words from breaking layout */
-.post-content td,
-.post-content th {
   word-break: normal;
   overflow-wrap: anywhere;
 }
@@ -578,92 +450,18 @@ a[href="./ads.txt"] {
   background: #f7f7f7;
 }
 
-/* =========================
-   Global Link Styling
-   ========================= */
-
-a {
-  color: #1f8f4a; /* fintech green */
-  text-decoration: none;
-}
-
-a:hover,
-a:focus {
-  color: #e67e22; /* soft orange on hover */
-  text-decoration: underline;
-}
-
-/* Visited links */
-a:visited {
-  color: #176c38;
-}
-
-
-/* =========================
-   Related Reading Section
-   ========================= */
-
-.related-reading {
-  margin-top: 2.5rem;
-  padding-top: 1.25rem;
-  border-top: 2px dotted #d6d6d6;
-}
-
-.related-reading__title {
-  margin: 0 0 0.9rem 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #1f2937;
-}
-
-/* List reset */
-.related-reading ul {
-  list-style: disc;
-  margin: 0;
-  padding-left: 1.2rem;
-}
-
-.related-reading li {
-  margin: 0.6rem 0;
-}
-
-/* Brand-aligned links (no Word-doc blue) */
-.related-reading a {
-  color: #1f8f4a;           /* fintech green */  text-decoration: none;
-  border-bottom: 1px dotted rgba(31, 143, 74, 0.4);
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.related-reading a:hover {
-  color: #e67e22;           /* soft orange */
-  border-bottom-color: #e67e22;
-}
-
-/* Mobile-friendly tables */
+/* Mobile-friendly tables wrapper + swipe hint */
 .table-wrap {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
-
 .table-wrap table {
   min-width: 520px;
   width: 100%;
   border-collapse: collapse;
 }
-
-.table-wrap th,
-.table-wrap td {
-  word-break: normal;
-  overflow-wrap: normal;
-  white-space: normal;
-}
-
-.table-wrap th {
-  white-space: nowrap;
-}
+.table-wrap th { white-space: nowrap; }
 
 @media (max-width: 600px) {
   .table-wrap.is-overflowing::before {
@@ -680,218 +478,121 @@ a:visited {
   }
 }
 
-/* Force CTA buttons to stay white even though links are green site-wide */
-a.cta-button,
-a.cta-button:visited,
-a.cta-button:hover,
-a.cta-button:active {
-  color: #fff;
+/* =========================
+   Global link styling
+   ========================= */
+a { color: #1f8f4a; text-decoration: none; }
+a:hover, a:focus { color: #e67e22; text-decoration: underline; }
+a:visited { color: #176c38; }
+
+/* =========================
+   Footer (canonical)
+   ========================= */
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.5rem 1rem 2rem;
+  border-top: 1px solid #eef0f3;
+  text-align: center;
 }
 
-/* Restore footer link color to footer text color */
-.site-footer a,
-.site-footer a:visited,
-.site-footer a:hover,
-.site-footer a:active {
-  color: inherit;
-  text-decoration: underline;
+.site-footer__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-/* ===== SHARE (INLINE ICON + POPOVER) ===== */
-
-.post-title {
+.site-footer__text {
   margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  text-align: center;
 }
 
-/* Share sits inline at end of the title text */
-.share-wrap {
-  position: relative;
-  display: inline-block;
-  vertical-align: baseline;
-  margin-left: 6px;
+.site-footer__sep {
+  margin: 0 0.4rem;
+  opacity: 0.6;
+  white-space: nowrap;
 }
 
-/* Icon-only trigger: do NOT restyle icon color */
-.share-btn-icon-only {
-  width: 28px;
-  height: 28px;
-  padding: 0;
+.site-footer a { color: inherit; text-decoration: underline; }
+.site-footer a::after,
+.site-footer a::before { content: "" !important; display: none !important; }
+
+/* Discoverable but invisible (ads.txt) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+a[href$="ads.txt"],
+a[href="/ads.txt"],
+a[href="./ads.txt"] { display: none !important; }
+
+/* =========================
+   SHARE (clean + stable)
+   ========================= */
+
+/* Title stays normal text flow */
+.post-header .post-title{
   margin: 0;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-
-  color: inherit; /* icon uses same color as title text */
-}
-
-.share-btn-icon-only svg {
-  width: 18px;
-  height: 18px;
   display: block;
 }
 
-/* CRITICAL: hidden must actually hide */
-.share-fallback[hidden] { display: none !important; }
-
-/* Popover */
-.share-fallback {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.12);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
-  z-index: 9999;
+/* Wrapper is inline and anchors popover */
+.share-wrap{
+  display: inline;
+  position: relative;
+  margin-left: 6px;
+  vertical-align: baseline;
 }
 
-/* Perfect squares */
-.share-icon,
-.share-copy {
+/* Trigger button (icon-only) */
+#shareBtn.share-btn-icon-only{
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   width: 36px;
   height: 36px;
-  padding: 0;
-  margin: 0;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
+  pointer-events: auto;
+  color: inherit;
   border-radius: 10px;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.12);
-  box-sizing: border-box;
-
-  line-height: 0;
-  font-size: 0;
-}
-
-/* Consistent SVG sizing */
-.share-icon svg,
-.share-copy svg {
-  width: 18px;
-  height: 18px;
-  display: block;
-  fill: currentColor;
-}
-
-/* Brand colors */
-#shareX { color: #000; }
-#shareWhatsApp { color: #25D366; }
-#shareFacebook { color: #1877F2; }
-#shareLinkedIn { color: #0A66C2; }
-
-/* Copy button styling */
-#copyLinkBtn {
-  background: #5f6368;
-  color: #fff;
-  border-color: transparent;
-}
-
-/* Mobile: vertical stack */
-@media (max-width: 640px) {
-  .share-fallback {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* Mobile: blog header should NOT be sticky */
-@media (max-width: 640px) {
-  header.post-header {
-    position: static !important;
-    top: auto !important;
-    padding: 10px 12px !important;
-  }
-
-  header.post-header h1 {
-    font-size: 1.35em !important;
-    line-height: 1.2 !important;
-  }
-}
-
-/* Title inline alignment */
-.post-title{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Prevent the button from messing with line height */
-.post-title .share-wrap{
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Hover/focus polish for share trigger */
-.share-btn-icon-only{
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
 
-.share-btn-icon-only:hover{
+#shareBtn.share-btn-icon-only:hover{
   background: #f6f6f6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
 }
 
-.share-btn-icon-only:active{
-  transform: scale(0.96);
-}
+#shareBtn.share-btn-icon-only:active{ transform: scale(0.96); }
 
-.share-btn-icon-only:focus-visible{
+#shareBtn.share-btn-icon-only:focus-visible{
   outline: 2px solid #111;
   outline-offset: 2px;
   box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
 }
 
-/* Hover/focus polish for each share icon */
-.share-icon:focus-visible,
-.share-copy:focus-visible{
-  outline: 2px solid #111;
-  outline-offset: 2px;
-  box-shadow: 0 0 0 3px rgba(0,0,0,0.15);
-}
-
-/* ===== SHARE ICON: FORCE PLAIN INLINE (no green box) ===== */
-.post-title .share-wrap{
-  display: inline;
-  position: relative;
-  white-space: normal;
-}
-
-.post-title #shareBtn.share-btn-icon-only{
-  all: unset;                       /* nukes inherited button styles */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  margin-left: 6px;
-  cursor: pointer;
-  color: inherit;                   /* same color as title text */
-}
-
-.post-title #shareBtn.share-btn-icon-only svg{
+#shareBtn.share-btn-icon-only svg{
   width: 18px;
   height: 18px;
   display: block;
+  pointer-events: none;
   stroke: currentColor;
   fill: none;
 }
 
-/* Keep popover hidden unless JS opens it */
+/* Hidden means hidden */
 #shareFallback[hidden]{ display: none !important; }
 
-/* Popover layout (desktop: horizontal) */
+/* Popover */
 #shareFallback{
   position: absolute;
   top: calc(100% + 10px);
@@ -907,9 +608,10 @@ a.cta-button:active {
   z-index: 9999;
 }
 
-/* Perfect squares + no squish */
+/* Buttons/links inside popover (perfect squares) */
 #shareFallback .share-icon,
 #shareFallback .share-copy{
+  all: unset;
   width: 36px;
   height: 36px;
   padding: 0;
@@ -923,6 +625,7 @@ a.cta-button:active {
   box-sizing: border-box;
   line-height: 0;
   font-size: 0;
+  cursor: pointer;
 }
 
 #shareFallback .share-icon svg,
@@ -931,109 +634,67 @@ a.cta-button:active {
   height: 18px;
   display: block;
   fill: currentColor;
+  pointer-events: none;
 }
 
-/* Copy button style (white icon on grey) */
-#copyLinkBtn{
-  background: #5f6368;
-  color: #fff;
-  border-color: transparent;
-}
+/* Brand colors */
+#shareX { color: #000; }
+#shareWhatsApp { color: #25D366; }
+#shareFacebook { color: #1877F2; }
+#shareLinkedIn { color: #0A66C2; }
 
-/* Mobile: vertical */
+/* Mobile: vertical stack */
 @media (max-width: 640px){
   #shareFallback{ flex-direction: column; align-items: center; }
 }
 
-/* ===== Fix share icon placement: inline after title text ===== */
-
-/* Make the title normal text flow (NOT flex) */
-.post-header .post-title{
-  display: block !important;
-}
-
-/* Make the share wrapper behave like a single inline character */
-.post-header .post-title .share-wrap{
-  display: inline !important;
-  position: static !important;      /* so it doesn't reserve a column */
-  margin-left: 0 !important;
-}
-
-/* The actual icon: inline with exactly ONE space separation */
-.post-header .post-title #shareBtn.share-btn-icon-only{
-  display: inline !important;
-  vertical-align: baseline;
-  margin-left: 0 !important;
-}
-
-/* The ONE space */
-.post-header .post-title #shareBtn.share-btn-icon-only::before{
-  content: " ";
-}
-
-/* Popover still needs positioning: anchor it relative to share-wrap */
-.post-header .post-title .share-wrap{
-  position: relative !important;    /* popover anchor */
-}
-
-/* Keep your popover positioning working */
-.post-header .post-title #shareFallback{
-  position: absolute !important;
-  top: calc(100% + 10px) !important;
-  right: 0 !important;
-}
-
-/* Copy button: dark background, WHITE icon */
-#copyLinkBtn {
-  background: #5f6368;       /* dark gray box */
-  color: #ffffff;            /* icon color (currentColor) */
-  border-color: transparent;
-}
-
-/* Ensure SVG uses currentColor */
-#copyLinkBtn svg {
-  fill: currentColor;
-}
-
-/* Success state */
-#copyLinkBtn[data-copied] {
-  background: #4CAF50;
-  color: #ffffff;
-}
-
-/* Default copy button: fintech green + white icon */
-#copyLinkBtn {
-  background: #2E7D32 !important;   /* fintech green */
-  color: #ffffff !important;        /* drives SVG via currentColor */
-  border-color: #2E7D32 !important;
-}
-
-/* Mobile-only "More" share button */
-#shareNativeBtn { 
-  display: none;
-}
-
+/* Native "More" button: show only on mobile */
+#shareNativeBtn { display: none; }
 @media (max-width: 640px) {
-  #shareNativeBtn {
-    display: inline-flex;
-  }
+  #shareNativeBtn { display: inline-flex; }
 }
 
-/* Slightly more subtle than the others */
-#shareNativeBtn {
-  color: #111; /* inherits your icon color style */
+/* ===== COPY LINK BUTTON — GREEN OUTLINE STYLE ===== */
+#copyLinkBtn {
+  all: unset;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border: 2px solid var(--green);
+  border-radius: 10px;
+
+  color: var(--green);
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.site-footer__text {
-  text-align: center;
-  line-height: 1.5;
+#copyLinkBtn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  pointer-events: none;
 }
 
-.site-footer__sep {
-  white-space: nowrap;
+#copyLinkBtn:hover {
+  background: #f3faf6;
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.18);
 }
 
-/* ---- CookieYes: reduce banner footprint (LCP/UX) ---- */
+#copyLinkBtn:active { transform: scale(0.96); }
+
+#copyLinkBtn[data-copied] {
+  background: var(--green);
+  color: #ffffff;
+  border-color: var(--green);
+}
+
+/* =========================
+   CookieYes tweaks (size + bottom bar)
+   ========================= */
 .cky-consent-bar,
 .cky-consent-container,
 .cky-consent {
@@ -1048,7 +709,7 @@ a.cta-button:active {
 }
 
 .cky-notice-des {
-  max-height: 3.1em !important;  /* ~2 lines */
+  max-height: 3.1em !important;
   overflow: hidden !important;
 }
 
@@ -1067,13 +728,12 @@ a.cta-button:active {
   .cky-consent {
     padding: 8px 12px !important;
   }
-
   .cky-notice-des {
-    max-height: 2.7em !important; /* slightly tighter on phones */
+    max-height: 2.7em !important;
   }
 }
 
-/* ===== CookieYes — force a bottom bar layout (still compliant) ===== */
+/* Force bottom bar layout */
 .cky-consent-container.cky-box-bottom-left {
   left: 0 !important;
   right: 0 !important;
@@ -1099,7 +759,6 @@ a.cta-button:active {
   overflow: hidden !important;
 }
 
-/* Put buttons in one row where possible */
 @media (min-width: 380px) {
   .cky-consent-container .cky-notice-btn-wrapper {
     display: grid !important;
