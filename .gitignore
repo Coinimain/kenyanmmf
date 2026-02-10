@@ -12,3 +12,4 @@ _site/
 .jekyll-cache/
 /footer.html
 _LOCAL_BACKUP/
+*.docx
