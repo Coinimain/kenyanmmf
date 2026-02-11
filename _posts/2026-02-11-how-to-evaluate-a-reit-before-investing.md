@@ -26,7 +26,7 @@ If you’re new to REITs entirely, start here first:
 **[Kenya REITs investment guide](/kenya-reits-investment-guide/)**
 
 If you want the buying process itself, read:  
-**[How to invest in a Kenyan REIT step by step](/how-to-invest-in-a-kenyan-reit/)**
+**[How to invest in a Kenyan REIT step by step](/investing/real%20estate/2026/02/10/how-to-invest-in-a-kenyan-reit.html)**
 
 ---
 
