@@ -126,7 +126,7 @@ No REIT will be flawless. The goal is not to find perfection, but to avoid struc
 A well-evaluated REIT becomes easier to hold during volatility because your decision was based on fundamentals rather than excitement.
 
 If you want to compare REITs with other asset classes before deciding on allocation, read:  
-**[REITs vs MMFs vs bonds vs equities in Kenya](/reits-vs-mmfs-bonds-equities-kenya/)**
+**[REITs vs MMFs vs bonds vs equities in Kenya](/investing/2026/02/10/reits-vs-mmfs-bonds-equities-kenya.html)**
 
 And for the broader context on how REITs work in Kenya, return to:  
 **[Kenya REITs investment guide](/kenya-reits-investment-guide/)**
