@@ -21,6 +21,19 @@ In Kenya, REITs are structured as **trusts rather than companies**, a distinctio
 
 REITs were formally introduced in Kenya under the Capital Markets regulatory framework in 2013, making Kenya one of the early adopters of REIT legislation in sub-Saharan Africa. Oversight is provided by the [**Capital Markets Authority**](https://licensees.cma.or.ke/licenses/14/), while listed REITs trade on the **Nairobi Securities Exchange**.
 
+### Currently Licensed REITs in Kenya (As of 2026)
+
+As of 2026, Kenya’s REIT market remains relatively small but formally regulated. The following Real Estate Investment Trusts are licensed under Kenya’s Capital Markets framework:
+
+- **Acorn Development Real Estate Investment Trust (Acorn D-REIT)**
+- **Acorn Income Real Estate Investment Trust (Acorn I-REIT)**
+- **ILAM Fahari I-REIT**
+- **LAPTRUST Imara Income Real Estate Investment Trust**
+- **ALP Industrial Real Estate Investment Trust**
+- **TRIFIC Green USD Income Real Estate Investment Trust**
+
+Some of these REITs are listed and accessible to retail investors through the Nairobi Securities Exchange, while others operate under more specialized structures. Investors should always verify the current listing status, investor eligibility requirements, and distribution structure before making any investment decision.
+
 ## Types of REITs Available in Kenya
 
 Kenyan regulations recognize three main categories of REITs, each serving a distinct investment purpose.
