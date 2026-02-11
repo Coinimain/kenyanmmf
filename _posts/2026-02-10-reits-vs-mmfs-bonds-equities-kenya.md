@@ -115,7 +115,8 @@ The most successful investors tend to use these tools together, adjusting emphas
 If you want a practical guide to actually buying a REIT, read:  
 **[How to invest in a Kenyan REIT step by step](/investing/real%20estate/2026/02/10/how-to-invest-in-a-kenyan-reit.html)**
 
-If you want to dig deeper into analysis, the next guide will explain how to evaluate a REIT before investing.
+If you want to dig deeper into analysis before committing money, read:  
+**[How to evaluate a REIT before investing](/how-to-evaluate-a-reit-before-investing/)**
 
 For the full REIT overview, return to:  
 **[Kenya REITs investment guide](/kenya-reits-investment-guide/)**
