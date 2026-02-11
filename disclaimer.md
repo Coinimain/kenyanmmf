@@ -5,6 +5,8 @@ description: Legal disclaimer and important information for readers of Kenya MMF
 permalink: /disclaimer/
 robots: noindex, nofollow
 sitemap: false
+no_ads: true
+
 ---
 
 ## Disclaimer

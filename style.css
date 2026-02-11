@@ -811,6 +811,7 @@ a[href="./ads.txt"] { display: none !important; }
   color: var(--text);
 }
 
+/* ✅ FIXED: this block was broken and killed the rest of your CSS */
 .contact-form input[type="text"],
 .contact-form input[type="email"],
 .contact-form select,
@@ -819,7 +820,38 @@ a[href="./ads.txt"] { display: none !important; }
   font: inherit;
   color: var(--text);
   background: #fff;
-  border: 1
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.contact-form textarea{
+  resize: vertical;
+  min-height: 140px;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus{
+  border-color: rgba(46,125,50,0.55);
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
+}
+
+.contact-form .error{
+  font-size: 0.85rem;
+  color: #b91c1c;
+  min-height: 1em;
+}
+
+.form-status{
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.form-status[data-state="ok"]{ color: #166534; }
+.form-status[data-state="error"]{ color: #b91c1c; }
 
 .form-privacy{
   margin-top: 10px;
@@ -858,4 +890,88 @@ a[href="./ads.txt"] { display: none !important; }
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
+
+/* ==============================
+   Buttons
+============================== */
+
+.btn{
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary{
+  background-color: #2E7D32;
+  color: #ffffff;
+  border: 2px solid #2E7D32;
+}
+
+/* 🔒 Force primary button text to stay white (overrides global link styles) */
+a.btn-primary,
+a.btn-primary:visited{
+  color: #ffffff !important;
+}
+
+.btn-primary:hover{
+  background-color: #256628;
+  border-color: #256628;
+}
+
+.btn-secondary{
+  background-color: #ffffff;
+  color: #2E7D32;
+  border: 2px solid #2E7D32;
+}
+
+.btn-secondary:hover{
+  background-color: #f2f9f3;
+}
+
+/* ==============================
+   Thank You Page
+============================== */
+
+.thanks-page{
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.thanks-card{
+  max-width: 520px;
+  text-align: center;
+  padding: 40px 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.thanks-icon{
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.thanks-card hr{
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 22px 0;
+}
+
+.thanks-actions{
+  margin-top: 0;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.thanks-note{
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #666;
 }

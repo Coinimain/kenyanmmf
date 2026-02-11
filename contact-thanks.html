@@ -5,10 +5,25 @@ description: Thanks for contacting Kenya MMF Calculator.
 permalink: /contact-thanks.html
 robots: noindex, follow
 sitemap: false
+no_ads: true
 ---
 
-<main>
-  <h2>Thanks!</h2>
-  <p>Your message was sent. We’ll get back to you as soon as possible.</p>
-  <p><a href="/"><strong>Back to Home</strong></a></p>
+<main class="thanks-page">
+  <div class="thanks-card" role="status" aria-live="polite">
+    <div class="thanks-icon" aria-hidden="true">✅</div>
+
+    <h2>Thanks!</h2>
+    <p>Your message was sent successfully. We’ll get back to you as soon as possible.</p>
+
+    <hr>
+
+    <div class="thanks-actions">
+      <a class="btn btn-primary" href="{{ '/' | relative_url }}">Back to Home</a>
+      <a class="btn btn-secondary" href="{{ '/blog/' | relative_url }}">Read the Blog</a>
+    </div>
+
+    <p class="thanks-note">
+      Tip: While you wait, you can run another calculation or compare providers on the homepage.
+    </p>
+  </div>
 </main>

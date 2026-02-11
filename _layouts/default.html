@@ -11,90 +11,95 @@
     src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
   ></script>
 
- <!-- Content Security Policy -->
-{% unless page.no_ads %}
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  base-uri 'self';
-  form-action 'self';
+  <!-- Content Security Policy -->
+  {% unless page.no_ads %}
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'self';
+    form-action 'self' https://formspree.io;
 
-  img-src 'self' data: https:;
-  style-src 'self' 'unsafe-inline';
-  font-src 'self' data: https:;
+    img-src 'self' data: https:;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data: https:;
 
-  script-src
-    'self'
-    'unsafe-inline'
-    https://cdn.jsdelivr.net
-    https://cdn-cookieyes.com
-    https://pagead2.googlesyndication.com
-    https://securepubads.g.doubleclick.net
-    https://www.googletagservices.com
-    https://tpc.googlesyndication.com
-    https://googleads.g.doubleclick.net
-    https://www.googletagmanager.com
-    https://ep2.adtrafficquality.google;
+    script-src
+      'self'
+      'unsafe-inline'
+      https://cdn.jsdelivr.net
+      https://cdn-cookieyes.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://www.googletagservices.com
+      https://tpc.googlesyndication.com
+      https://googleads.g.doubleclick.net
+      https://www.googletagmanager.com
+      https://ep2.adtrafficquality.google;
 
-  connect-src
-    'self'
-    https://cdn.jsdelivr.net
-    https://open.er-api.com
-    https://cdn-cookieyes.com
-    https://pagead2.googlesyndication.com
-    https://securepubads.g.doubleclick.net
-    https://googleads.g.doubleclick.net
-    https://adservice.google.com
-    https://adservice.google.co.ke
-    https://www.google-analytics.com
-    https://region1.google-analytics.com
-    https://analytics.google.com
-    https://ep1.adtrafficquality.google
-    https://ep2.adtrafficquality.google;
+    connect-src
+      'self'
+      https://formspree.io
+      https://cdn.jsdelivr.net
+      https://open.er-api.com
+      https://cdn-cookieyes.com
+      https://pagead2.googlesyndication.com
+      https://securepubads.g.doubleclick.net
+      https://googleads.g.doubleclick.net
+      https://adservice.google.com
+      https://adservice.google.co.ke
+      https://www.google-analytics.com
+      https://region1.google-analytics.com
+      https://analytics.google.com
+      https://ep1.adtrafficquality.google
+      https://ep2.adtrafficquality.google;
 
-  frame-src
-    https://googleads.g.doubleclick.net
-    https://tpc.googlesyndication.com
-    https://ep2.adtrafficquality.google
-    https://www.google.com;
+    frame-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
 
-  child-src
-    https://googleads.g.doubleclick.net
-    https://tpc.googlesyndication.com
-    https://ep2.adtrafficquality.google
-    https://www.google.com;
+    child-src
+      https://googleads.g.doubleclick.net
+      https://tpc.googlesyndication.com
+      https://ep2.adtrafficquality.google
+      https://www.google.com;
 
-  upgrade-insecure-requests;
-" />
-{% endunless %}
+    upgrade-insecure-requests;
+  " />
+  {% endunless %}
 
-{% if page.no_ads %}
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  base-uri 'self';
-  form-action 'self';
+  {% if page.no_ads %}
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'self';
+    form-action 'self' https://formspree.io;
 
-  img-src 'self' data: https:;
-  style-src 'self' 'unsafe-inline';
-  font-src 'self' data: https:;
+    img-src 'self' data: https:;
+    style-src 'self' 'unsafe-inline';
+    font-src 'self' data: https:;
 
-  script-src
-    'self'
-    'unsafe-inline'
-    https://cdn.jsdelivr.net
-    https://cdn-cookieyes.com;
+    script-src
+      'self'
+      'unsafe-inline'
+      https://cdn.jsdelivr.net
+      https://cdn-cookieyes.com;
 
-  connect-src
-    'self'
-    https://cdn.jsdelivr.net
-    https://open.er-api.com;
+    connect-src
+      'self'
+      https://formspree.io
+      https://cdn.jsdelivr.net
+      https://open.er-api.com;
 
-  frame-src 'self';
-  child-src 'self';
+    frame-src 'self';
+    child-src 'self';
 
-  upgrade-insecure-requests;
-" />
-{% endif %}
-
+    upgrade-insecure-requests;
+  " />
+  {% endif %}
 
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="Referrer-Policy" content="no-referrer" />
@@ -109,20 +114,18 @@
   <link rel="canonical" href="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
 
   <!-- Use relative_url so it works locally + on GitHub Pages -->
-  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260213" />
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260216" />
 
   <!-- Chart.js (safe to include globally) -->
 
   <!-- AdSense -->
-{% unless page.no_ads %}
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
-{% endunless %}
+  {% unless page.no_ads %}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
+  {% endunless %}
 </head>
 
-
 <body>
-
   {% unless page.layout == 'post' or page.url == '/blog/' or page.url contains '/blog/' %}
     {% include header.html %}
   {% endunless %}
@@ -135,8 +138,6 @@
     <script src="{{ '/main.js' | relative_url }}" defer></script>
   {% endunless %}
 
-<script src="{{ '/share.js' | relative_url }}?v=20260211" defer></script>
-
-
+  <script src="{{ '/share.js' | relative_url }}?v=20260211" defer></script>
 </body>
 </html>
