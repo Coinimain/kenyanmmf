@@ -1,6 +1,6 @@
 name: Google Sitemap Ping Posts New and Edited
 
-"on":
+on:
   push:
     branches:
       - main
@@ -20,6 +20,7 @@ jobs:
 
       - name: Detect changed posts (new + edited)
         id: detect
+        shell: bash
         run: |
           set -e
           echo "Checking for changed posts (added or modified) in the last push..."
@@ -40,8 +41,33 @@ jobs:
             echo "EOF" >> $GITHUB_OUTPUT
           fi
 
-      - name: Ping Google Sitemap
+      - name: Wait for sitemap to be live (GitHub Pages rebuild)
         if: steps.detect.outputs.posts_changed == 'true'
+        shell: bash
+        run: |
+          SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
+          echo "Waiting for sitemap to return HTTP 200:"
+          echo "$SITEMAP_URL"
+          echo ""
+
+          for i in {1..15}; do
+            code=$(curl -A "Mozilla/5.0" -s -o /dev/null -w "%{http_code}" "$SITEMAP_URL" || true)
+            echo "Attempt $i: HTTP $code"
+
+            if [ "$code" = "200" ]; then
+              echo "✅ Sitemap is live."
+              exit 0
+            fi
+
+            sleep 20
+          done
+
+          echo "⚠️ Sitemap not reachable after waiting. Failing."
+          exit 1
+
+      - name: Ping Google Sitemap (retry)
+        if: steps.detect.outputs.posts_changed == 'true'
+        shell: bash
         run: |
           SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
           PING_URL="https://www.google.com/ping?sitemap=${SITEMAP_URL}"
@@ -50,9 +76,11 @@ jobs:
           echo "${{ steps.detect.outputs.post_list }}"
           echo ""
           echo "Sitemap: $SITEMAP_URL"
+          echo "Ping: $PING_URL"
           echo ""
 
-          http_code=$(curl -s -o /dev/null -w "%{http_code}" "$PING_URL")
+          # Retry because Google sometimes returns transient errors
+          http_code=$(curl -A "Mozilla/5.0" -s -o /dev/null -w "%{http_code}" --retry 5 --retry-all-errors --retry-delay 10 "$PING_URL" || true)
           echo "Google ping HTTP status: $http_code"
 
           if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 400 ]; then

@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - "_posts/**"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,6 +15,7 @@ jobs:
     # Prevent infinite loops from bot commits
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,6 +26,8 @@ jobs:
         id: latest
         shell: bash
         run: |
+          set -e
+
           latest=$(ls -1 _posts/*.md _posts/*.markdown 2>/dev/null \
             | sed -E 's#.*/([0-9]{4}-[0-9]{2}-[0-9]{2})-.*#\1#' \
             | sort | tail -n 1)
@@ -34,17 +38,41 @@ jobs:
           fi
 
           echo "latest=$latest" >> "$GITHUB_OUTPUT"
+          echo "Latest post date: $latest"
 
-      - name: Update blog.md last_modified_at
+      - name: Update blog.md last_modified_at (add if missing)
         shell: bash
         run: |
+          set -e
+
           latest="${{ steps.latest.outputs.latest }}"
+
+          if [ ! -f "blog.md" ]; then
+            echo "blog.md not found. Skipping."
+            exit 0
+          fi
+
           echo "Setting blog.md last_modified_at to $latest"
-          sed -i -E "s/^last_modified_at: .*/last_modified_at: ${latest}/" blog.md
+
+          # Ensure blog.md has front matter
+          if ! head -n 1 blog.md | grep -q "^---$"; then
+            echo "blog.md has no front matter. Skipping."
+            exit 0
+          fi
+
+          # If last_modified_at exists, replace it. Otherwise insert it after the first --- line.
+          if grep -q "^last_modified_at:" blog.md; then
+            sed -i -E "s/^last_modified_at:.*/last_modified_at: \"${latest}\"/" blog.md
+          else
+            # Insert on line 2 (right after opening ---)
+            sed -i "2i last_modified_at: \"${latest}\"" blog.md
+          fi
 
       - name: Commit and push if changed
         shell: bash
         run: |
+          set -e
+
           if git diff --quiet; then
             echo "No changes to commit."
             exit 0
