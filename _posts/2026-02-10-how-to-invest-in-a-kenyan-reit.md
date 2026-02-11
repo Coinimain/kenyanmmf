@@ -125,7 +125,7 @@ Being aware of these pitfalls already puts you ahead of many first-time investor
 ## Where to go next
 
 If you want to understand how REITs fit alongside other investments, read:  
-**[REITs vs MMFs vs bonds vs equities in Kenya](/reits-vs-mmfs-bonds-equities-kenya/)**
+**[REITs vs MMFs vs bonds vs equities in Kenya](/investing/2026/02/10/reits-vs-mmfs-bonds-equities-kenya.html)**
 
 If you want to go deeper into analysis, the next guide will cover how to evaluate a REIT before investing.
 
