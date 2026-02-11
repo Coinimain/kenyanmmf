@@ -62,11 +62,12 @@ jobs:
             sleep 20
           done
 
-          echo "⚠️ Sitemap not reachable after waiting. Failing."
-          exit 1
+          echo "⚠️ Sitemap not reachable yet (Pages likely still building). Skipping ping for now."
+          exit 0
 
       - name: Ping Google Sitemap (retry)
         if: steps.detect.outputs.posts_changed == 'true'
+        continue-on-error: true
         shell: bash
         run: |
           SITEMAP_URL="https://kenyammfcalculator.co.ke/sitemap.xml"
@@ -80,7 +81,9 @@ jobs:
           echo ""
 
           # Retry because Google sometimes returns transient errors
-          http_code=$(curl -A "Mozilla/5.0" -s -o /dev/null -w "%{http_code}" --retry 5 --retry-all-errors --retry-delay 10 "$PING_URL" || true)
+          http_code=$(curl -A "Mozilla/5.0" -s -o /dev/null -w "%{http_code}" \
+            --retry 5 --retry-all-errors --retry-delay 10 "$PING_URL" || true)
+
           echo "Google ping HTTP status: $http_code"
 
           if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 400 ]; then
