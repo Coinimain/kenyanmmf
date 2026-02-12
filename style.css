@@ -615,19 +615,22 @@ a[href="./ads.txt"] { display: none !important; }
 /* Hidden means hidden */
 #shareFallback[hidden]{ display: none !important; }
 
-/* Popover */
+/* Popover — transparent + tight */
 #shareFallback{
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 4px);   /* closer to icon */
   right: 0;
+
   display: flex;
   flex-direction: row;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.12);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  gap: 6px;                /* tighter spacing */
+  padding: 4px 6px;        /* minimal breathing room */
+  border-radius: 12px;
+
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
   z-index: 9999;
 }
 
