@@ -293,6 +293,29 @@ a.cta-button:active { color: #fff; }
   line-height: 1.5;
 }
 
+/* =========================
+   Post hero (CLS-safe + tight caption)
+   ========================= */
+.post-hero{
+  margin: 0 0 8px 0;
+}
+
+.post-hero img{
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  display: block; /* removes baseline gap */
+  margin: 0;      /* overrides global img margin */
+}
+
+.post-hero figcaption{
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 2px;   /* tight to image */
+  line-height: 1.2;
+  min-height: 14px;  /* reserves caption space to prevent CLS */
+}
+
 .blog-wrap {
   max-width: 900px;
   margin: 2rem auto;
@@ -776,7 +799,6 @@ a[href="./ads.txt"] { display: none !important; }
 /* =========================
    Contact page / form
    ========================= */
-
 .contact-page{
   max-width: 760px;
   margin: 0 auto;
@@ -895,7 +917,6 @@ a[href="./ads.txt"] { display: none !important; }
 /* ==============================
    Buttons
 ============================== */
-
 .btn{
   display: inline-block;
   padding: 10px 18px;
@@ -935,7 +956,6 @@ a.btn-primary:visited{
 /* ==============================
    Thank You Page
 ============================== */
-
 .thanks-page{
   display: flex;
   justify-content: center;
