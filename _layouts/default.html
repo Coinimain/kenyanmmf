@@ -107,18 +107,38 @@
 
   <title>{% if page.title %}{{ page.title }} | {% endif %}Kenya MMF Calculator</title>
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
-  <meta name="robots" content="{{ page.robots | default: 'index, follow' }}" />
+
+  <!-- UPDATED ROBOTS (Discover ready) -->
+  <meta name="robots" content="{{ page.robots | default: 'index, follow' }}, max-image-preview:large" />
+
   <meta name="theme-color" content="#2E7D32" />
 
   <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon" />
   <link rel="canonical" href="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
 
+  <!-- Open Graph / Twitter -->
+  <meta property="og:site_name" content="Kenya MMF Calculator" />
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}Kenya MMF Calculator{% endif %}" />
+  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
+  <meta property="og:url" content="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
+
+  {% if page.image %}
+    <meta property="og:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
+    <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | escape }}" />
+  {% endif %}
+
+  <meta name="twitter:card" content="{% if page.image %}summary_large_image{% else %}summary{% endif %}" />
+  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}Kenya MMF Calculator{% endif %}" />
+  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
+
+  {% if page.image %}
+    <meta name="twitter:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
+  {% endif %}
+
   <!-- Use relative_url so it works locally + on GitHub Pages -->
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260216" />
 
-  <!-- Chart.js (safe to include globally) -->
-
-  <!-- AdSense -->
   {% unless page.no_ads %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
