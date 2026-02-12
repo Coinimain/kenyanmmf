@@ -108,7 +108,7 @@
   <title>{% if page.title %}{{ page.title }} | {% endif %}Kenya MMF Calculator</title>
   <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
 
-  <!-- UPDATED ROBOTS (Discover ready) -->
+  <!-- UPDATED ROBOTS -->
   <meta name="robots" content="{{ page.robots | default: 'index, follow' }}, max-image-preview:large" />
 
   <meta name="theme-color" content="#2E7D32" />
@@ -136,13 +136,41 @@
     <meta name="twitter:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
   {% endif %}
 
-  <!-- Use relative_url so it works locally + on GitHub Pages -->
+  <!-- Main CSS -->
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260218" />
 
   {% unless page.no_ads %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
   {% endunless %}
+
+  <!-- EEAT Disclaimer Schema (loads only on disclaimer page) -->
+  {% if page.url == "/disclaimer/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Disclaimer",
+    "url": "https://kenyammfcalculator.co.ke/disclaimer/",
+    "description": "Legal disclaimer and important information for readers of Kenya MMF Calculator.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kenya MMF Calculator",
+      "url": "https://kenyammfcalculator.co.ke"
+    },
+    "about": {
+      "@type": "Thing",
+      "name": "Financial Information Disclaimer"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Kenya MMF Calculator",
+      "url": "https://kenyammfcalculator.co.ke"
+    }
+  }
+  </script>
+  {% endif %}
+
 </head>
 
 <body>
