@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- CookieYes banner -->
-  <script
-    id="cookieyes"
-    type="text/javascript"
-    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
-  ></script>
+  <!-- Preconnects (reduce DNS/TLS cost on mobile) -->
+  <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin>
+  {% unless page.no_ads %}
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
+  <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+  <link rel="dns-prefetch" href="//tpc.googlesyndication.com">
+  {% endunless %}
+  <link rel="dns-prefetch" href="//cdn-cookieyes.com">
 
   <!-- Content Security Policy -->
   {% unless page.no_ads %}
@@ -136,11 +138,13 @@
     <meta name="twitter:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
   {% endif %}
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260220" />
+  <!-- Main CSS (non-blocking load) -->
+  <link rel="preload" as="style" href="{{ '/style.css' | relative_url }}?v=20260220">
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260220" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260220"></noscript>
 
   {% unless page.no_ads %}
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+    <!-- Keep account meta. We will lazy-load the JS later (big LCP win on mobile) -->
     <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
   {% endunless %}
 
@@ -170,7 +174,6 @@
   }
   </script>
   {% endif %}
-
 </head>
 
 <body>
@@ -187,5 +190,51 @@
   {% endunless %}
 
   <script src="{{ '/share.js' | relative_url }}?v=20260214" defer></script>
+
+  <!-- CookieYes banner (moved out of head to avoid render-blocking) -->
+  <script
+    id="cookieyes"
+    src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
+    defer>
+  </script>
+
+  {% unless page.no_ads %}
+  {% if page.layout == 'post' or page.url contains '/blog/' %}
+  <!-- AdSense: lazy-load after page load (huge mobile LCP win) -->
+  <script>
+  (function () {
+    var loaded = false;
+
+    function loadAdsense() {
+      if (loaded) return;
+      loaded = true;
+
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452";
+      s.crossOrigin = "anonymous";
+      document.head.appendChild(s);
+
+      s.onload = function () {
+        try {
+          document.querySelectorAll('ins.adsbygoogle').forEach(function () {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          });
+        } catch (e) {}
+      };
+    }
+
+    window.addEventListener('load', function () {
+      // delay on mobile to protect LCP; desktop loads immediately after load
+      var isMobile = window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
+      setTimeout(loadAdsense, isMobile ? 2500 : 0);
+    });
+  })();
+  </script>
+  {% else %}
+  <!-- Non-blog pages: load AdSense normally -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
+  {% endif %}
+  {% endunless %}
 </body>
 </html>

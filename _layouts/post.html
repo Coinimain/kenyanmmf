@@ -11,73 +11,72 @@ layout: default
       <a href="/" class="post-nav-link">Home</a>
     </nav>
 
-<header class="post-header">
-  <h1 class="post-title">
-    {{ page.title }}
-    <span class="share-wrap" aria-label="Share this article">
-      <button
-        class="share-btn-icon-only"
-        type="button"
-        id="shareBtn"
-        aria-expanded="false"
-        aria-controls="shareFallback"
-        aria-label="Share"
-        title="Share"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-             width="24" height="24" fill="none" stroke="currentColor"
-             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-             aria-hidden="true">
-          <g transform="rotate(-90 12 12)">
-            <circle cx="12" cy="12" r="1.8"/>
-            <line x1="12" y1="12" x2="12" y2="5.5"/>
-            <line x1="12" y1="12" x2="6" y2="18.5"/>
-            <line x1="12" y1="12" x2="18" y2="18.5"/>
-            <circle cx="12" cy="5.5" r="1.3" fill="currentColor"/>
-            <circle cx="6" cy="18.5" r="1.3" fill="currentColor"/>
-            <circle cx="18" cy="18.5" r="1.3" fill="currentColor"/>
-          </g>
-        </svg>
-      </button>
+    <header class="post-header">
+      <h1 class="post-title">
+        {{ page.title }}
+        <span class="share-wrap" aria-label="Share this article">
+          <button
+            class="share-btn-icon-only"
+            type="button"
+            id="shareBtn"
+            aria-expanded="false"
+            aria-controls="shareFallback"
+            aria-label="Share"
+            title="Share"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 width="24" height="24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <g transform="rotate(-90 12 12)">
+                <circle cx="12" cy="12" r="1.8"/>
+                <line x1="12" y1="12" x2="12" y2="5.5"/>
+                <line x1="12" y1="12" x2="6" y2="18.5"/>
+                <line x1="12" y1="12" x2="18" y2="18.5"/>
+                <circle cx="12" cy="5.5" r="1.3" fill="currentColor"/>
+                <circle cx="6" cy="18.5" r="1.3" fill="currentColor"/>
+                <circle cx="18" cy="18.5" r="1.3" fill="currentColor"/>
+              </g>
+            </svg>
+          </button>
 
-<div class="share-fallback" id="shareFallback" hidden aria-label="Share options"></div>
+          <div class="share-fallback" id="shareFallback" hidden aria-label="Share options"></div>
+        </span>
+      </h1>
 
-    </span>
-  </h1>
+      {% if page.date %}
+        <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+      {% endif %}
+    </header>
 
-  {% if page.date %}
-    <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
-  {% endif %}
-</header>
-
-{% if page.image %}
-  <figure class="post-hero">
-    <img
-      src="{{ page.image | relative_url }}"
-      alt="{{ page.image_alt | default: page.title | escape }}"
-      loading="eager"
-      decoding="async"
-    />
-    {% if page.image_caption %}
-      <figcaption>{{ page.image_caption }}</figcaption>
+    {% if page.image %}
+      <figure class="post-hero">
+        <img
+          src="{{ page.image | relative_url }}"
+          alt="{{ page.image_alt | default: page.title | escape }}"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+        {% if page.image_caption %}
+          <figcaption>{{ page.image_caption }}</figcaption>
+        {% endif %}
+      </figure>
     {% endif %}
-  </figure>
-{% endif %}
 
+    <div class="post-content">
+      {{ content }}
+    </div>
 
-<div class="post-content">
-  {{ content }}
-</div>
+    <section class="related-reading" aria-label="Related reading">
+      <h2 class="related-reading__title">Related reading</h2>
+      {% include related_posts.html show_title=false %}
+    </section>
 
-<section class="related-reading" aria-label="Related reading">
-  <h2 class="related-reading__title">Related reading</h2>
-  {% include related_posts.html show_title=false %}
-</section>
-
-{% if page.disclaimer != false %}
-  <hr class="post-divider" />
-  {% include disclaimer.html %}
-{% endif %}
+    {% if page.disclaimer != false %}
+      <hr class="post-divider" />
+      {% include disclaimer.html %}
+    {% endif %}
 
   </article>
 </main>
