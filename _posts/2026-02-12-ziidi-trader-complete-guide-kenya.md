@@ -32,9 +32,7 @@ faq:
     a: "Yes. Share prices fluctuate based on market conditions and company performance, and investing carries risk."
 ---
 
-# Ziidi Trader Safaricom: The Complete 2026 Guide to Buying NSE Shares on M-PESA
-
-Just day after the launch of **Ziidi Trader**, interest in the new Ziidi Safaricom product has surged. We will explore how Ziidi Trader works in this article, and other important aspects of the new stock trading platform.
+Just days after the launch of **Ziidi Trader**, interest in the new Ziidi Safaricom product has surged. We will explore how Ziidi Trader works in this article, and other important aspects of the new stock trading platform.
 
 For the first time, millions of Kenyans can buy and sell shares listed on the Nairobi Securities Exchange (NSE) directly inside the M-PESA app. This marks a structural shift in retail investing.
 

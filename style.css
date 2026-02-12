@@ -297,7 +297,7 @@ a.cta-button:active { color: #fff; }
    Post hero (CLS-safe + tight caption)
    ========================= */
 .post-hero{
-  margin: 0 0 8px 0;
+  margin: 14px 0 8px 0;  /* adds space above hero */
 }
 
 .post-hero img{
