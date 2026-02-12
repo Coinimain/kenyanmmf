@@ -91,6 +91,16 @@ By accessing and using this website, you acknowledge that you have read, underst
 
 ---
 
+## External Links Disclaimer
+
+This website may contain links to third-party websites, including but not limited to regulatory bodies, financial institutions, and other informational resources.
+
+These links are provided for convenience and informational purposes only. I do not control, endorse, or assume responsibility for the content, privacy policies, services, or practices of any third-party websites.
+
+Any reliance you place on information from external websites is strictly at your own risk. I am not liable for any losses, damages, or issues that may arise from your use of third-party websites linked from this site.
+
+---
+
 ## Updates to This Disclaimer
 
 This disclaimer may be updated or modified at any time without prior notice. Continued use of the website after changes are posted constitutes acceptance of the revised disclaimer.
