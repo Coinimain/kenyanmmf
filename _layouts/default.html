@@ -138,6 +138,29 @@
     <meta name="twitter:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
   {% endif %}
 
+  <!-- Critical CSS: reduces "unstyled snap" on hard refresh -->
+  <style>
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color: #1E293B;
+      background: #fff;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    main { display: block; }
+
+    /* Blog post skeleton so it doesn't look "basic" before style.css arrives */
+    .post-wrap { max-width: 900px; margin: 0 auto; padding: 16px; }
+    .post { line-height: 1.6; }
+    .post-nav { margin: 6px 0 14px; font-size: 14px; opacity: .9; }
+    .post-nav-link { text-decoration: none; }
+    .post-title { margin: 0; font-size: 28px; line-height: 1.2; }
+    .post-date { margin: 6px 0 0; font-size: 13px; opacity: .8; }
+    .post-hero img { display: block; }
+  </style>
+
   <!-- Main CSS (non-blocking load) -->
   <link rel="preload" as="style" href="{{ '/style.css' | relative_url }}?v=20260220">
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v=20260220" media="print" onload="this.media='all'">
@@ -184,6 +207,7 @@
   {{ content }}
 
   {% include footer.html %}
+
 
   {% unless page.layout == 'post' or page.url == '/blog/' or page.url contains '/blog/' %}
     <script src="{{ '/main.js' | relative_url }}" defer></script>
