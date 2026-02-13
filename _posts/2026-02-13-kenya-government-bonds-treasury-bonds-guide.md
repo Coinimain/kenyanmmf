@@ -14,7 +14,7 @@ tags:
   - fixed income kenya
 permalink: /blog/kenya-government-bonds-treasury-bonds-guide/
 description: "A complete, practical guide to Kenya Treasury bonds: how coupons and yields work, taxes, bond types (FXD/IFB/zero coupon), CBK auction process, and step-by-step instructions to invest via DhowCSD or through banks."
-image: /assets/images/kenya-treasury-bonds-cbk-dhowcsd-guide.png
+image: /assets/images/kenya-treasury-bonds-cbk-dhowcsd-guide-2026.png
 image_alt: "Kenya Treasury bonds guide with CBK and DhowCSD"
 image_caption: "Kenya Treasury bonds are auctioned by CBK and can be bought directly via DhowCSD."
 image_source_name: "Kenya MMF Calculator"
