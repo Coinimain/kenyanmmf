@@ -13,3 +13,4 @@ _site/
 /footer.html
 _LOCAL_BACKUP/
 *.docx
+.jekyll-metadata
