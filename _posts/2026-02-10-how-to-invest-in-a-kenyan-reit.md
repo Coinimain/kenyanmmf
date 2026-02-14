@@ -2,6 +2,7 @@
 layout: post
 title: "How to Invest in a Kenyan REIT: A Step-by-Step Guide for Beginners (2026)"
 description: "A practical, plain-English walkthrough of how to invest in a Kenyan REIT in 2026 — from opening a CDS account to buying, earning distributions, and exiting."
+permalink: /blog/how-to-invest-in-a-kenyan-reit/
 categories:
   - Investing
   - Real Estate
