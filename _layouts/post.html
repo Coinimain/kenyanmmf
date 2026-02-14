@@ -113,19 +113,20 @@ layout: default
 {% endif %}
 
 <!-- FAQ Schema -->
-{% if page.faq and page.faq.size > 0 %}
+{% assign faq_list = page.faq | default: page.faqs %}
+{% if faq_list and faq_list.size > 0 %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {% for item in page.faq %}
+    {% for item in faq_list %}
     {
       "@type": "Question",
-      "name": {{ item.q | jsonify }},
+      "name": {{ item.q | strip_newlines | strip | jsonify }},
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": {{ item.a | jsonify }}
+        "text": {{ item.a | strip_newlines | strip | jsonify }}
       }
     }{% unless forloop.last %},{% endunless %}
     {% endfor %}
