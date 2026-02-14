@@ -32,18 +32,19 @@ faq:
     a: "Yes. Share prices fluctuate based on market conditions and company performance, and investing carries risk."
 ---
 
-Just days after the launch of **Ziidi Trader**, interest in the new Ziidi Safaricom product has surged. We will explore how Ziidi Trader works in this article, and other important aspects of the new stock trading platform.
+Ziidi Trader is Safaricom’s new **NSE trading feature inside the M-PESA app**, letting Kenyans buy and sell listed shares (and some bonds) directly from their phone.
 
-For the first time, millions of Kenyans can buy and sell shares listed on the Nairobi Securities Exchange (NSE) directly inside the M-PESA app. This marks a structural shift in retail investing.
+If you’re searching **“what is Ziidi Trader”** or **“how does Ziidi Trader work”**, this guide breaks it down in plain English — including setup, order matching, pricing options, risks, and how Ziidi compares to money market funds.
 
-But before placing your first trade, you need to understand:
+## Quick answers (Ziidi Trader)
 
-- How does Ziidi Trader work
-- Whether you need a CDS account
-- How pricing and order matching function
-- What risks are involved
-- How it compares to money market funds
-- Whether it is suitable for beginners
+> **Note:** Some people search for **“ziddi trader”** - they usually mean **Ziidi Trader** by Safaricom.
+
+- **What is Ziidi Trader?** A stock trading platform inside M-PESA that lets you place buy/sell orders for **NSE-listed shares**.
+- **How does Ziidi Trader work?** You activate it in M-PESA → place a buy/sell order → orders match during market hours → settlement follows the NSE process.
+- **Do you need a CDS account?** **No** - Ziidi uses an **omnibus structure** (your ownership is tracked in-app).
+- **Is Ziidi Trader legit/safe?** It operates within Kenya’s regulated market setup, but prices can fall and trades may not execute.
+- **Ziidi Trader not working?** Most issues are **market hours**, verification/CDS details, app updates, or network problems.
 
 This is the complete 2026 guide.
 
@@ -207,6 +208,20 @@ Monday – Friday
 9:30 AM – 3:00 PM
 
 Outside these hours, you can view your portfolio but cannot execute trades.
+
+---
+
+## Ziidi Trader Not Working? Common Reasons
+
+If Ziidi Trader is failing to place trades or showing errors, the most common causes are:
+
+- **Outside market hours** (NSE is open Mon–Fri, 9:30 AM–3:00 PM)
+- **Verification still pending** or details don’t match your ID records
+- **App needs an update** (older M-PESA versions can bug out)
+- **Network issues** (slow data can cause timeouts)
+- **No matching orders** (your trade may be valid but not executed due to price/liquidity)
+
+If the issue is execution-related, try using **Best Price** during market hours, or adjust your **Own Price** closer to market levels.
 
 ---
 
