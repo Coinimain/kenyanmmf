@@ -94,6 +94,10 @@ def is_ignored_url(url: str) -> bool:
     return url.startswith(IGNORE_URL_PREFIXES)
 
 def check_front_matter(path: Path, text: str) -> int:
+    # README.md is not a Jekyll page/post
+    if path.name.lower() == "readme.md":
+        return 0
+
     errors = 0
     fm, body = split_front_matter(text)
     if path.suffix in {".md", ".markdown"}:
