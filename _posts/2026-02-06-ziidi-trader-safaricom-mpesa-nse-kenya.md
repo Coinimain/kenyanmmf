@@ -18,6 +18,8 @@ Safaricom’s **Ziidi Trader** represents a major shift in how Kenyans access th
 
 For the first time, buying shares can feel as familiar as sending money or paying a bill.
 
+If you want the full step-by-step walkthrough (setup, fees, limits, and how the omnibus holding actually works), use the **[Ziidi Trader complete guide for Kenya](/blog/ziidi-trader-complete-guide-kenya/)**.
+
 ---
 
 ## What Is Ziidi Trader?
@@ -60,6 +62,8 @@ Ziidi Trader lowers the cost of participation by:
 - Keeping absolute transaction costs low
 
 A small trade of about **KES 300** resulted in a total debit of roughly **KES 322**, covering brokerage and statutory charges. While percentage costs are higher on small trades, the absolute shilling cost remains accessible.
+
+Here’s the detailed breakdown of what makes up the charges: **[Ziidi Trader fees explained](/blog/ziidi-trader-fees-explained-trade-cost/)**.
 
 ---
 

@@ -34,7 +34,7 @@ faq:
 
 Ziidi Trader is Safaricom’s new **NSE trading feature inside the M-PESA app**, letting Kenyans buy and sell listed shares (and some bonds) directly from their phone.
 
-If you’re searching **“what is Ziidi Trader”** or **“how does Ziidi Trader work”**, this guide breaks it down in plain English — including setup, order matching, pricing options, risks, and how Ziidi compares to money market funds.
+If you’re searching **“what is Ziidi Trader”** or **“how does Ziidi Trader work”**, this guide breaks it down in plain English - including setup, order matching, pricing options, risks, and how Ziidi compares to money market funds. If you’d rather start with the shorter overview, read **[Ziidi Trader by Safaricom: how M-PESA is opening the NSE to everyday investors]({{ '/blog/ziidi-trader-safaricom-mpesa-nse-kenya/' | relative_url }})** first.
 
 ## Quick answers (Ziidi Trader)
 
