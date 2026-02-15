@@ -39,8 +39,6 @@ faq:
     a: "Netting allows maturities (coupon or redemption payments that fall on the same settlement date) to offset what you owe for a successful bid, reducing the amount you need to top up or increasing any refund due."
 ---
 
-# Kenya Government Bonds (Treasury Bonds): The Complete Guide for Beginners and Serious Investors
-
 Kenya Treasury bonds (often called **T-bonds**) are one of the most widely used fixed-income investments in the country. When you buy a Treasury bond, you’re **lending money to the Government of Kenya** for a set number of years. In return, you typically receive:
 
 - **Interest payments every six months** (semi-annual coupons), and
