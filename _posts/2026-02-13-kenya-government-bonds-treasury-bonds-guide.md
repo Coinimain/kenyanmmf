@@ -222,7 +222,7 @@ DhowCSD allows individuals and corporates to invest without going through an int
 
 ### Step 1: Open your DhowCSD account
 You can access DhowCSD via:
-- Web portal: https://dhowcsd.centralbank.go.ke/
+- Web portal: [DhowCSD](https://dhowcsd.centralbank.go.ke/)
 - Mobile app (Google Play / Apple App Store)
 
 Follow CBK’s official account-opening steps and complete KYC. Once activated, you can participate in primary auctions.

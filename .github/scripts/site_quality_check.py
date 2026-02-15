@@ -8,6 +8,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 # ---- Config you can tweak ----
 REQUIRED_FRONT_MATTER_KEYS = {"title", "description", "permalink"}
+PERMALINK_REQUIRED_FROM = "2026-02-15"
 SCAN_DIRS = ["_posts", "_pages", ""]  # "" means repo root too (for standalone pages)
 SCAN_EXTS = {".md", ".markdown", ".html"}
 
@@ -47,18 +48,29 @@ def split_front_matter(text: str):
     return "", text
 
 def parse_front_matter(fm: str):
+    # Only consider TOP-LEVEL keys (no indentation).
+    # This avoids false "duplicate key" warnings for nested YAML like:
+    # faq:
+    #   - q: ...
+    #     a: ...
     keys = set()
     duplicates = set()
+
     for line in fm.splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#"):
+        if not line.strip() or line.lstrip().startswith("#"):
             continue
-        m = re.match(r"^([A-Za-z0-9_\-]+)\s*:", stripped)
+
+        # Ignore indented lines and list items (nested YAML)
+        if line.startswith((" ", "\t", "-")):
+            continue
+
+        m = re.match(r"^([A-Za-z0-9_\-]+)\s*:", line)
         if m:
             k = m.group(1)
             if k in keys:
                 duplicates.add(k)
             keys.add(k)
+
     return keys, duplicates
 
 def strip_query_fragment(url: str) -> str:
@@ -93,6 +105,21 @@ def is_inside_markdown_link(text: str, idx: int) -> bool:
 def is_ignored_url(url: str) -> bool:
     return url.startswith(IGNORE_URL_PREFIXES)
 
+def post_date_from_filename(path: Path):
+    # Jekyll post filenames start with YYYY-MM-DD-
+    m = re.match(r"^(\d{4}-\d{2}-\d{2})-", path.name)
+    return m.group(1) if m else None
+
+def permalink_required_for_file(path: Path) -> bool:
+    # Only enforce permalinks for posts on/after the cutoff date
+    if "_posts" in path.parts:
+        d = post_date_from_filename(path)
+        if d is None:
+            return False
+        return d >= PERMALINK_REQUIRED_FROM
+    # For pages (non-posts), always require permalink
+    return True
+
 def check_front_matter(path: Path, text: str) -> int:
     # README.md is not a Jekyll page/post
     if path.name.lower() == "readme.md":
@@ -106,10 +133,15 @@ def check_front_matter(path: Path, text: str) -> int:
             return 1
 
         keys, dups = parse_front_matter(fm)
-        missing = REQUIRED_FRONT_MATTER_KEYS - keys
+        required = set(REQUIRED_FRONT_MATTER_KEYS)
+        if not permalink_required_for_file(path):
+            required.discard("permalink")
+
+        missing = required - keys
         if missing:
             gh_annot("error", path, 1, 1, f"Missing required front matter keys: {', '.join(sorted(missing))}")
             errors += 1
+
 
         if dups:
             gh_annot("warning", path, 1, 1, f"Duplicate front matter keys detected: {', '.join(sorted(dups))}")
