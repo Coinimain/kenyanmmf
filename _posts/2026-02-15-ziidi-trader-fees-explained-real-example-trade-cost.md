@@ -12,7 +12,7 @@ image_alt: "Ziidi Trader fees: the real cost — trade cost examples and break-e
 image_title: "Ziidi Trader Fees: The Real Cost (2026)"
 image_caption: "Ziidi Trader fees explained with real trade cost examples and a break-even rule."
 image_credit: "Kenya MMF Calculator"
-image_credit_url: "https://kenyammfcalculator.co.ke/"
+image_credit_url: "[kenyammfcalculator.co.ke](https://kenyammfcalculator.co.ke/)"
 image_copyright: "© Kenya MMF Calculator"
 image_license: "All rights reserved"
 
