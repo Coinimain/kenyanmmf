@@ -304,3 +304,13 @@ Ziidi Trader Safaricom represents one of the most significant retail investing d
 By embedding NSE trading inside M-PESA, it transforms capital markets access, simplifies participation, removes friction, and expands opportunity.
 
 However, it does not remove risk. Understanding how Ziidi Trader works is essential. Learn the mechanics, start small, diversify, and think long-term..
+
+## FAQ
+
+{% for item in page.faq %}
+<details>
+  <summary><strong>{{ item.q }}</strong></summary>
+  <p>{{ item.a }}</p>
+</details>
+{% endfor %}
+
