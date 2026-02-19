@@ -10,6 +10,12 @@ tags: [ipo, equities, capital-markets, investing, nse]
 </p>
 
 ---
+<div style="border-left: 4px solid #1a73e8; background:#f5f9ff; padding:1rem; margin:1.5rem 0; font-size:0.95rem;">
+  <strong>Update (February 19, 2026):</strong> The Kenya Pipeline IPO has now been officially extended following slower-than-expected subscription levels. 
+  <a href="/blog/kenya-pipeline-ipo-extended-analysis" style="font-weight:600;">
+    Read our full extension analysis and valuation update →
+  </a>
+</div>
 
 ## IPO status as of February 3, 2026
 
