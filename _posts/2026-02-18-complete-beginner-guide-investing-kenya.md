@@ -13,7 +13,7 @@ tags:
   - nse trading kenya
 permalink: /blog/complete-beginner-guide-to-investing-in-kenya/
 description: "A complete 2026 beginner guide to investing in Kenya. Learn how to invest in MMFs, NSE shares, Treasury Bills, Bonds, and REITs step-by-step with low starting capital."
-image: /assets/images/complete-beginner-guide-investing-kenya-2026.png
+image: /assets/images/complete-beginner-guide-investing-kenya-2026.jpg
 image_alt: "Beginner guide to investing in Kenya (2026) — MMFs, shares, bonds, and REITs explained step-by-step"
 image_caption: "Beginner Guide to Investing in Kenya (2026): MMFs, NSE shares, Treasury bonds, and REITs."
 image_source_name: "Kenya MMF Calculator"

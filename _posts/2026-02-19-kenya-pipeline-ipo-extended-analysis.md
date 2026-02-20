@@ -11,7 +11,7 @@ tags:
   - kpc valuation
 description: "Kenya Pipeline IPO has been extended amid slower subscription at KSh 9.00. Is KPC overpriced? Here’s what the extension means for investors and the NSE."
 permalink: /blog/kenya-pipeline-ipo-extended-analysis
-image: /assets/images/kenya-pipeline-ipo-extended-kpc-overpriced-9-1600x900.png
+image: /assets/images/kenya-pipeline-ipo-extended-kpc-overpriced-9-1600x900.jpg
 image_alt: "Kenya Pipeline IPO Extended: Is KPC Overpriced at KSh 9? NSE valuation analysis"
 image_caption: "Kenya Pipeline IPO Extended: Valuation debate around KSh 9 offer price."
 image_source_name: "Kenya MMF Calculator"
