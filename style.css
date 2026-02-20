@@ -39,7 +39,7 @@ img {
 /* =========================
    Header & Navigation
    ========================= */
-header {
+.site-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,7 +51,7 @@ header {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-header h1 {
+.site-header h1 {
   margin: 0;
   font-size: 1.5em;
 }
@@ -111,7 +111,7 @@ nav .nav-links a.faq-link:hover { background-color: #45a049; }
 
 /* Mobile (<=768px) */
 @media (max-width: 768px){
-  header { flex-direction: column; align-items: flex-start; }
+  .site-header { flex-direction: column; align-items: flex-start; }
   .nav-toggle { display: inline-flex !important; }
   nav { position: relative; }
 
@@ -998,3 +998,4 @@ a.btn-primary:visited{
   font-size: 0.9rem;
   color: #666;
 }
+
