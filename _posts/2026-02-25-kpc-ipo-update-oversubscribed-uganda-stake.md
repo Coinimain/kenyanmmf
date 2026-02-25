@@ -30,7 +30,7 @@ The offer period ran for weeks and was **extended by three working days** to all
 
 Now that the window has closed, the market’s focus shifts from “did it sell?” to **who got what, and what happens next**.
 If you want the deeper background and valuation debate, see the earlier pieces here:
-- [KPC IPO risks & benefits](/blog/kenya-pipeline-ipo-risks-benefits/)
+- [KPC IPO risks & benefits](/2026/02/03/kenya-pipeline-ipo-risks-benefits.html)
 - [KPC IPO extended analysis](/blog/kenya-pipeline-ipo-extended-analysis/)
 
 ## Oversubscription: good headline, but it changes your allocation
