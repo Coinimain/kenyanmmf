@@ -19,13 +19,15 @@ image_license: "Original graphic © Kenya MMF Calculator"
 
 ---
 
-The **Kenya Pipeline IPO** has officially been extended after slower-than-expected subscription at the offer price of **KSh 9.00 per share**.
+The **Kenya Pipeline IPO** was officially extended after slower-than-expected subscription at the offer price of **KSh 9.00 per share** - a move that intensified debate over whether the **KPC IPO price was too high** heading into the Nairobi Securities Exchange (NSE) listing.
 
-The move has intensified debate over whether the **KPC IPO price is too high** - and what that means for investors ahead of the Nairobi Securities Exchange (NSE) listing.
+Since then, the story has moved fast: the offer has now **hit the Sh106.3B target and is being reported as oversubscribed**, with demand described as heavily **institution-led**, and Uganda (via UNOC) securing a **20.15% strategic stake** in the deal.
 
-If you need the full breakdown of the offer structure, risks and benefits, read our original analysis first: **[Kenya Pipeline IPO: Risks and Benefits Explained](/2026/02/03/kenya-pipeline-ipo-risks-benefits.html)**
+If you need the full breakdown of the offer structure, risks, and valuation debate, start here: **[Kenya Pipeline IPO: Risks and Benefits Explained](/blog/kenya-pipeline-ipo-risks-benefits/)**
 
-This update focuses on the extension - and what IPO extensions usually signal.
+And for the latest “what happened after the extension” update - including what oversubscription means for allocation/refunds and what to expect next, read: **[KPC IPO Update: Offer Hits Sh106.3B Target, Oversubscribed as Uganda Locks 20.15% Stake](/blog/kpc-ipo-update-oversubscribed-uganda-stake/)**
+
+It explains **why the extension happened**, what extensions usually signal, and why the outcome matters even now that the IPO has closed.
 
 ---
 
@@ -114,13 +116,16 @@ Will the market support **KSh 9.00**, or will price discovery happen after listi
 
 An IPO extension does not mean Kenya Pipeline is a weak business.
 
-It does mean there is friction between **price and demand**.
+It means there was friction between **price and demand** at **KSh 9.00** - and that investors (especially large institutions) took longer to commit at the valuation.
 
-For investors, the decision is straightforward:
+Now that the offer has **closed** and is being reported as **fully subscribed / oversubscribed**, the question shifts from “will it sell?” to:
 
-- Buy now if you are comfortable with the valuation and focused on dividend income.  
-- Wait for listing if you believe the KPC share price may adjust lower.
+- **Who got allocated shares (and how much)?**
+- **How quickly will refunds be processed for unallocated amounts?**
+- **What will liquidity and price discovery look like once trading starts?**
 
-For full background analysis, read: **[Kenya Pipeline IPO: Risks and Benefits Explained](/2026/02/03/kenya-pipeline-ipo-risks-benefits.html)**
+For the full background analysis, read: **[Kenya Pipeline IPO: Risks and Benefits Explained](/blog/kenya-pipeline-ipo-risks-benefits/)**
 
-We will update this page as new KPC IPO subscription data becomes available.
+For the latest update, including oversubscription context, Uganda’s **20.15%** stake, and what investors should expect around **allocation and listing timelines**, read: **[KPC IPO Update: Offer Hits Sh106.3B Target, Oversubscribed as Uganda Locks 20.15% Stake](/blog/kpc-ipo-update-oversubscribed-uganda-stake/)**
+
+We’ll continue updating coverage as official **allocation results**, **refund processing**, and **NSE trading** details are confirmed.
