@@ -23,7 +23,7 @@ The **Kenya Pipeline IPO** was officially extended after slower-than-expected su
 
 Since then, the story has moved fast: the offer has now **hit the Sh106.3B target and is being reported as oversubscribed**, with demand described as heavily **institution-led**, and Uganda (via UNOC) securing a **20.15% strategic stake** in the deal.
 
-If you need the full breakdown of the offer structure, risks, and valuation debate, start here: **[Kenya Pipeline IPO: Risks and Benefits Explained](/blog/kenya-pipeline-ipo-risks-benefits/)**
+If you need the full breakdown of the offer structure, risks, and valuation debate, start here: **[Kenya Pipeline IPO: Risks and Benefits Explained](/2026/02/03/kenya-pipeline-ipo-risks-benefits.html)**
 
 And for the latest “what happened after the extension” update - including what oversubscription means for allocation/refunds and what to expect next, read: **[KPC IPO Update: Offer Hits Sh106.3B Target, Oversubscribed as Uganda Locks 20.15% Stake](/blog/kpc-ipo-update-oversubscribed-uganda-stake/)**
 
@@ -124,7 +124,7 @@ Now that the offer has **closed** and is being reported as **fully subscribed / 
 - **How quickly will refunds be processed for unallocated amounts?**
 - **What will liquidity and price discovery look like once trading starts?**
 
-For the full background analysis, read: **[Kenya Pipeline IPO: Risks and Benefits Explained](/blog/kenya-pipeline-ipo-risks-benefits/)**
+For the full background analysis, read: **[Kenya Pipeline IPO: Risks and Benefits Explained](/2026/02/03/kenya-pipeline-ipo-risks-benefits.html)**
 
 For the latest update, including oversubscription context, Uganda’s **20.15%** stake, and what investors should expect around **allocation and listing timelines**, read: **[KPC IPO Update: Offer Hits Sh106.3B Target, Oversubscribed as Uganda Locks 20.15% Stake](/blog/kpc-ipo-update-oversubscribed-uganda-stake/)**
 
