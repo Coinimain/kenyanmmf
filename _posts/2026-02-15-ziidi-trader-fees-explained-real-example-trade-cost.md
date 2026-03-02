@@ -168,4 +168,7 @@ Key takeaways:
 - Trade during market hours
 - Start small, then scale with experience
 
+**New:** Dividend investing guide — why Ziidi Trader fits long-term income better than day trading:  
+[Dividend Investing on the NSE: Why Ziidi Trader Works for Income (and Fights Day Trading)](/blog/ziidi-trader-dividend-investing-nse/)
+
 Related: [Ziidi Trader vs Money Market Funds in Kenya]({{ '/blog/ziidi-trader-vs-money-market-funds-kenya/' | relative_url }})
