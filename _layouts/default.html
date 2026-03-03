@@ -170,7 +170,7 @@
   </style>
 
   <!-- Main CSS (non-blocking load) -->
-  {% assign cssv = "20260303" %}
+  {% assign cssv = "20260304" %}
   <link rel="preload" as="style" href="{{ '/style.css' | relative_url }}?v={{ cssv }}">
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}"></noscript>

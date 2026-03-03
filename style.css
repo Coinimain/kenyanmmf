@@ -1062,69 +1062,59 @@ a.btn-primary:visited{
 }
 
 
-/* ========== Post categories (inside blog posts) ========== */
+/* Post categories: minimal inline row (no box) */
 .post-categories{
-  margin-top: 14px;
-  padding: 10px 12px;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 14px;
-  background: rgba(0,0,0,0.02);
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  gap: 10px;
+  align-items: center;
   flex-wrap: wrap;
 }
 
 .post-categories__label{
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: .2px;
-  opacity: .85;
-  padding-top: 7px;
+  opacity: .75;
+  padding: 0;
   white-space: nowrap;
 }
 
 .post-categories__list{
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
   align-items: center;
+  gap: 0; /* separators handle spacing */
 }
 
 .post-categories__chip{
-  display: inline-flex !important;
-  align-items: center !important;
-  padding: 7px 12px !important;
-  border-radius: 999px !important;
-  border: 1px solid rgba(0,0,0,0.10) !important;
-  background: #fff !important;
-  text-decoration: none !important;
-  line-height: 1.15 !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
   font-size: 13px !important;
+  text-decoration: none !important;
   opacity: .95;
-  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
 }
 
 .post-categories__chip:hover{
-  transform: translateY(-1px);
-  border-color: rgba(0,0,0,0.16) !important;
-  background: rgba(0,0,0,0.02) !important;
+  text-decoration: underline !important;
+  transform: none !important;
 }
 
+/* dot divider between items */
+.post-categories__chip:not(:last-child)::after{
+  content: " | ";
+  opacity: .45;
+  margin: 0 8px;
+}
+
+/* make "All categories" look like a normal link */
 .post-categories__chip--all{
   font-weight: 700;
-  border-color: rgba(46,125,50,0.28) !important;
-  background: rgba(46,125,50,0.06) !important;
-}
-
-@media (max-width: 560px){
-  .post-categories{
-    padding: 10px;
-  }
-  .post-categories__label{
-    width: 100%;
-    padding-top: 0;
-  }
 }
 
 
