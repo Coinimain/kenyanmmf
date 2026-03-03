@@ -170,7 +170,7 @@
   </style>
 
   <!-- Main CSS (non-blocking load) -->
-  {% assign cssv = "20260221" %}
+  {% assign cssv = "20260303" %}
   <link rel="preload" as="style" href="{{ '/style.css' | relative_url }}?v={{ cssv }}">
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}"></noscript>
@@ -211,7 +211,10 @@
 </head>
 
 <body>
-  {% unless page.layout == 'post' or page.url == '/blog/' or page.url contains '/blog/' %}
+  {% unless page.no_site_header
+    or page.layout == 'post'
+    or page.url == '/blog/' or page.url contains '/blog/'
+    or page.url == '/categories/' or page.url contains '/category/' %}
     {% include header.html %}
   {% endunless %}
 
@@ -219,7 +222,10 @@
 
   {% include footer.html %}
 
-  {% unless page.layout == 'post' or page.url == '/blog/' or page.url contains '/blog/' %}
+  {% unless page.no_site_header
+    or page.layout == 'post'
+    or page.url == '/blog/' or page.url contains '/blog/'
+    or page.url == '/categories/' or page.url contains '/category/' %}
     <script src="{{ '/main.js' | relative_url }}" defer></script>
   {% endunless %}
 

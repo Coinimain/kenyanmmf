@@ -7,7 +7,7 @@ title: "Ziidi Trader vs Money Market Funds in Kenya: Which Is Better for New Inv
 date: 2026-02-06
 
 description: "A clear comparison of Ziidi Trader and money market funds in Kenya, covering risk, returns, liquidity, and which option suits different investors."
-
+categories: [investing, nse]
 tags: [ziidi-trader, money-market-funds, investing, mpesa, kenya]
 
 permalink: /blog/ziidi-trader-vs-money-market-funds-kenya/

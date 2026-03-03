@@ -7,7 +7,7 @@ title: "Money Market Funds in Kenya (2026 Guide): How MMFs Work, Current Yields,
 date: 2026-02-05
 
 description: "A practical 2026 guide to money market funds (MMFs) in Kenya—how they work, what drives yields, key risks, and a checklist for choosing the right fund."
-
+categories: [investing]
 tags: [mmf, unit-trusts, savings, t-bills]
 
 ---

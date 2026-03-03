@@ -7,7 +7,7 @@ title: "Ziidi Trader by Safaricom: How M-PESA Is Opening the NSE to Everyday Inv
 date: 2026-02-06
 
 description: "Ziidi Trader allows Kenyans to buy and sell NSE shares directly from M-PESA, removing CDS barriers, lowering costs, and reshaping retail investing."
-
+categories: [investing, nse]
 tags: [ziidi-trader, safaricom, mpesa, nse, investing]
 
 permalink: /blog/ziidi-trader-safaricom-mpesa-nse-kenya/

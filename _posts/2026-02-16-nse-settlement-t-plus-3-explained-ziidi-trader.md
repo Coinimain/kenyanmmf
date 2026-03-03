@@ -3,9 +3,7 @@ layout: post
 title: "NSE Settlement Explained: What T+3 Means (and Why Ziidi Trader Won’t Trade on Weekends)"
 description: "A plain-English guide to how NSE trades actually settle after you click Buy/Sell in Ziidi Trader—what T+3 means, what happens between trade date and settlement, and the common reasons Ziidi Trader shows “not working” (like weekends and market hours)."
 permalink: /blog/nse-settlement-t-plus-3-explained-ziidi-trader/
-categories:
-  - Investing
-  - Stocks
+categories: [investing, stocks]
 tags:
   - nse settlement
   - t+3 meaning

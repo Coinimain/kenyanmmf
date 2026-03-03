@@ -47,6 +47,28 @@ layout: default
       {% if page.date %}
         <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
       {% endif %}
+
+      {%- comment -%} Blog categories (appears on blog posts only) {%- endcomment -%}
+      {% if page.categories and page.categories.size > 0 %}
+        <nav class="post-categories" aria-label="Post categories">
+          <span class="post-categories__label">Categories</span>
+
+          <div class="post-categories__list">
+            {% for cat in page.categories %}
+              {% assign slug = cat | slugify %}
+              <a class="post-categories__chip"
+                 href="{{ '/category/' | append: slug | append: '/' | relative_url }}">
+                {{ cat | replace: '-', ' ' }}
+              </a>
+            {% endfor %}
+
+            <a class="post-categories__chip post-categories__chip--all"
+               href="{{ '/categories/' | relative_url }}">
+              All categories
+            </a>
+          </div>
+        </nav>
+      {% endif %}
     </header>
 
     {% if page.image %}

@@ -1,0 +1,26 @@
+{% comment %}
+Blog-only categories navigation.
+Requires category archive pages at /category/<slug>/.
+Toggle with: show_blog_categories: true
+{% endcomment %}
+
+{% assign cats = site.categories | sort %}
+{% if cats and cats.size > 0 %}
+  <nav class="blog-categories" aria-label="Blog categories">
+    <div class="blog-categories__label">Browse:</div>
+    <div class="blog-categories__list">
+      <a class="blog-categories__chip" href="{{ '/blog/' | relative_url }}">All</a>
+
+      {% for c in cats %}
+        {% assign name = c[0] %}
+        {% assign count = c[1].size %}
+        {% assign slug = name | slugify %}
+        <a class="blog-categories__chip"
+           href="{{ '/category/' | append: slug | append: '/' | relative_url }}">
+          {{ name | replace: '-', ' ' }}
+          <span class="blog-categories__count">{{ count }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </nav>
+{% endif %}

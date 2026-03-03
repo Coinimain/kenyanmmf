@@ -999,3 +999,284 @@ a.btn-primary:visited{
   color: #666;
 }
 
+/* ========== Blog category bar (blog index) ========== */
+.blog-categories{
+  margin: 18px 0 22px;
+  padding: 12px 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.02);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.blog-categories__label{
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .2px;
+  opacity: .85;
+  padding-top: 7px;
+  white-space: nowrap;
+}
+
+.blog-categories__list{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.blog-categories__chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 999px;
+  background: #fff;
+  text-decoration: none !important;
+  line-height: 1.15;
+  font-size: 13px;
+  opacity: .95;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.blog-categories__chip:hover{
+  transform: translateY(-1px);
+  border-color: rgba(0,0,0,0.16);
+  background: rgba(0,0,0,0.02);
+}
+
+.blog-categories__count{
+  font-size: 12px;
+  opacity: .7;
+}
+
+@media (max-width: 560px){
+  .blog-categories__label{
+    width: 100%;
+    padding-top: 0;
+  }
+}
+
+
+/* ========== Post categories (inside blog posts) ========== */
+.post-categories{
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 14px;
+  background: rgba(0,0,0,0.02);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.post-categories__label{
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .2px;
+  opacity: .85;
+  padding-top: 7px;
+  white-space: nowrap;
+}
+
+.post-categories__list{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.post-categories__chip{
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 7px 12px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(0,0,0,0.10) !important;
+  background: #fff !important;
+  text-decoration: none !important;
+  line-height: 1.15 !important;
+  font-size: 13px !important;
+  opacity: .95;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.post-categories__chip:hover{
+  transform: translateY(-1px);
+  border-color: rgba(0,0,0,0.16) !important;
+  background: rgba(0,0,0,0.02) !important;
+}
+
+.post-categories__chip--all{
+  font-weight: 700;
+  border-color: rgba(46,125,50,0.28) !important;
+  background: rgba(46,125,50,0.06) !important;
+}
+
+@media (max-width: 560px){
+  .post-categories{
+    padding: 10px;
+  }
+  .post-categories__label{
+    width: 100%;
+    padding-top: 0;
+  }
+}
+
+
+/* ========== Categories hub ( /categories/ ) ========== */
+.cat-grid{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 16px 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 900px){
+  .cat-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px){
+  .cat-grid{ grid-template-columns: 1fr; }
+}
+
+.cat-card{
+  display: block;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: #fff;
+  text-decoration: none !important;
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.cat-card:hover{
+  transform: translateY(-2px);
+  border-color: rgba(0,0,0,0.16);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.cat-card__top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.cat-card__title{
+  font-weight: 800;
+  font-size: 18px;
+  color: #111;
+  text-transform: capitalize;
+}
+
+.cat-card__count{
+  min-width: 34px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(0,0,0,0.04);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #111;
+}
+
+.cat-card__desc{
+  color: #555;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+
+/* ========== Blog card excerpt clamp (blog + category pages) ========== */
+.blog-card__excerpt{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* ========== Match blog card typography inside category pages ========== */
+.category-page .blog-card__title{
+  font-size: 16px;
+  line-height: 1.25;
+  margin: 6px 0 8px;
+}
+
+@media (min-width: 900px){
+  .category-page .blog-card__title{ font-size: 18px; }
+}
+
+.category-page .blog-card__meta{
+  font-size: 12px;
+}
+
+.category-page .blog-card__excerpt{
+  font-size: 14px;
+}
+
+/* More breathing room on category pages */
+.category-page .blog-grid{
+  gap: 18px;
+}
+
+.category-page .blog-card{
+  padding: 18px;
+}
+
+@media (max-width: 560px){
+  .category-page .blog-grid{ gap: 14px; }
+  .category-page .blog-card{ padding: 16px; }
+}
+
+/* Category pages: increase spacing BETWEEN cards */
+.category-page .blog-grid{
+  display: grid;                 /* enforce (in case it’s being overridden) */
+  grid-template-columns: 1fr;    /* mobile default */
+  row-gap: 18px;                 /* vertical spacing */
+  column-gap: 18px;              /* if you later go to 2 columns */
+}
+
+@media (min-width: 900px){
+  .category-page .blog-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* extra safety in case something still stacks too tight */
+.category-page .blog-card{
+  margin: 0; /* avoid weird margin-collapsing */
+}
+
+.cats-nav{
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 10px 16px 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Add " | " separators between featured topic links */
+.featured-cats__list .featured-cats__chip{
+  position: relative;
+  padding-right: 14px;
+}
+
+.featured-cats__list .featured-cats__chip:not(:last-child):not(.featured-cats__chip--money):not(.featured-cats__chip--all)::after{
+  content: " | ";
+  position: absolute;
+  right: 4px;
+  opacity: 0.45;
+}

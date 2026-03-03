@@ -3,9 +3,7 @@ layout: post
 title: "How to Evaluate a REIT Before Investing: A Practical Guide for Kenyan Investors"
 description: "A clear, practical guide to evaluating a Kenyan REIT before investing covering occupancy, debt, fees, distributions, and what really matters."
 permalink: /how-to-evaluate-a-reit-before-investing/
-categories:
-  - Investing
-  - Real Estate
+categories: [investing, real-estate]
 tags:
   - reits kenya
   - evaluating reits

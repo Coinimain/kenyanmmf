@@ -12,6 +12,28 @@ last_modified_at: "2026-03-02"
   <h1>Blog</h1>
   <p>Practical guides and updates on money market funds, savings, and personal finance in Kenya.</p>
 
+  <!-- Featured categories strip (curated) -->
+  <nav class="featured-cats" aria-label="Featured categories">
+    <div class="featured-cats__label">Popular Topics</div>
+    <div class="featured-cats__list">
+      <a class="featured-cats__chip" href="{{ '/category/investing/' | relative_url }}">Investing</a>
+      <a class="featured-cats__chip" href="{{ '/category/nse/' | relative_url }}">NSE</a>
+      <a class="featured-cats__chip" href="{{ '/category/stocks/' | relative_url }}">Stocks</a>
+      <a class="featured-cats__chip" href="{{ '/category/fixed-income/' | relative_url }}">Fixed Income</a>
+      <a class="featured-cats__chip" href="{{ '/category/tax/' | relative_url }}">Tax</a>
+
+      <a class="featured-cats__chip featured-cats__chip--money"
+         href="{{ '/category/money-transfers/' | relative_url }}">
+        Money Transfers
+      </a>
+
+      <a class="featured-cats__chip featured-cats__chip--all"
+         href="{{ '/categories/' | relative_url }}">
+        All categories
+      </a>
+    </div>
+  </nav>
+
   <hr class="blog-divider" />
 
   {% if site.posts.size == 0 %}
@@ -23,7 +45,6 @@ last_modified_at: "2026-03-02"
         {% assign words = post.content | strip_html | number_of_words %}
         {% assign minutes = words | plus: 199 | divided_by: 200 %}
         {% if minutes < 1 %}{% assign minutes = 1 %}{% endif %}
-
 
         <a class="blog-card {% if forloop.first %}blog-card--featured{% endif %}" href="{{ post.url }}">
           <div class="blog-card-top">

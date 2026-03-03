@@ -16,9 +16,7 @@ image_credit_url: "[kenyammfcalculator.co.ke](https://kenyammfcalculator.co.ke/)
 image_copyright: "© Kenya MMF Calculator"
 image_license: "All rights reserved"
 
-categories:
-  - Investing
-  - Stocks
+categories: [investing, stocks, nse]
 tags:
   - ziidi trader fees
   - ziidi trader cost

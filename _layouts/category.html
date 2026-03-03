@@ -1,0 +1,59 @@
+---
+layout: default
+---
+
+<main class="blog-wrap category-page">
+  <header class="blog-header">
+    <h1 class="blog-title">{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="blog-subtitle">{{ page.description }}</p>
+    {% endif %}
+
+    <div style="margin-top:14px">
+      <a class="post-categories__chip post-categories__chip--all"
+         href="{{ '/categories/' | relative_url }}">All categories</a>
+      <a class="post-categories__chip"
+         href="{{ '/blog/' | relative_url }}">Back to Blog</a>
+    </div>
+  </header>
+
+  {% assign cat = page.category %}
+  {% assign posts = site.categories[cat] %}
+
+  {% if posts and posts.size > 0 %}
+    <section class="blog-grid" aria-label="Posts in category">
+      {% for post in posts %}
+        <article class="blog-card">
+          <div class="blog-card__meta">
+            <span>{{ post.date | date: "%B %d, %Y" }}</span>
+            {% if post.read_time %}<span> • {{ post.read_time }} min read</span>{% endif %}
+          </div>
+
+          <h2 class="blog-card__title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+
+          {% if post.description %}
+            <p class="blog-card__excerpt">
+              {{ post.description | strip_html | strip_newlines | truncate: 140 }}
+            </p>
+          {% else %}
+            <p class="blog-card__excerpt">
+              {{ post.excerpt | strip_html | strip_newlines | truncate: 140 }}
+            </p>
+          {% endif %}
+
+          {% if post.tags and post.tags.size > 0 %}
+            <div class="post-tags">
+              {% for t in post.tags %}
+                <span class="tag">{{ t }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </section>
+  {% else %}
+    <p style="margin-top:16px">No posts in this category yet.</p>
+  {% endif %}
+</main>

@@ -5,7 +5,7 @@ description: "A neutral, in-depth guide to REITs in Kenya—how they work, regul
 date: 2026-02-09
 permalink: /kenya-reits-investment-guide/
 tags: [reits, real-estate, investing, nse, capital-markets, dividends]
-categories: [Investing, Real-Estate]
+categories: [investing, real-estate]
 last_modified_at: 2026-02-09
 ---
 
