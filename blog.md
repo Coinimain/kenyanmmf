@@ -14,24 +14,32 @@ last_modified_at: "2026-03-03"
 
   <!-- Featured categories strip (curated) -->
   <nav class="featured-cats" aria-label="Featured categories">
-    <div class="featured-cats__label">Popular Topics</div>
-    <div class="featured-cats__list">
-      <a class="featured-cats__chip" href="{{ '/category/investing/' | relative_url }}">Investing</a>
-      <a class="featured-cats__chip" href="{{ '/category/nse/' | relative_url }}">NSE</a>
-      <a class="featured-cats__chip" href="{{ '/category/stocks/' | relative_url }}">Stocks</a>
-      <a class="featured-cats__chip" href="{{ '/category/fixed-income/' | relative_url }}">Fixed Income</a>
-      <a class="featured-cats__chip" href="{{ '/category/tax/' | relative_url }}">Tax</a>
+    <div class="featured-cats__label">Popular Topics:</div>
+<div class="featured-cats__list">
+  <a class="featured-cats__chip" href="{{ '/category/investing/' | relative_url }}">Investing</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
 
-      <a class="featured-cats__chip featured-cats__chip--money"
-         href="{{ '/category/money-transfers/' | relative_url }}">
-        Money Transfers
-      </a>
+  <a class="featured-cats__chip" href="{{ '/category/nse/' | relative_url }}">NSE</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
 
-      <a class="featured-cats__chip featured-cats__chip--all"
-         href="{{ '/categories/' | relative_url }}">
-        All categories
-      </a>
-    </div>
+  <a class="featured-cats__chip" href="{{ '/category/stocks/' | relative_url }}">Stocks</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
+
+  <a class="featured-cats__chip" href="{{ '/category/fixed-income/' | relative_url }}">Fixed Income</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
+
+  <a class="featured-cats__chip" href="{{ '/category/tax/' | relative_url }}">Tax</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
+
+  <a class="featured-cats__chip featured-cats__chip--money"
+     href="{{ '/category/money-transfers/' | relative_url }}">Money Transfers</a>
+  <span class="featured-sep" aria-hidden="true">|</span>
+  
+  <a class="featured-cats__chip featured-cats__chip--all"
+     href="{{ '/categories/' | relative_url }}">
+    All Categories
+  </a>
+</div>
   </nav>
 
   <hr class="blog-divider" />

@@ -1109,7 +1109,14 @@ a.btn-primary:visited{
 .post-categories__chip:not(:last-child)::after{
   content: " | ";
   opacity: .45;
-  margin: 0 8px;
+  margin: 0 3px;
+}
+
+/* Reliable separators that wrap correctly */
+.featured-sep{
+  opacity: 0.45;
+  margin: 0 3px;
+  line-height: 1.15;
 }
 
 /* make "All categories" look like a normal link */
@@ -1259,14 +1266,14 @@ a.btn-primary:visited{
 }
 
 /* Add " | " separators between featured topic links */
-.featured-cats__list .featured-cats__chip{
+/*.featured-cats__list .featured-cats__chip{
   position: relative;
   padding-right: 14px;
-}
+} 
 
 .featured-cats__list .featured-cats__chip:not(:last-child):not(.featured-cats__chip--money):not(.featured-cats__chip--all)::after{
   content: " | ";
   position: absolute;
   right: 4px;
   opacity: 0.45;
-}
+}  */
