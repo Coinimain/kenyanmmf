@@ -30,8 +30,8 @@ Sending money to Kenya is easy. Sending it **cheaply** is the tricky part. The �
 ## The 30-Second Rule: How To Pick The Best Option
 
 When comparing providers, ignore the headline like “$0 fee” until you check two numbers:
-1) **Total amount your recipient gets in KSh**  
-2) **How you’re paying** (bank transfer vs card) and **how they receive** (M-Pesa vs bank vs cash)
+1. **Total amount your recipient gets in KSh**  
+2. **How you’re paying** (bank transfer vs card) and **how they receive** (M-Pesa vs bank vs cash)
 
 If Provider A charges a small fee but uses a better exchange rate, it can still beat Provider B with “no fee” but a worse rate.
 
