@@ -103,6 +103,9 @@
       https://cdn.jsdelivr.net
       https://open.er-api.com
       https://cdn-cookieyes.com;
+      https://www.google-analytics.com
+      https://region1.google-analytics.com
+      https://analytics.google.com;
 
     frame-src 'self';
     child-src 'self';
@@ -208,6 +211,9 @@
   }
   </script>
   {% endif %}
+  
+<!-- Google tag (gtag.js) -->
+{% include ga4.html %}
 </head>
 
 <body>
