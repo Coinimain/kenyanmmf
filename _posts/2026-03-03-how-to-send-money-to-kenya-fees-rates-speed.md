@@ -5,7 +5,7 @@ description: "A practical, no-fluff guide to sending money to Kenya: compare fee
 permalink: /blog/how-to-send-money-to-kenya-fees-rates-speed/
 date: 2026-03-03
 last_modified_at: "2026-03-03"
-categories: [money-transfers]
+categories: [remittances]
 tags:
   - money transfers
   - send money to kenya

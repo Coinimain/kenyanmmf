@@ -32,7 +32,7 @@ last_modified_at: "2026-03-03"
   <span class="featured-sep" aria-hidden="true">|</span>
 
   <a class="featured-cats__chip featured-cats__chip--money"
-     href="{{ '/category/money-transfers/' | relative_url }}">Money Transfers</a>
+     href="{{ '/category/remittances/' | relative_url }}">Remittances</a>
   <span class="featured-sep" aria-hidden="true">|</span>
   
   <a class="featured-cats__chip featured-cats__chip--all"
