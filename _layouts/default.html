@@ -1,26 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% assign site_name = "Kenya MMF Calculator" %}
+  {% assign site_url = "https://kenyammfcalculator.co.ke" %}
+  {% assign page_title = page.title | default: site_name %}
+  {% assign page_description = page.description | default: "Tools and guides for money market funds and personal finance in Kenya." %}
+  {% assign canonical_path = page.url | replace: 'index.html', '' %}
+  {% assign canonical_url = site_url | append: canonical_path %}
+  {% assign social_image_alt = page.image_alt | default: page_title %}
+  {% assign show_site_header = true %}
+  {% if page.no_site_header or page.layout == 'post' or page.url == '/blog/' or page.url contains '/blog/' or page.url == '/categories/' or page.url contains '/category/' %}
+    {% assign show_site_header = false %}
+  {% endif %}
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Preconnects (reduce DNS/TLS cost on mobile) -->
+  <!-- Preconnects -->
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="//cdn-cookieyes.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
 
-  <!-- ADS DISABLED: commenting out ad-related preconnects -->
-  <!--
   {% unless page.no_ads %}
   <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
   <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossorigin>
+  <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="//googleads.g.doubleclick.net">
   <link rel="dns-prefetch" href="//tpc.googlesyndication.com">
   {% endunless %}
-  -->
-
-  <link rel="dns-prefetch" href="//cdn-cookieyes.com">
 
   <!-- Content Security Policy -->
-  <!-- ADS DISABLED: commenting out the ads CSP block -->
-  <!--
   {% unless page.no_ads %}
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
@@ -38,12 +48,12 @@
       'unsafe-inline'
       https://cdn.jsdelivr.net
       https://cdn-cookieyes.com
+      https://www.googletagmanager.com
       https://pagead2.googlesyndication.com
       https://securepubads.g.doubleclick.net
       https://www.googletagservices.com
       https://tpc.googlesyndication.com
       https://googleads.g.doubleclick.net
-      https://www.googletagmanager.com
       https://ep2.adtrafficquality.google;
 
     connect-src
@@ -52,14 +62,14 @@
       https://cdn.jsdelivr.net
       https://open.er-api.com
       https://cdn-cookieyes.com
+      https://www.google-analytics.com
+      https://region1.google-analytics.com
+      https://analytics.google.com
       https://pagead2.googlesyndication.com
       https://securepubads.g.doubleclick.net
       https://googleads.g.doubleclick.net
       https://adservice.google.com
       https://adservice.google.co.ke
-      https://www.google-analytics.com
-      https://region1.google-analytics.com
-      https://analytics.google.com
       https://ep1.adtrafficquality.google
       https://ep2.adtrafficquality.google;
 
@@ -77,9 +87,7 @@
 
     upgrade-insecure-requests;
   " />
-  {% endunless %}
-  -->
-  {% if page.no_ads %}
+  {% else %}
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
     base-uri 'self';
@@ -95,14 +103,15 @@
       'self'
       'unsafe-inline'
       https://cdn.jsdelivr.net
-      https://cdn-cookieyes.com;
+      https://cdn-cookieyes.com
+      https://www.googletagmanager.com;
 
     connect-src
       'self'
       https://formspree.io
       https://cdn.jsdelivr.net
       https://open.er-api.com
-      https://cdn-cookieyes.com;
+      https://cdn-cookieyes.com
       https://www.google-analytics.com
       https://region1.google-analytics.com
       https://analytics.google.com;
@@ -112,44 +121,41 @@
 
     upgrade-insecure-requests;
   " />
-  {% endif %}
+  {% endunless %}
 
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Referrer-Policy" content="no-referrer" />
-  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <title>{% if page.title %}{{ page.title }} | {% endif %}Kenya MMF Calculator</title>
-  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
-
-  <!-- UPDATED ROBOTS -->
+  <title>{{ page_title }}{% unless page_title == site_name %} | {{ site_name }}{% endunless %}</title>
+  <meta name="description" content="{{ page_description | escape }}" />
   <meta name="robots" content="{{ page.robots | default: 'index, follow' }}, max-image-preview:large" />
-
   <meta name="theme-color" content="#2E7D32" />
 
   <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon" />
-  <link rel="canonical" href="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
+  <link rel="canonical" href="{{ canonical_url }}" />
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:site_name" content="Kenya MMF Calculator" />
+  <meta property="og:site_name" content="{{ site_name }}" />
   <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
-  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}Kenya MMF Calculator{% endif %}" />
-  <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
-  <meta property="og:url" content="https://kenyammfcalculator.co.ke{{ page.url | replace:'index.html','' }}" />
+  <meta property="og:title" content="{{ page_title | escape }}" />
+  <meta property="og:description" content="{{ page_description | escape }}" />
+  <meta property="og:url" content="{{ canonical_url }}" />
 
   {% if page.image %}
-    <meta property="og:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
-    <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | escape }}" />
+    <meta property="og:image" content="{{ site_url }}{{ page.image | relative_url }}" />
+    <meta property="og:image:alt" content="{{ social_image_alt | escape }}" />
   {% endif %}
 
   <meta name="twitter:card" content="{% if page.image %}summary_large_image{% else %}summary{% endif %}" />
-  <meta name="twitter:title" content="{% if page.title %}{{ page.title }}{% else %}Kenya MMF Calculator{% endif %}" />
-  <meta name="twitter:description" content="{% if page.description %}{{ page.description }}{% else %}Tools and guides for money market funds and personal finance in Kenya.{% endif %}" />
+  <meta name="twitter:title" content="{{ page_title | escape }}" />
+  <meta name="twitter:description" content="{{ page_description | escape }}" />
 
   {% if page.image %}
-    <meta name="twitter:image" content="https://kenyammfcalculator.co.ke{{ page.image | relative_url }}" />
+    <meta name="twitter:image" content="{{ site_url }}{{ page.image | relative_url }}" />
+    <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}" />
   {% endif %}
 
-  <!-- Critical CSS: reduces "unstyled snap" on hard refresh -->
+  <!-- Critical CSS -->
   <style>
     html { -webkit-text-size-adjust: 100%; }
     body {
@@ -162,7 +168,6 @@
     img { max-width: 100%; height: auto; }
     main { display: block; }
 
-    /* Blog post skeleton so it doesn't look "basic" before style.css arrives */
     .post-wrap { max-width: 900px; margin: 0 auto; padding: 16px; }
     .post { line-height: 1.6; }
     .post-nav { margin: 6px 0 14px; font-size: 14px; opacity: .9; }
@@ -178,15 +183,59 @@
   <link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="{{ '/style.css' | relative_url }}?v={{ cssv }}"></noscript>
 
-  <!-- ADS DISABLED: commenting out account meta too -->
-  <!--
+  <!-- AdSense Auto ads -->
   {% unless page.no_ads %}
     <meta name="google-adsense-account" content="ca-pub-1110082069590452" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
   {% endunless %}
-  -->
 
-  <!-- EEAT Disclaimer Schema (loads only on disclaimer page) -->
-  {% if page.url == "/disclaimer/" %}
+  <!-- Sitewide structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site_name | jsonify }},
+    "url": {{ site_url | jsonify }},
+    "description": {{ site_name | jsonify }},
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ site_name | jsonify }},
+      "url": {{ site_url | jsonify }}
+    }
+  }
+  </script>
+
+  {% if page.url == "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page_title | jsonify }},
+    "url": {{ canonical_url | jsonify }},
+    "description": {{ page_description | jsonify }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": {{ site_name | jsonify }},
+      "url": {{ site_url | jsonify }}
+    }
+  }
+  </script>
+  {% elsif page.url == "/blog/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": {{ page_title | jsonify }},
+    "url": {{ canonical_url | jsonify }},
+    "description": {{ page_description | jsonify }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": {{ site_name | jsonify }},
+      "url": {{ site_url | jsonify }}
+    }
+  }
+  </script>
+  {% elsif page.url == "/disclaimer/" %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -211,76 +260,31 @@
   }
   </script>
   {% endif %}
-  
-<!-- Google tag (gtag.js) -->
-{% include ga4.html %}
+
+  <!-- Google tag (gtag.js) -->
+  {% include ga4.html %}
 </head>
 
 <body>
-  {% unless page.no_site_header
-    or page.layout == 'post'
-    or page.url == '/blog/' or page.url contains '/blog/'
-    or page.url == '/categories/' or page.url contains '/category/' %}
+  {% if show_site_header %}
     {% include header.html %}
-  {% endunless %}
+  {% endif %}
 
   {{ content }}
 
   {% include footer.html %}
 
-  {% unless page.no_site_header
-    or page.layout == 'post'
-    or page.url == '/blog/' or page.url contains '/blog/'
-    or page.url == '/categories/' or page.url contains '/category/' %}
+  {% if show_site_header %}
     <script src="{{ '/main.js' | relative_url }}" defer></script>
-  {% endunless %}
+  {% endif %}
 
   <script src="{{ '/share.js' | relative_url }}?v=20260214" defer></script>
 
-  <!-- CookieYes banner (moved out of head to avoid render-blocking) -->
+  <!-- CookieYes banner -->
   <script
     id="cookieyes"
     src="https://cdn-cookieyes.com/client_data/cde2f292617a9fcc525c14cd/script.js"
     defer>
   </script>
-
-  <!-- ADS DISABLED: commenting out ALL AdSense injection -->
-  <!--
-  {% unless page.no_ads %}
-  {% if page.layout == 'post' or page.url contains '/blog/' %}
-  <script>
-  (function () {
-    var loaded = false;
-
-    function loadAdsense() {
-      if (loaded) return;
-      loaded = true;
-
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452";
-      s.crossOrigin = "anonymous";
-      document.head.appendChild(s);
-
-      s.onload = function () {
-        try {
-          document.querySelectorAll('ins.adsbygoogle').forEach(function () {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          });
-        } catch (e) {}
-      };
-    }
-
-    window.addEventListener('load', function () {
-      var isMobile = window.matchMedia && window.matchMedia("(max-width: 768px)").matches;
-      setTimeout(loadAdsense, isMobile ? 2500 : 0);
-    });
-  })();
-  </script>
-  {% else %}
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452" crossorigin="anonymous"></script>
-  {% endif %}
-  {% endunless %}
-  -->
 </body>
 </html>
