@@ -33,17 +33,17 @@ image_source_url: "https://www.cmarcp.or.ke/images/Docs/cisreports/2026/CISRepor
 image_license: "Source data from CMA public report. Graphic recreated by Kenya MMF Calculator for editorial use."
 source_url: "https://www.cmarcp.or.ke/images/Docs/cisreports/2026/CISReportQ1-2026.pdf"
 sib_url: "https://sib.co.ke/mansa-x/"
-faqs:
-  - question: "Is Mansa-X a Money Market Fund?"
-    answer: "No. In the CMA Q1 2026 CIS report, Mansa-X is listed under Special Funds, not Money Market Funds."
-  - question: "Who owns or operates the Mansa-X fund?"
-    answer: "Mansa-X is associated with Standard Investment Bank through SIB Global Markets."
-  - question: "Which is the largest collective investment scheme in Kenya?"
-    answer: "According to the CMA Q1 2026 CIS report, Sanlam Unit Trust Scheme was the largest collective investment scheme in Kenya with KSh 161.0 billion in assets under management."
-  - question: "How close is Standard Investment Trust Fund to Sanlam?"
-    answer: "Standard Investment Trust Fund had KSh 153.2 billion in assets under management in Q1 2026, while Sanlam had KSh 161.0 billion. The difference was about KSh 7.9 billion."
-  - question: "How big are Money Market Funds in Kenya?"
-    answer: "Money Market Funds held KSh 442.2 billion in assets under management in Q1 2026, representing about 51.9 percent of the market."
+faq:
+  - q: "Is Mansa-X a Money Market Fund?"
+    a: "No. In the CMA Q1 2026 CIS report, Mansa-X is listed under Special Funds, not Money Market Funds."
+  - q: "Who owns or operates the Mansa-X fund?"
+    a: "Mansa-X is associated with Standard Investment Bank through SIB Global Markets."
+  - q: "Which is the largest collective investment scheme in Kenya?"
+    a: "According to the CMA Q1 2026 CIS report, Sanlam Unit Trust Scheme was the largest collective investment scheme in Kenya with KSh 161.0 billion in assets under management."
+  - q: "How close is Standard Investment Trust Fund to Sanlam?"
+    a: "Standard Investment Trust Fund had KSh 153.2 billion in assets under management in Q1 2026, while Sanlam had KSh 161.0 billion. The difference was about KSh 7.9 billion."
+  - q: "How big are Money Market Funds in Kenya?"
+    a: "Money Market Funds held KSh 442.2 billion in assets under management in Q1 2026, representing about 51.9 percent of the market."
 ---
 
 Kenya’s regulated fund market is growing fast, and the latest CMA report shows just how competitive it has become.
@@ -319,34 +319,9 @@ The best fund is not always the biggest one.
 The best fund is the one that fits your money, your timeline, and your risk level.
 
 ## FAQs
-{% if page.faqs %}
-
-<section class="faq-section">
-  {% for faq in page.faqs %}
-    <details>
-      <summary>{{ faq.question }}</summary>
-      <p>{{ faq.answer }}</p>
-    </details>
-  {% endfor %}
-</section>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {% for faq in page.faqs %}
-    {
-      "@type": "Question",
-      "name": {{ faq.question | jsonify }},
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": {{ faq.answer | jsonify }}
-      }
-    }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ]
-}
-</script>
-
-{% endif %}
+{% for item in page.faq %}
+<details>
+  <summary><strong>{{ item.q }}</strong></summary>
+  <p>{{ item.a }}</p>
+</details>
+{% endfor %}
