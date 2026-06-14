@@ -22,7 +22,7 @@ Start with the Ziidi overview:
 - **[Ziidi Trader by Safaricom: How M-PESA Is Opening the NSE](/blog/ziidi-trader-safaricom-mpesa-nse-kenya/)**
 
 And for the MMF deep dive:
-- **[Money Market Funds in Kenya (2026 Guide)](/2026/02/05/money-market-funds-kenya-2026-guide.html)**
+- **[Money Market Funds in Kenya (2026 Guide)](/investing//2026/02/05/money-market-funds-kenya-2026-guide.html)**
 
 ---
 
