@@ -5,7 +5,7 @@ date: 2026-06-03
 categories:
   - investing
   - kenya
-  - global stocks
+  - global-stocks
 tags:
   - global stocks Kenya
   - investing in stocks

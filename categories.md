@@ -12,33 +12,48 @@ permalink: /categories/
 <div class="cat-grid" aria-label="All categories">
   {% assign cats = site.categories | sort %}
   {% for c in cats %}
-    {% assign name = c[0] %}
-    {% assign count = c[1].size %}
-    <a class="cat-card" href="{{ '/category/' | append: name | append: '/' | relative_url }}">
+{% assign name = c[0] %}
+{% assign slug = name | slugify %}
+{% assign count = c[1].size %}
+
+{% assign display_name = name | replace: '-', ' ' %}
+{% if slug == "ipo" %}
+  {% assign display_name = "IPO" %}
+{% elsif slug == "nse" %}
+  {% assign display_name = "NSE" %}
+{% endif %}
+
+    <a class="cat-card" href="{{ '/category/' | append: slug | append: '/' | relative_url }}">
       <div class="cat-card__top">
-        <div class="cat-card__title">{{ name | replace: '-', ' ' }}</div>
+        <div class="cat-card__title">{{ display_name }}</div>
         <div class="cat-card__count">{{ count }}</div>
       </div>
 
-      {% if name == "nse" %}
+      {% if slug == "nse" %}
         <div class="cat-card__desc">NSE guides, trading basics, fees, settlement</div>
-      {% elsif name == "ipo" %}
+      {% elsif slug == "ipo" %}
         <div class="cat-card__desc">How IPOs work, timelines, risks, allocation</div>
-      {% elsif name == "investing" %}
+      {% elsif slug == "investing" %}
         <div class="cat-card__desc">Step-by-step investing guides for Kenya</div>
-      {% elsif name == "tax" %}
+      {% elsif slug == "tax" %}
         <div class="cat-card__desc">Practical tax explainers and compliance</div>
-      {% elsif name == "stocks" %}
+      {% elsif slug == "stocks" %}
         <div class="cat-card__desc">Stock investing guides and walkthroughs</div>
-      {% elsif name == "real-estate" %}
+      {% elsif slug == "global-stocks" %}
+        <div class="cat-card__desc">Guides on buying and trading international stocks from Kenya</div>
+      {% elsif slug == "money-market-funds" %}
+        <div class="cat-card__desc">MMF rates, fees, taxes, withdrawals, and fund comparisons</div>
+      {% elsif slug == "remittances" %}
+        <div class="cat-card__desc">Money transfer guides, costs, platforms, and practical tips</div>
+      {% elsif slug == "real-estate" %}
         <div class="cat-card__desc">REITs, property basics, risk and returns</div>
-      {% elsif name == "fixed-income" %}
+      {% elsif slug == "fixed-income" %}
         <div class="cat-card__desc">Bonds, T-bills, yields, and income strategies</div>
-      {% elsif name == "dividends" %}
+      {% elsif slug == "dividends" %}
         <div class="cat-card__desc">Dividend schedules, income investing, payouts</div>
-      {% elsif name == "business" %}
+      {% elsif slug == "business" %}
         <div class="cat-card__desc">Small business + freelancer money guides</div>
-      {% elsif name == "kenya" %}
+      {% elsif slug == "kenya" %}
         <div class="cat-card__desc">Kenya-specific explainers and updates</div>
       {% else %}
         <div class="cat-card__desc">Browse posts in this category</div>
