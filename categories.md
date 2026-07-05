@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Categories"
+description: "Browse Kenya MMF Calculator categories including money market funds, investing, NSE, IPOs, tax, REITs, stocks, and business finance guides."
 permalink: /categories/
 ---
 

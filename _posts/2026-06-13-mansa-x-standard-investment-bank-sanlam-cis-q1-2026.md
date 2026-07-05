@@ -29,10 +29,7 @@ og_image: /assets/images/kenya-cis-market-share-q1-2026.png
 image_alt: "Kenya CIS market share by fund type in Q1 2026 showing Money Market Funds at 51.9%, Special Funds at 23.9%, and Fixed Income Funds at 23.4%."
 image_caption: "Kenya CIS market share by fund type in Q1 2026."
 image_source: "Capital Markets Authority Kenya, Collective Investment Schemes Quarterly Report Q1 2026"
-image_source_url: "https://www.cmarcp.or.ke/images/Docs/cisreports/2026/CISReportQ1-2026.pdf"
 image_license: "Source data from CMA public report. Graphic recreated by Kenya MMF Calculator for editorial use."
-source_url: "https://www.cmarcp.or.ke/images/Docs/cisreports/2026/CISReportQ1-2026.pdf"
-sib_url: "https://sib.co.ke/mansa-x/"
 faq:
   - q: "Is Mansa-X a Money Market Fund?"
     a: "No. In the CMA Q1 2026 CIS report, Mansa-X is listed under Special Funds, not Money Market Funds."
