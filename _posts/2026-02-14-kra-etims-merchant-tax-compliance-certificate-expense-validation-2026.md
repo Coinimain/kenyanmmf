@@ -43,7 +43,7 @@ For many businesses, eTIMS used to feel like “a VAT tool” or “an invoicing
 
 This guide breaks down what’s changing, why KRA is doing it, what it means for SMEs and larger firms, and the practical steps to stay compliant.
 
-Related reading: [KRA Will Now Treat Unexplained Bank Deposits as Taxable Income: What It Means for Kenyans](https://kenyammfcalculator.co.ke/2026/02/04/kra-unexplained-bank-deposits-taxable-income.html)
+Related reading: [KRA Will Now Treat Unexplained Bank Deposits as Taxable Income: What It Means for Kenyans](https://kenyammfcalculator.co.ke/tax/2026/02/04/kra-unexplained-bank-deposits-taxable-income.html)
 
 ---
 

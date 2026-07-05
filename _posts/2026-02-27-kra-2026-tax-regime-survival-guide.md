@@ -146,7 +146,7 @@ If KRA ever questions your numbers, your documents are your strongest defense.
 
 If you receive frequent deposits through a bank or mobile money account, this guide will help you understand how deposits can be treated when their source is unclear - and what kind of documentation protects you:
 
-**[KRA Will Now Treat Unexplained Bank Deposits as Taxable Income: What It Means for Kenyans](/2026/02/04/kra-unexplained-bank-deposits-taxable-income.html)**
+**[KRA Will Now Treat Unexplained Bank Deposits as Taxable Income: What It Means for Kenyans](/tax/2026/02/04/kra-unexplained-bank-deposits-taxable-income.html)**
 
 ---
 

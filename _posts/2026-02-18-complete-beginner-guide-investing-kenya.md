@@ -131,10 +131,10 @@ Most MMFs earn interest daily and reflect that in your unit price or balance. So
 - Transparent reporting
 
 If you want the deeper guide with how to compare providers and understand returns, use:
-- [Money Market Funds Kenya 2026 Guide](/2026/02/05/money-market-funds-kenya-2026-guide.html)
+- [Money Market Funds Kenya 2026 Guide](/investing/money-market-funds/2026/02/05/money-market-funds-kenya-2026-guide.html)
 
 If you want a bigger-picture comparison of where MMFs sit versus other assets:
-- [REITs vs MMFs vs Bonds vs Equities (Kenya)](/investing/2026/02/10/reits-vs-mmfs-bonds-equities-kenya.html)
+- [REITs vs MMFs vs Bonds vs Equities (Kenya)](/investing/real-estate/2026/02/10/reits-vs-mmfs-bonds-equities-kenya.html)
 
 ---
 

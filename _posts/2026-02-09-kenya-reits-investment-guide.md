@@ -100,7 +100,7 @@ In Kenya, market depth remains limited, which can affect pricing efficiency and 
 
 ## REITs Compared to Other Kenyan Investment Options
 
-Compared to treasury bills or money market funds, REITs generally offer higher risk but potential for long-term income growth and capital appreciation. Compared to [equities](https://kenyammfcalculator.co.ke/2026/02/03/kenya-pipeline-ipo-risks-benefits.html), REITs tend to exhibit lower volatility but slower growth. Against direct property ownership, REITs trade control and leverage for liquidity, diversification, and professional oversight.
+Compared to treasury bills or money market funds, REITs generally offer higher risk but potential for long-term income growth and capital appreciation. Compared to [equities](https://kenyammfcalculator.co.ke/investing/nse/2026/02/03/kenya-pipeline-ipo-risks-benefits.html), REITs tend to exhibit lower volatility but slower growth. Against direct property ownership, REITs trade control and leverage for liquidity, diversification, and professional oversight.
 
 Understanding these trade-offs is essential. REITs are neither substitutes for all real estate investments nor universal income solutions; they occupy a specific niche within a diversified portfolio.
 
