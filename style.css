@@ -298,6 +298,11 @@ a.cta-button:active { color: #fff; }
   line-height: 1.5;
 }
 
+.post-in-article-ad {
+  width: 100%;
+  margin: 2rem 0;
+}
+
 /* =========================
    Post hero (CLS-safe + tight caption)
    ========================= */

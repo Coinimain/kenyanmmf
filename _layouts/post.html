@@ -86,9 +86,22 @@ layout: default
       </figure>
     {% endif %}
 
-    <div class="post-content">
-      {{ content }}
-    </div>
+<div class="post-content">
+  {% assign post_h2_sections = content | split: '<h2' %}
+
+  {% if post_h2_sections.size > 2 %}
+    {{ post_h2_sections[0] }}
+    <h2{{ post_h2_sections[1] }}
+
+    {% include in-article-ad.html %}
+
+    {% for post_h2_section in post_h2_sections offset:2 %}
+      <h2{{ post_h2_section }}
+    {% endfor %}
+  {% else %}
+    {{ content }}
+  {% endif %}
+</div>
 
     <section class="related-reading" aria-label="Related reading">
       <h2 class="related-reading__title">Related reading</h2>
