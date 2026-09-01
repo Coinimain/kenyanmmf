@@ -1287,3 +1287,13 @@ a.btn-primary:visited{
   right: 4px;
   opacity: 0.45;
 }  */
+
+/* Keep MathJax equations inside the mobile viewport */
+mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
+  -webkit-overflow-scrolling: touch;
+}
