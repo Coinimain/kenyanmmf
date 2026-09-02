@@ -56,6 +56,8 @@ permalink: /categories/
         <div class="cat-card__desc">Small business + freelancer money guides</div>
       {% elsif slug == "kenya" %}
         <div class="cat-card__desc">Kenya-specific explainers and updates</div>
+	  {% elsif slug == "personal-finance" %}
+        <div class="cat-card__desc">Guides to earning more, building skills, saving, and managing money</div>
       {% else %}
         <div class="cat-card__desc">Browse posts in this category</div>
       {% endif %}
