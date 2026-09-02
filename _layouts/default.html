@@ -160,27 +160,35 @@
     <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}" />
   {% endif %}
 
-  <!-- Critical CSS -->
-  <style>
-    html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      font-family: Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      color: #1E293B;
-      background: #fff;
-    }
-    a { color: inherit; }
-    img { max-width: 100%; height: auto; }
-    main { display: block; }
+<!-- Critical CSS -->
+<style>
+  html { -webkit-text-size-adjust: 100%; }
 
-    .post-wrap { max-width: 900px; margin: 0 auto; padding: 16px; }
-    .post { line-height: 1.6; }
-    .post-nav { margin: 6px 0 14px; font-size: 14px; opacity: .9; }
-    .post-nav-link { text-decoration: none; }
-    .post-title { margin: 0; font-size: 28px; line-height: 1.2; }
-    .post-date { margin: 6px 0 0; font-size: 13px; opacity: .8; }
-    .post-hero img { display: block; }
-  </style>
+  body {
+    margin: 0;
+    font-family: Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    color: #1E293B;
+    background: #fff;
+  }
+
+  a { color: inherit; }
+  img { max-width: 100%; height: auto; }
+  main { display: block; }
+
+  .post-wrap {
+    max-width: 760px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .post { line-height: 1.6; }
+  .post-nav { margin: 6px 0 14px; font-size: 14px; opacity: .9; }
+  .post-nav-link { text-decoration: none; }
+  .post-title { margin: 0; font-size: 28px; line-height: 1.2; }
+  .post-date { margin: 6px 0 0; font-size: 13px; opacity: .8; }
+  .post-hero img { display: block; }
+</style>
 
   <!-- Main CSS (non-blocking load) -->
   {% assign cssv = "20260305" %}
