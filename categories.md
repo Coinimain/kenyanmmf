@@ -46,6 +46,8 @@ permalink: /categories/
         <div class="cat-card__desc">MMF rates, fees, taxes, withdrawals, and fund comparisons</div>
       {% elsif slug == "remittances" %}
         <div class="cat-card__desc">Money transfer guides, costs, platforms, and practical tips</div>
+      {% elsif slug == "diaspora-finance" %}
+        <div class="cat-card__desc">Exchange rates, remittances, investing, and money planning for Kenyans abroad</div>
       {% elsif slug == "real-estate" %}
         <div class="cat-card__desc">REITs, property basics, risk and returns</div>
       {% elsif slug == "fixed-income" %}
