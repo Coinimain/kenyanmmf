@@ -7,7 +7,10 @@ tags: [CDS account Kenya, CDSC Kenya, NSE shares, stockbrokers Kenya, investing 
 permalink: /blog/how-to-open-cds-account-kenya/
 description: "Learn how to open a CDS account in Kenya online through Dosikaa or a licensed broker, including requirements, fees, timelines and what to do next."
 image: /assets/images/how-to-open-cds-account-kenya.jpg
-image_alt: "How to open a CDS account in Kenya online through Dosikaa or a licensed stockbroker"
+image_alt: "How to open a CDS account in Kenya graphic showing a mobile trading screen, investment chart and application checklist"
+image_caption: "A CDS account is the electronic account used to hold shares and other eligible securities bought through the Nairobi Securities Exchange."
+image_source_name: "Kenya MMF Calculator"
+image_license: "Original graphic © Kenya MMF Calculator"
 faq:
   - q: "What is a CDS account in Kenya?"
     a: "A CDS account is an electronic securities account that records shares and other eligible NSE-listed investments held in an investor's name. It is maintained within the Central Depository System operated by CDSC."

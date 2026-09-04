@@ -9,6 +9,9 @@ tags: [short courses in Kenya, careers in Kenya, side hustles, income, skills tr
 permalink: /blog/short-courses-kenya-grow-income/
 image: /assets/images/short-courses-kenya-grow-income.jpg
 image_alt: "Graphic for 10 short courses in Kenya showing digital work, professional services, welding and tailoring"
+image_caption: "The guide compares 10 short courses in Kenya by cost, duration, earning opportunities and potential payback period."
+image_source_name: "Kenya MMF Calculator"
+image_license: "Original graphic © Kenya MMF Calculator"
 ---
 
 The right short course can give you a skill, licence or professional credential that makes it possible to apply for new roles, earn a promotion, take freelance work or start a small service business.

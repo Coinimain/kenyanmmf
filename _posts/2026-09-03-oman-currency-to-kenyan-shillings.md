@@ -18,6 +18,8 @@ tags:
 image: /assets/images/oman-currency-to-kenyan-shillings.jpg
 image_alt: "Oman currency to Kenyan shillings conversion graphic with the Oman and Kenya flags"
 image_caption: "Convert Omani rials to Kenyan shillings using the live OMR-to-KSh calculator."
+image_source_name: "Kenya MMF Calculator"
+image_license: "Original graphic © Kenya MMF Calculator"
 permalink: /blog/oman-currency-to-kenyan-shillings/
 
 faq:
