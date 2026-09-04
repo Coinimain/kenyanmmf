@@ -1553,3 +1553,36 @@ mjx-container[display="true"] {
     font-size: 0.88rem;
   }
 }
+
+/* NSE derivatives comparison table */
+.nse-comparison-wrap table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+}
+
+.nse-comparison-wrap th,
+.nse-comparison-wrap td {
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
+}
+
+.nse-comparison-wrap th:first-child,
+.nse-comparison-wrap td:first-child {
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* Balanced desktop column widths */
+.nse-comparison-wrap th:nth-child(1) { width: 20%; }
+.nse-comparison-wrap th:nth-child(2) { width: 21%; }
+.nse-comparison-wrap th:nth-child(3) { width: 36%; }
+.nse-comparison-wrap th:nth-child(4) { width: 23%; }
+
+/* Scroll only on genuinely narrow screens */
+@media (max-width: 760px) {
+  .nse-comparison-wrap table {
+    min-width: 760px;
+  }
+}
