@@ -2,6 +2,7 @@ title: Kenya MMF Calculator
 description: Tools and guides for money market funds and personal finance in Kenya.
 url: https://kenyammfcalculator.co.ke
 baseurl: ""
+timezone: Africa/Nairobi
 markdown: kramdown
 
 kramdown:
