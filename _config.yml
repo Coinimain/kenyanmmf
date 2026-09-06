@@ -25,4 +25,4 @@ exclude:
   - yarn.lock
   - pnpm-lock.yaml
   - _LOCAL_BACKUP
-
+  - footer-loader.js

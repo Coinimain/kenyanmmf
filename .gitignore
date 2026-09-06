@@ -14,3 +14,7 @@ _site/
 _LOCAL_BACKUP/
 *.docx
 .jekyll-metadata
+
+# Node build dependencies
+node_modules/
+npm-debug.log*
