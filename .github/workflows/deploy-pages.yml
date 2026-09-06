@@ -50,6 +50,9 @@ jobs:
           source: ./
           destination: ./_site
 
+      - name: Make generated site writable
+        run: sudo chown -R "$(id -u):$(id -g)" _site
+
       - name: Minify CSS and JavaScript
         run: npm run minify -- _site
 
