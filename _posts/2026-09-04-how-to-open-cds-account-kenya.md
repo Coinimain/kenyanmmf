@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Open a CDS Account in Kenya (2026 Guide)"
+seo_title: "How to Open a CDS Account in Kenya: 2026 Guide"
 date: 2026-09-04
 categories: [stocks]
 tags: [CDS account Kenya, CDSC Kenya, NSE shares, stockbrokers Kenya, investing in Kenya]

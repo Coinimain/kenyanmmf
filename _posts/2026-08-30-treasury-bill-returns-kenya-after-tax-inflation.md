@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Treasury Bill Returns in Kenya: What You Actually Earn After Tax and Inflation"
+seo_title: "Kenya Treasury Bill Returns After Tax and Inflation"
 date: 2026-08-30
 description: "A practical calculation of Kenya Treasury bill returns after withholding tax and inflation, using the 3 August 2026 auction rates."
 permalink: /treasury-bill-returns-kenya-after-tax-inflation/

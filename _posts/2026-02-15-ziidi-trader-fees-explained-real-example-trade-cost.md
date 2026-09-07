@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ziidi Trader Fees Explained: Real Trade Cost Examples (2026)"
+seo_title: "Ziidi Trader Fees: Real Trading Cost Examples"
 description: "Ziidi Trader fees are reported around ~1.5% per trade. Here’s what that means in real shillings, how much price movement you need to break even, and why activity is rising."
 permalink: /blog/ziidi-trader-fees-explained-trade-cost/
 

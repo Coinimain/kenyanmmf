@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Invest in Kenya From Abroad: A Guide for Kenyans in the Diaspora"
+seo_title: "How to Invest in Kenya From Abroad"
 description: "Learn how Kenyans in the diaspora can invest in Kenya through MMFs, Treasury securities, NSE shares, pensions, SACCOs and property."
 date: 2026-09-06
 categories: [diaspora-finance]

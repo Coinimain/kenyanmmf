@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "KRA eTIMS in 2026: Merchant Tax Compliance Certificate, Expense Validation, and What Businesses Must Do Now"
+seo_title: "KRA eTIMS 2026: Merchant Tax Compliance Certificate"
 description: "KRA is tying tax compliance to eTIMS data in 2026—through a new Merchant Tax Compliance Certificate and automated income/expense validation in iTax. Here’s what changes, who is affected, exemptions, and a practical compliance checklist."
 image: /assets/images/kra-etims-2026-merchant-tax-compliance-certificate.png
 image_alt: "KRA eTIMS 2026 guide: Merchant Tax Compliance Certificate and expense validation"

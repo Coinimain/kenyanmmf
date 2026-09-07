@@ -2,6 +2,7 @@
 layout: post
 math: true
 title: "Oman Currency to Kenyan Shillings: Live OMR to KSh Converter"
+seo_title: "Oman Currency to Kenyan Shillings: Live Converter"
 description: "Convert Oman currency to Kenyan shillings using a live OMR-to-KSh calculator. See common rial and baisa amounts plus the effect of transfer fees."
 date: 2026-09-03
 last_modified_at: "2026-09-03"

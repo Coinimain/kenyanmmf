@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ziidi Trader Safaricom: How to Buy and Sell NSE Shares on M-PESA (Complete 2026 Guide)"
+seo_title: "Ziidi Trader Guide: Buy NSE Shares on M-PESA"
 date: 2026-02-12
 categories: [investing, kenya, stocks]
 tags:

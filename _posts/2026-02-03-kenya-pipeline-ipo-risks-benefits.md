@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Kenya Pipeline IPO: Risks, Benefits, and What Investors Need to Know"
+seo_title: "Kenya Pipeline IPO: Risks and Benefits"
 description: "A practical breakdown of the Kenya Pipeline IPO, covering offer price, timeline, key risks, and what Kenyan investors should realistically expect."
 categories: [investing, nse]
 tags: [ipo, equities, capital-markets, investing, nse]

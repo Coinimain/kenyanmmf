@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Is Land Banking Profitable in Kenya? Real Returns After Costs and Inflation"
+seo_title: "Is Land Banking Profitable in Kenya?"
 date: 2026-08-30
 description: "Is land banking profitable in Kenya? Calculate the real return after stamp duty, legal fees, county charges, fencing, capital gains tax and inflation."
 permalink: /land-banking-returns-kenya/

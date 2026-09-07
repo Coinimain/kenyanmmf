@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Kenya Government Bonds (Treasury Bonds): How They Work, Returns, Taxes, and How to Buy on DhowCSD"
+seo_title: "Treasury Bonds in Kenya: 2026 Investment Guide"
 date: 2026-02-13
 last_modified_at: 2026-02-13
 categories: [investing, kenya, fixed-income]

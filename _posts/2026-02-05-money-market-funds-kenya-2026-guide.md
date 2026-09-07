@@ -3,6 +3,7 @@
 layout: post
 
 title: "Money Market Funds in Kenya (2026 Guide): How MMFs Work, Current Yields, Risks, and How to Choose One"
+seo_title: "Money Market Funds in Kenya: 2026 Guide"
 
 date: 2026-02-05
 

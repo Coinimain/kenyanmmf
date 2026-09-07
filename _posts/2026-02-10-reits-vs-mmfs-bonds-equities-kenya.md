@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "REITs vs MMFs vs Bonds vs Equities in Kenya: How to Choose What Fits You"
+seo_title: "REITs vs MMFs, Bonds and Stocks in Kenya"
 description: "A clear, practical comparison of REITs, money market funds, bonds, and equities in Kenya — explaining how each works, where they fit, and what kind of investor they suit."
 categories: [investing, real-estate]
 tags:

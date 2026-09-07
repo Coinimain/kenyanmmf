@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Dividend Investing on the NSE: Why Ziidi Trader Works for Income (and Fights Day Trading)"
+seo_title: "NSE Dividend Investing With Ziidi Trader"
 date: 2026-03-02
 categories: [investing, kenya, stocks, dividends, nse]
 tags:

@@ -3,7 +3,7 @@
 <head>
   {% assign site_name = "Kenya MMF Calculator" %}
   {% assign site_url = "https://kenyammfcalculator.co.ke" %}
-  {% assign page_title = page.title | default: site_name %}
+  {% assign page_title = page.seo_title | default: page.title | default: site_name %}
   {% assign page_description = page.description | default: "Tools and guides for money market funds and personal finance in Kenya." %}
   {% assign canonical_path = page.url | replace: 'index.html', '' %}
   {% assign canonical_url = site_url | append: canonical_path %}

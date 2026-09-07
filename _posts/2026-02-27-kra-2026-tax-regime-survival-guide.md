@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "KRA 2026 Tax Regime in Kenya: A Survival Guide for Forex Traders, Freelancers, and Small Businesses"
+seo_title: "KRA 2026 Tax Guide: Freelancers, Traders and SMEs"
 description: "KRA 2026 tax regime survival guide for forex traders, freelancers, and small businesses covering eTIMS, PIN risks, turnover tax, withholding, and invoice compliance."
 date: 2026-02-27
 categories: [tax, kenya, business]

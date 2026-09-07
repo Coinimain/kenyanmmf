@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "KPC IPO Update: Offer Hits Sh106.3B Target, Turns Oversubscribed as Uganda Locks 20.15% Stake"
+seo_title: "KPC IPO Update: Oversubscription and Uganda Stake"
 date: 2026-02-25
 categories: [investing, kenya, nse, ipo]
 tags:

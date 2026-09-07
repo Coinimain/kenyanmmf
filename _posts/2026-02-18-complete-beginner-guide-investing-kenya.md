@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Complete Beginner Guide to Investing in Kenya (2026 Step-by-Step)"
+seo_title: "How to Start Investing in Kenya: 2026 Guide"
 date: 2026-02-18
 categories: [investing, kenya, nse]
 tags:

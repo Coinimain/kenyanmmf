@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Invest in NSE Indices in Kenya: ETFs, Futures and Options"
+seo_title: "How to Invest in NSE Indices in Kenya"
 date: 2026-09-05
 description: "Can you buy the NSE 25 or NSE 20? Compare index ETFs, shares, NSE futures and options in Kenya, and learn why binary options are different."
 categories: [stocks]

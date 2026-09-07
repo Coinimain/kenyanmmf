@@ -3,6 +3,7 @@
 layout: post
 
 title: "Ziidi Trader by Safaricom: How M-PESA Is Opening the NSE to Everyday Investors"
+seo_title: "What Is Ziidi Trader? Safaricom’s NSE Platform"
 
 date: 2026-02-06
 

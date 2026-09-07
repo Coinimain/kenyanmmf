@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Mansa-X Dominates as Kenya’s Fund Market Hits KSh 851.7 Billion"
+seo_title: "Mansa-X, Sanlam and Kenya’s Q1 2026 Fund Market"
 description: "CMA Q1 2026 CIS report shows Kenya fund assets reached KSh 851.7 billion, with Sanlam leading, Standard Investment Trust close behind, and Mansa-X dominating Special Funds."
 date: 2026-06-13
 categories:

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Send Money to Kenya: Fees, Exchange Rates, and Speed (Simple Guide)"
+seo_title: "How to Send Money to Kenya: Fees, Rates and Speed"
 description: "A practical, no-fluff guide to sending money to Kenya: compare fees vs exchange rates, choose M-Pesa/bank/cash payout, and avoid hidden costs."
 permalink: /blog/how-to-send-money-to-kenya-fees-rates-speed/
 date: 2026-03-03

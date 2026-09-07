@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Kenya Pipeline IPO Extended: Is KPC Overpriced at KSh 9?"
+seo_title: "Kenya Pipeline IPO: Is KPC Overpriced at KSh 9?"
 date: 2026-02-19
 categories: [investing, kenya, stocks, ipo, nse]
 tags:

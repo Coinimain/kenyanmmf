@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "KRA Will Now Treat Unexplained Bank Deposits as Taxable Income: What It Means for Kenyans"
+seo_title: "KRA: Are Unexplained Bank Deposits Taxable?"
 date: 2026-02-04
 description: "KRA will now treat unexplained bank deposits as taxable income following a landmark Tax Appeals Tribunal ruling. Here’s what it means for Kenyan individuals, freelancers, and businesses."
 categories: [tax]

@@ -3,6 +3,7 @@
 layout: post
 
 title: "Ziidi Trader vs Money Market Funds in Kenya: Which Is Better for New Investors?"
+seo_title: "Ziidi Trader vs Money Market Funds in Kenya"
 
 date: 2026-02-06
 

@@ -2,6 +2,7 @@
 layout: post
 math: true
 title: "10 Short Courses in Kenya That Can Help You Grow Your Income"
+seo_title: "10 Short Courses in Kenya to Grow Your Income"
 description: "Compare 10 short courses in Kenya by fees, duration, earning opportunities and the time it could take to recover your training costs."
 date: 2026-09-02
 categories: [personal-finance]

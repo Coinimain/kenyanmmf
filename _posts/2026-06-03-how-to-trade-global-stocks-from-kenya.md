@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Trade Global Stocks from Kenya"
+seo_title: "How to Trade Global Stocks From Kenya"
 date: 2026-06-03
 categories:
   - investing

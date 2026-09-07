@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Real Estate Investment Trusts (REITs) in Kenya: A Comprehensive Investor Guide"
+seo_title: "REITs in Kenya: Complete Investment Guide"
 description: "A neutral, in-depth guide to REITs in Kenya—how they work, regulation, types, risks, taxes, and how to evaluate them as an investor."
 date: 2026-02-09
 permalink: /kenya-reits-investment-guide/
