@@ -1586,3 +1586,9 @@ mjx-container[display="true"] {
     min-width: 760px;
   }
 }
+
+/* Keep FAQ accordion questions consistently bold */
+.post-content details > summary {
+  font-weight: 700;
+  cursor: pointer;
+}
