@@ -53,7 +53,18 @@
   }
 
   input.addEventListener("input", filterArticles);
+  input.addEventListener("search", () => {
+    filterArticles();
+    input.blur();
+  });
   input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.isComposing) {
+      event.preventDefault();
+      filterArticles();
+      input.blur();
+      return;
+    }
+
     if (event.key === "Escape" && input.value) {
       input.value = "";
       filterArticles();
