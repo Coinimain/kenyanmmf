@@ -56,6 +56,8 @@ The most interesting part is what happened at the top of the market. **Sanlam Un
 
 For Kenyan investors, this is a useful moment to understand the difference between **Money Market Funds**, **Special Funds**, and other collective investment schemes.
 
+> **Q2 2026 update:** Standard Investment Trust Fund, the umbrella scheme containing the four Mansa-X funds, has since overtaken Sanlam to become Kenya’s largest collective investment scheme, with KSh 188.6 billion in assets under management. Read our [complete Mansa-X Special Fund Kenya guide](/blog/mansa-x-special-fund-kenya/) for the latest returns, fees, minimum investment, lock-in period, withdrawals and risks.
+
 ## Kenya’s CIS market reached KSh 851.7 billion in Q1 2026
 
 The CMA report shows that Kenya had **62 approved Collective Investment Schemes** made up of **285 funds** by the end of March 2026. Out of these, **43 were active**.
@@ -174,13 +176,13 @@ Special Funds also grew by **25%** from the previous quarter.
 
 The biggest Special Funds in the CMA report included:
 
-| Rank | Special Fund                          | AUM as of March 2026 | Share of Special Funds |
-| ---: | ------------------------------------- | -------------------: | ---------------------: |
-|    1 | Mansa-X Special Fund KES              |    KSh 132.2 billion |                  64.9% |
-|    2 | Mansa-X Special Fund USD              |     KSh 17.4 billion |                   8.6% |
-|    3 | Oak Multi Asset Special KES Fund      |     KSh 15.5 billion |                   7.6% |
-|    4 | Madison Wealth Special Fund           |      KSh 8.8 billion |                   4.3% |
-|    5 | Britam Special Fund Fixed Income Fund |      KSh 6.5 billion |                   3.2% |
+| # | Special Fund                          | AUM as of March 2026 | Share of Special Funds |
+| -: | ------------------------------------ | -------------------: | ---------------------: |
+| 1 | Mansa-X Special Fund KES              |    KSh 132.2 billion |                  64.9% |
+| 2 | Mansa-X Special Fund USD              |     KSh 17.4 billion |                   8.6% |
+| 3 | Oak Multi Asset Special KES Fund      |     KSh 15.5 billion |                   7.6% |
+| 4 | Madison Wealth Special Fund           |      KSh 8.8 billion |                   4.3% |
+| 5 | Britam Special Fund Fixed Income Fund |      KSh 6.5 billion |                   3.2% |
 
 This is why terms like **Oak Special Fund**, **Etica**, and **Arvocap** are also becoming more relevant.
 
