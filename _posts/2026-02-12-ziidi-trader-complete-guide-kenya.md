@@ -81,7 +81,7 @@ Here is the process step-by-step:
 
 ### Step 1: Activation
 
-1. Open the My OneApp  
+1. Open the Safaricom My OneApp app  
 2. Select Ziidi Trader under Financial Services  
 3. Accept terms and risk acknowledgment  
 4. Complete identity verification  
