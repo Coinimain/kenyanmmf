@@ -15,25 +15,27 @@ tags:
   - nse shares mpesa
   - ziidi investment
 permalink: /blog/ziidi-trader-complete-guide-kenya/
-description: "Ziidi Trader by Safaricom allows Kenyans to buy and sell NSE shares directly through the M-PESA app. Learn how Ziidi Trader works, whether you need a CDS account, pricing options, risks, dividends, and how it compares to Ziidi Money Market Fund."
+description: "Ziidi Trader by Safaricom allows Kenyans to buy and sell NSE shares directly through the My OneApp app. Learn how Ziidi Trader works, whether you need a CDS account, pricing options, risks, dividends, and how it compares to Ziidi Money Market Fund."
 image: /assets/images/ziidi-trader-mpesa-nse-kenya-2026.png
-image_alt: "Ziidi Trader inside the M-PESA app financial services section"
-image_caption: "Ziidi Trader inside the M-PESA app."
+image_alt: "Ziidi Trader inside the My OneApp app financial services section"
+image_caption: "Ziidi Trader inside the My OneApp app."
 image_source_name: "Screenshot by Kenya MMF Calculator"
 image_license: "Original screenshot © Kenya MMF Calculator"
 
 faq:
   - q: "What is Ziidi Trader?"
-    a: "Ziidi Trader is a service inside the M-PESA app that allows users to buy and sell shares listed on the Nairobi Securities Exchange."
+    a: "Ziidi Trader is a service inside the Safaricom My OneApp app that allows users to buy and sell shares listed on the Nairobi Securities Exchange."
   - q: "Do I need a CDS account to use Ziidi Trader?"
     a: "No. Ziidi Trader uses an omnibus account structure where shares are pooled but ownership is recorded individually within the platform."
   - q: "How does Ziidi Trader work?"
-    a: "Users activate the service in the M-PESA app, place buy or sell orders, and trades are executed on the Nairobi Securities Exchange through market matching."
+    a: "Users activate the service in the My OneApp app, place buy or sell orders, and trades are executed on the Nairobi Securities Exchange through market matching."
   - q: "Can I lose money using Ziidi Trader?"
     a: "Yes. Share prices fluctuate based on market conditions and company performance, and investing carries risk."
+  - q: "What is the Ziidi USSD code?"
+    a: "Ziidi Trader does not have a USSD code and is accessed through the Safaricom My OneApp app. The separate Ziidi Money Market Fund can be accessed by dialing *334# and selecting Financial Services, then Ziidi, or through the direct *334*5# route."
 ---
 
-Ziidi Trader is Safaricom’s new **NSE trading feature inside the M-PESA app**, letting Kenyans buy and sell listed shares (and some bonds) directly from their phone.
+Ziidi Trader is Safaricom’s new **NSE trading feature inside the My OneApp app**, letting Kenyans buy and sell listed shares (and some bonds) directly from their phone.
 
 If you’re searching **“what is Ziidi Trader”** or **“how does Ziidi Trader work”**, this guide breaks it down in plain English - including setup, order matching, pricing options, risks, and how Ziidi compares to money market funds. If you’d rather start with the shorter overview, read **[Ziidi Trader by Safaricom: how M-PESA is opening the NSE to everyday investors]({{ '/blog/ziidi-trader-safaricom-mpesa-nse-kenya/' | relative_url }})** first.
 
@@ -41,11 +43,12 @@ If you’re searching **“what is Ziidi Trader”** or **“how does Ziidi Trad
 
 > **Note:** Some people search for **“ziddi trader”** - they usually mean **Ziidi Trader** by Safaricom.
 
-- **What is Ziidi Trader?** A stock trading platform inside M-PESA that lets you place buy/sell orders for **NSE-listed shares**.
-- **How does Ziidi Trader work?** You activate it in M-PESA → place a buy/sell order → orders match during market hours → settlement follows the NSE process.
+- **What is Ziidi Trader?** A stock trading platform inside Safaricom's My OneApp that lets you place buy/sell orders for **NSE-listed shares**.
+- **How does Ziidi Trader work?** You activate it in My OneApp → place a buy/sell order → orders match during market hours → settlement follows the NSE process.
 - **Do you need a CDS account?** **No** - Ziidi uses an **omnibus structure** (your ownership is tracked in-app).
 - **Is Ziidi Trader legit/safe?** It operates within Kenya’s regulated market setup, but prices can fall and trades may not execute.
 - **Ziidi Trader not working?** Most issues are **market hours**, verification/CDS details, app updates, or network problems.
+- **What is the Ziidi USSD code?** Ziidi Trader does not currently have a USSD code. It is accessed through the Safaricom My OneApp app. The separate Ziidi Money Market Fund can be accessed through USSD by dialing **`*334#`** and selecting Financial Services → Ziidi, or through the direct **`*334*5#`** route.
 
 This is the complete 2026 guide.
 
@@ -53,7 +56,7 @@ This is the complete 2026 guide.
 
 ## What Is Ziidi Trader?
 
-Ziidi Trader is a stock trading platform embedded within the M-PESA app under Financial Services. It allows eligible M-PESA users to:
+Ziidi Trader is a stock trading platform embedded within the Safaricom My OneApp app under Financial Services. It allows eligible M-PESA users to:
 
 - Buy NSE-listed shares
 - Sell listed shares
@@ -74,13 +77,11 @@ Ziidi Trader extends that ecosystem into listed equities and bonds.
 
 ## How Does Ziidi Trader Work?
 
-This is one of the fastest-rising searches in Kenya.
-
 Here is the process step-by-step:
 
 ### Step 1: Activation
 
-1. Open the M-PESA App  
+1. Open the My OneApp  
 2. Select Ziidi Trader under Financial Services  
 3. Accept terms and risk acknowledgment  
 4. Complete identity verification  
@@ -150,10 +151,24 @@ However, it also centralizes execution through the app structure rather than giv
 
 ---
 
-## Does Ziidi Trader Use USSD?
+## Ziidi USSD Code: Can You Access Ziidi Trader via USSD?
 
-Currently, there is no Ziidi USSD functionality. Ziidi Trader is app-based, which aligns with Safaricom’s smartphone-first digital strategy. Trading functionality is optimized for the M-PESA app experience rather than USSD.
+If you are looking for the **Ziidi USSD code**, it is important to distinguish between **Ziidi Trader** and the **Ziidi Money Market Fund (MMF)**.
 
+**Ziidi Trader does not currently support USSD.** To buy or sell NSE shares through Ziidi Trader, you need to use the Safaricom My OneApp and open Ziidi Trader under Financial Services.
+
+The separate **Ziidi Money Market Fund does support USSD**. You can access it by dialing **`*334#`**, selecting **Financial Services**, and then choosing **Ziidi**. Safaricom also provides the direct **`*334*5#`** route for accessing Ziidi MMF.
+
+So, if you dial **`*334#`** looking for Ziidi Trader, you will find the Ziidi investment/MMF service, not the NSE share-trading platform.
+
+### Ziidi Trader vs Ziidi USSD
+
+| Service | USSD Access | My OneApp |
+| --- | --- | --- |
+| Ziidi Trader | No | Yes |
+| Ziidi Money Market Fund | Yes - **`*334#`** / **`*334*5#`** | Yes |
+
+To trade NSE shares, open **My OneApp → Financial Services → Ziidi Trader**.
 ---
 
 ## Ziidi Trader App Features
@@ -218,7 +233,7 @@ If Ziidi Trader is failing to place trades or showing errors, the most common ca
 
 - **Outside market hours** (NSE is open Mon–Fri, 9:30 AM–3:00 PM)
 - **Verification still pending** or details don’t match your ID records
-- **App needs an update** (older M-PESA versions can bug out)
+- **App needs an update** (older My OneApp versions can bug out)
 - **Network issues** (slow data can cause timeouts)
 - **No matching orders** (your trade may be valid but not executed due to price/liquidity)
 
