@@ -12,6 +12,11 @@ kramdown:
 plugins:
   - jekyll-sitemap
 
+social:
+  x: "https://x.com/KeMMFCalculator"
+  facebook: "https://web.facebook.com/profile.php?id=61593884837879"
+  whatsapp: "https://whatsapp.com/channel/0029VbDKp0e6WaKm4jGgZS3A"
+
 exclude:
   - vendor
   - node_modules

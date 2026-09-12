@@ -105,7 +105,9 @@ layout: default
   {% endif %}
 </div>
 
-    <section class="related-reading" aria-label="Related reading">
+    {% include social-follow.html %}
+	
+	<section class="related-reading" aria-label="Related reading">
       <h2 class="related-reading__title">Related reading</h2>
       {% include related_posts.html show_title=false %}
     </section>

@@ -1717,3 +1717,108 @@ mjx-container[display="true"] {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Social Media Follow */
+.social-follow {
+  margin: 12px 0 4px;
+  padding: 6px 14px;
+
+  /* No visible container */
+  border: none;
+  border-radius: 0;
+  background: transparent;
+
+  text-align: left;
+}
+
+.social-follow-title {
+  display: block;
+  margin: 0 0 10px;
+  color: #1e293b;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.social-follow-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-follow-btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  border-radius: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  text-decoration: none;
+
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.social-follow-btn:hover {
+  color: #fff;
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.social-follow-btn svg {
+  display: block;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.social-follow-x svg {
+  width: 22px;
+  height: 22px;
+}
+
+.social-follow-facebook svg {
+  width: 35px;
+  height: 35px;
+}
+
+.social-follow-whatsapp svg {
+  width: 40px;
+  height: 40px;
+}
+
+.social-follow-x {
+  background: #000;
+}
+
+.social-follow-facebook {
+  background: #1877f2;
+}
+
+.social-follow-whatsapp {
+  background: #25d366;
+}
+
+@media (max-width: 600px) {
+  .social-follow {
+    margin: 20px 0 14px;
+    padding: 14px 16px;
+  }
+
+  .social-follow-title {
+    font-size: 17px;
+  }
+
+  .social-follow-links {
+    gap: 9px;
+  }
+
+  .social-follow-btn {
+    width: 48px;
+    height: 48px;
+  }
+}
