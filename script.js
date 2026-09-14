@@ -96,6 +96,8 @@ async function loadProviders() {
       payoutFrequency,
       lastUpdated,
       currency,
+      status,
+      statusAsOf,
     ] = row.split(",").map((v) => (v ?? "").trim());
 
     const rateNum = parseFloat(rate);
@@ -111,11 +113,17 @@ async function loadProviders() {
       lastUpdated,
       updatedTs: parseUpdatedDate(lastUpdated),
       currency,
+      status: status || "Active",
+      statusAsOf,
+      isInactive: (status || "").toLowerCase() === "inactive",
     });
 
     const opt = document.createElement("option");
     opt.value = idx;
-    opt.textContent = `${provider} - ${fundName} (${rateNum}%) [${currency}]`;
+    const currentFund = funds[funds.length - 1];
+    opt.textContent = currentFund.isInactive
+      ? `${provider} - ${fundName} (${rateNum}%) [${currency}]`
+      : `${provider} - ${fundName} (${rateNum}%) [${currency}]`;
     select.appendChild(opt);
   });
 
@@ -155,7 +163,9 @@ function generateComparisonChart() {
       latestByKey.set(key, f);
     }
   }
-  const latestFunds = Array.from(latestByKey.values());
+  const latestFunds = Array.from(latestByKey.values()).filter(
+    (f) => !f.isInactive
+  );
   if (!latestFunds.length) return;
 
   // 2) Group by provider, but store ALL KES funds + ALL USD funds (not just one)
@@ -383,6 +393,13 @@ function calculateReturns() {
   }
 
   const fund = funds[idx];
+
+  if (fund.isInactive) {
+    const asOf = fund.statusAsOf ? ` as of ${fund.statusAsOf}` : "";
+    results.innerHTML = `<p><strong>Inactive${asOf}.</strong></p>`;
+    return;
+  }
+
   const rate = fund.rate / 100;
 
   const initial = parseFloat($id("initial").value);
