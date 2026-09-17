@@ -1,8 +1,9 @@
 ---
 layout: default
 title: "Categories"
-description: "Browse Kenya MMF Calculator categories including money market funds, investing, NSE, IPOs, tax, REITs, stocks, and business finance guides."
+description: "Browse Kenya MMF Calculator categories and free tools covering money market funds, investing, NSE, tax, personal finance and business."
 permalink: /categories/
+last_modified_at: "2026-09-17"
 ---
 
 <nav class="cats-nav" aria-label="Category navigation">
@@ -11,6 +12,14 @@ permalink: /categories/
 </nav>
 
 <div class="cat-grid" aria-label="All categories">
+  <a class="cat-card" href="{{ '/calculators/' | relative_url }}">
+    <div class="cat-card__top">
+      <div class="cat-card__title">Calculators &amp; Tools</div>
+      <div class="cat-card__count">{{ site.data.calculators | size }}</div>
+    </div>
+    <div class="cat-card__desc">Free calculators and interactive tools for investments, currencies, business decisions and more</div>
+  </a>
+
   {% assign cats = site.categories | sort %}
   {% for c in cats %}
 {% assign name = c[0] %}

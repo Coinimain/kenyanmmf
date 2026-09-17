@@ -1,0 +1,17 @@
+- title: "Money Market Fund Calculator"
+  type: "Investment calculator"
+  description: "Estimate Kenyan money market fund returns, compare providers and see how contributions can grow over time."
+  url: "/"
+  cta: "Calculate MMF returns"
+
+- title: "OMR to KES Currency Converter"
+  type: "Currency converter"
+  description: "Convert Omani rials to Kenyan shillings using the latest available exchange rate and check common OMR amounts."
+  url: "/blog/oman-currency-to-kenyan-shillings/#omrKesConverter"
+  cta: "Convert OMR to KES"
+
+- title: "AI Readiness Score Calculator"
+  type: "Business assessment"
+  description: "Score a business across strategy, people, data, governance, technology and ROI, then get a practical action plan."
+  url: "/ai-readiness-calculator/"
+  cta: "Check AI readiness"
