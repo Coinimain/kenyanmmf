@@ -126,7 +126,7 @@ During Q2, Standard Investment Trust Fund grew by **23%**, adding about **KSh 35
 
 The wider Special Funds category was expanding just as quickly. Its AUM rose from KSh 203.5 billion to **KSh 252.8 billion** in one quarter, a **24% jump**. Special Funds now hold 26.6% of Kenya’s CIS assets, compared with 48.5% held by Money Market Funds.
 
-Mansa-X is the main force behind that growth. The four Mansa-X funds account for almost three-quarters of all Special Fund money in Kenya.
+Mansa-X is the main force behind that growth. The four Mansa-X funds account for almost three-quarters of all Special Fund money in Kenya. Our guide to [Special Funds in Kenya]({{ '/blog/special-funds-in-kenya/' | relative_url }}) compares the wider market, including Oak, Madison, Britam, Old Mutual, Etica and Arvocap.
 
 ## Mansa-X returns from 2019 to 2026
 
