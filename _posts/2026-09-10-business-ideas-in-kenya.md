@@ -305,7 +305,7 @@ The best choice changes with the money available.
 | KSh300,000–KSh1 million | Food outlet, car wash, daycare, mini shop, M-Pesa sub-agent | Stronger daily or monthly cash flow, with higher fixed costs |
 | Above KSh1 million | Distribution, hardware, larger event-hire operation | Scale, stock depth and business-to-business sales |
 
-Do not force the capital into the largest business it can open. Choose the smallest model that proves demand.
+Do not force the capital into the largest business it can open. Choose the smallest model that proves demand. If KSh50,000 is your ceiling, use the detailed guide to [15 businesses to start with KSh50,000 in Kenya](/blog/business-ideas-in-kenya-with-50000/). It includes itemised launch budgets, working-capital reserves and the businesses that do not fit the amount.
 
 ## How to calculate the real startup capital
 
