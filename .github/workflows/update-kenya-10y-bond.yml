@@ -1,10 +1,11 @@
-name: Update Kenya 10-Year Bond Yield
+name: Update Kenya 10Y bond yield from NSE
 
 on:
-  workflow_dispatch: {}
   schedule:
-    # First day of every month at 9:15 a.m. Kenya time (06:15 UTC).
-    - cron: "15 6 1 * *"
+    # GitHub cron is UTC. 06:00 UTC = 09:00 EAT.
+    # The guard below allows only the first Thursday of each month.
+    - cron: "0 6 * * 4"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,119 +15,62 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  update-bond-yield:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Download Kenya 10-year yield history and latest observation
-        env:
-          STOOQ_URL: "https://stooq.com/q/d/l/?s=10ykey.b&i=d"
-          HISTORY_PATH: kenya-10y-bond-history.csv
-          LATEST_PATH: kenya-10y-bond-data.csv
+      - name: First Thursday guard
+        id: guard
+        shell: bash
         run: |
-          set -euo pipefail
-
-          RAW_PATH="$RUNNER_TEMP/kenya-10y-history.csv"
-
-          curl --fail --location --retry 3 --retry-delay 5 \
-            --user-agent "KenyaMMFCalculator/1.0 (+https://kenyammfcalculator.co.ke/)" \
-            "$STOOQ_URL" \
-            --output "$RAW_PATH"
-
-          if [ ! -s "$RAW_PATH" ]; then
-            echo "ERROR: Stooq returned an empty file."
-            exit 1
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run: bypassing first-Thursday guard."
+            exit 0
           fi
 
-          python3 - <<'PY'
-          import csv
-          import os
-          from datetime import datetime
-          from pathlib import Path
+          day_of_month="$(TZ=Africa/Nairobi date +%-d)"
+          if [ "$day_of_month" -le 7 ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "First Thursday window confirmed in EAT."
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Not the first Thursday of the month; exiting without changes."
+          fi
 
-          raw_path = Path(os.environ["RUNNER_TEMP"]) / "kenya-10y-history.csv"
-          history_path = Path(os.environ["HISTORY_PATH"])
-          latest_path = Path(os.environ["LATEST_PATH"])
-          expected_columns = ["Date", "Open", "High", "Low", "Close"]
+      - name: Set up Python
+        if: steps.guard.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
-          observations = []
-
-          with raw_path.open("r", encoding="utf-8-sig", newline="") as source:
-              reader = csv.DictReader(source)
-
-              if reader.fieldnames != expected_columns:
-                  raise SystemExit(
-                      "ERROR: Unexpected Stooq response. "
-                      f"Expected {expected_columns}, received {reader.fieldnames}."
-                  )
-
-              for row in reader:
-                  try:
-                      observation_date = datetime.strptime(
-                          row["Date"].strip(), "%Y-%m-%d"
-                      ).date()
-                      prices = [float(row[column].strip()) for column in expected_columns[1:]]
-                  except (AttributeError, TypeError, ValueError):
-                      continue
-
-                  yield_percent = prices[-1]
-                  if 0 < yield_percent < 100:
-                      observations.append((observation_date, prices))
-
-          if not observations:
-              raise SystemExit("ERROR: No valid bond-yield observations were found.")
-
-          observations.sort(key=lambda item: item[0])
-          latest_date, latest_prices = observations[-1]
-          latest_yield = latest_prices[-1]
-
-          history_temporary_path = history_path.with_suffix(history_path.suffix + ".new")
-          latest_temporary_path = latest_path.with_suffix(latest_path.suffix + ".new")
-
-          with history_temporary_path.open("w", encoding="utf-8", newline="") as output:
-              writer = csv.writer(output, lineterminator="\n")
-              writer.writerow(expected_columns)
-              for observation_date, prices in observations:
-                  writer.writerow([
-                      observation_date.isoformat(),
-                      *[format(value, ".12g") for value in prices],
-                  ])
-
-          with latest_temporary_path.open("w", encoding="utf-8", newline="") as output:
-              writer = csv.writer(output, lineterminator="\n")
-              writer.writerow(["Date", "Yield", "Symbol", "Source", "Source URL"])
-              writer.writerow([
-                  latest_date.isoformat(),
-                  f"{latest_yield:.3f}",
-                  "10YKEY.B",
-                  "Stooq",
-                  os.environ["STOOQ_URL"],
-              ])
-
-          history_temporary_path.replace(history_path)
-          latest_temporary_path.replace(latest_path)
-          print(f"Saved {len(observations)} historical observations.")
-          print(f"Latest Kenya 10-year yield: {latest_yield:.3f}% on {latest_date}")
-          PY
-
-      - name: Commit and push if changed
+      - name: Install PDF text utility
+        if: steps.guard.outputs.run == 'true'
         run: |
-          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
 
-          HISTORY_PATH="kenya-10y-bond-history.csv"
-          LATEST_PATH="kenya-10y-bond-data.csv"
+      - name: Update Kenya 10Y yield
+        if: steps.guard.outputs.run == 'true'
+        env:
+          TZ: Africa/Nairobi
+        run: python scripts/update_kenya_10y_from_nse.py
 
-          if [ -z "$(git status --porcelain -- "$HISTORY_PATH" "$LATEST_PATH")" ]; then
-            echo "No bond-data changes detected. Exiting."
+      - name: Commit updated data
+        if: steps.guard.outputs.run == 'true'
+        shell: bash
+        run: |
+          git add kenya-10y-bond-data.csv kenya-10y-bond-history.csv special-funds-data.csv
+
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add "$HISTORY_PATH" "$LATEST_PATH"
-          git commit -m "Update Kenya 10-year bond data"
+          git commit -m "chore(data): update Kenya 10Y bond yield from NSE"
           git push
