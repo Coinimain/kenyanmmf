@@ -76,6 +76,24 @@ class Estimate:
     upper: Observation
 
 
+@dataclass(frozen=True)
+class OCRWord:
+    text: str
+    left: int
+    top: int
+    width: int
+    height: int
+    confidence: float
+
+    @property
+    def right(self) -> int:
+        return self.left + self.width
+
+    @property
+    def center_y(self) -> float:
+        return self.top + self.height / 2
+
+
 def latest_wednesday(anchor: date) -> date:
     # Monday=0 ... Wednesday=2
     delta = (anchor.weekday() - 2) % 7
@@ -125,18 +143,12 @@ def _pdftotext(pdf_path: Path, txt_path: Path) -> str:
     return txt_path.read_text(encoding="utf-8", errors="replace")
 
 
-def _ocr_pdf(pdf_path: Path, tmpdir: Path) -> str:
-    """OCR the PDF only when its embedded text layer is unusable.
-
-    NSE sometimes publishes PDFs whose visible table is fine but whose embedded
-    text does not preserve security codes. The monthly workflow can afford an OCR
-    fallback, and we still refuse to write data unless the parsed curve passes all
-    downstream sanity checks.
-    """
+def _render_pdf_pages(pdf_path: Path, tmpdir: Path, dpi: int = 360) -> list[Path]:
+    """Render the NSE PDF to grayscale PNG pages for positional OCR."""
     prefix = tmpdir / "nse-page"
     try:
         subprocess.run(
-            ["pdftoppm", "-r", "220", "-png", str(pdf_path), str(prefix)],
+            ["pdftoppm", "-r", str(dpi), "-gray", "-png", str(pdf_path), str(prefix)],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -150,29 +162,342 @@ def _ocr_pdf(pdf_path: Path, tmpdir: Path) -> str:
     pages = sorted(tmpdir.glob("nse-page-*.png"))
     if not pages:
         raise RuntimeError("OCR fallback could not render any PDF pages")
+    return pages
 
-    output: list[str] = []
-    for page in pages:
+
+def _tesseract_words(page: Path, psm: int) -> list[OCRWord]:
+    """Return OCR words with coordinates using Tesseract TSV output."""
+    try:
+        proc = subprocess.run(
+            ["tesseract", str(page), "stdout", "-l", "eng", "--psm", str(psm), "tsv"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError("tesseract is required for NSE OCR fallback") from exc
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"tesseract OCR failed on {page.name}: {exc.stderr.strip()}") from exc
+
+    reader = csv.DictReader(io.StringIO(proc.stdout), delimiter="\t")
+    words: list[OCRWord] = []
+    for row in reader:
+        text_value = (row.get("text") or "").strip()
+        if not text_value:
+            continue
         try:
-            proc = subprocess.run(
-                [
-                    "tesseract", str(page), "stdout", "-l", "eng", "--psm", "6",
-                    "-c", "preserve_interword_spaces=1",
-                ],
-                check=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
+            conf = float(row.get("conf") or -1)
+            left = int(row.get("left") or 0)
+            top = int(row.get("top") or 0)
+            width = int(row.get("width") or 0)
+            height = int(row.get("height") or 0)
+        except ValueError:
+            continue
+        # Keep low-ish confidence numerics because table rules hurt Tesseract's
+        # confidence even when the digits themselves are usable.
+        if conf < 12 or width <= 0 or height <= 0:
+            continue
+        words.append(OCRWord(text_value, left, top, width, height, conf))
+    return words
+
+
+def _cluster_visual_lines(words: list[OCRWord]) -> list[list[OCRWord]]:
+    """Group OCR words by their visual baseline rather than OCR text flow."""
+    if not words:
+        return []
+    heights = sorted(w.height for w in words if w.height > 0)
+    median_height = heights[len(heights) // 2] if heights else 18
+    tolerance = max(6.0, min(22.0, median_height * 0.62))
+
+    lines: list[list[OCRWord]] = []
+    centers: list[float] = []
+    for word in sorted(words, key=lambda w: (w.center_y, w.left)):
+        best_idx = None
+        best_dist = None
+        # Only the last few clusters can plausibly match after sorting by y.
+        for idx in range(max(0, len(lines) - 4), len(lines)):
+            dist = abs(word.center_y - centers[idx])
+            if dist <= tolerance and (best_dist is None or dist < best_dist):
+                best_idx = idx
+                best_dist = dist
+        if best_idx is None:
+            lines.append([word])
+            centers.append(word.center_y)
+        else:
+            lines[best_idx].append(word)
+            centers[best_idx] = statistics.mean(w.center_y for w in lines[best_idx])
+
+    for line in lines:
+        line.sort(key=lambda w: w.left)
+    return sorted(lines, key=lambda line: statistics.mean(w.center_y for w in line))
+
+
+def _line_text(words: list[OCRWord]) -> str:
+    return " ".join(w.text for w in words)
+
+
+def _heading_normalized(text: str) -> str:
+    return re.sub(r"[^A-Z0-9]+", " ", text.upper()).strip()
+
+
+def _looks_like_fixed_heading(text: str) -> bool:
+    u = _heading_normalized(text)
+    # Live September PDFs OCR "FIXED" as "FKED", so do not require exact spelling.
+    return (
+        "KENYA" in u
+        and "TREASURY" in u
+        and "BOND" in u
+        and ("FIXED" in u or "FKED" in u or "RATE" in u)
+        and "50" in u
+        and "BELOW" not in u
+    )
+
+
+def _looks_like_fixed_section_end(text: str) -> bool:
+    u = _heading_normalized(text)
+    return (
+        "INFRASTRUCTURE" in u
+        or ("SELL" in u and "BUY" in u and "BACK" in u)
+        or ("BELOW" in u and "50" in u and "MILLION" in u)
+        or "CORPORATE BONDS" in u
+    )
+
+
+def _merge_close_words(words: list[OCRWord]) -> list[tuple[int, int, str]]:
+    """Merge OCR fragments that belong to one printed numeric cell."""
+    if not words:
+        return []
+    heights = sorted(w.height for w in words if w.height > 0)
+    median_height = heights[len(heights) // 2] if heights else 18
+    max_gap = max(5, int(median_height * 0.42))
+
+    groups: list[list[OCRWord]] = []
+    for word in sorted(words, key=lambda w: w.left):
+        # Ignore table-border glyphs by themselves.
+        if re.fullmatch(r"[|_\[\]{}()]+", word.text):
+            continue
+        if not groups:
+            groups.append([word])
+            continue
+        prev = groups[-1][-1]
+        gap = word.left - prev.right
+        # Merge tiny OCR fragments such as "1" + "2.7000", but do not bridge
+        # normal table-cell gaps.
+        if gap <= max_gap:
+            groups[-1].append(word)
+        else:
+            groups.append([word])
+
+    merged: list[tuple[int, int, str]] = []
+    for group in groups:
+        merged.append((group[0].left, group[-1].right, "".join(w.text for w in group)))
+    return merged
+
+
+def _parse_ocr_number(token: str) -> float | None:
+    """Parse one OCR numeric cell, including common comma/decimal confusion."""
+    raw = token.strip()
+    # Only apply letter-to-digit substitutions to strings that already look numeric.
+    if re.search(r"\d", raw):
+        raw = raw.replace("O", "0").replace("o", "0")
+        raw = raw.replace("I", "1").replace("l", "1")
+    raw = re.sub(r"[^0-9.,-]", "", raw)
+    if not raw or raw in {"-", ".", ","}:
+        return None
+
+    # OCR often turns the decimal point in rates into a comma: 12,7000.
+    if "." not in raw and raw.count(",") == 1:
+        left, right = raw.split(",", 1)
+        if left.isdigit() and right.isdigit() and len(right) == 4 and int(left) <= 250:
+            raw = left + "." + right
+        elif left.isdigit() and right.isdigit() and len(right) == 3:
+            raw = left + right
+    elif raw.count(",") >= 1:
+        raw = raw.replace(",", "")
+
+    try:
+        return float(raw)
+    except ValueError:
+        return None
+
+
+def _numeric_cells(words: list[OCRWord]) -> list[tuple[int, float, str]]:
+    cells: list[tuple[int, float, str]] = []
+    for left, _right, token in _merge_close_words(words):
+        value = _parse_ocr_number(token)
+        if value is not None:
+            cells.append((left, value, token))
+    return cells
+
+
+def _row_observation_from_words(
+    words: list[OCRWord], page_width: int, row_id: str
+) -> Observation | None:
+    """Parse a traded fixed-rate row from its visual column order.
+
+    We intentionally do not depend on reading the FXD code. The live NSE image PDFs
+    OCR codes such as FXD1/2019/15Yr very poorly, while the numeric columns are much
+    more reliable. The table itself gives Days to Maturity, Coupon and Traded Yield,
+    which are sufficient for the 10-year interpolation.
+    """
+    cells = _numeric_cells(words)
+    if len(cells) < 4:
+        return None
+
+    # Locate coupon -> traded yield -> price by value and left-to-right order.
+    # Requiring a price after the two rates distinguishes actively traded rows
+    # from rows that only show coupon and previous price.
+    rate_window: tuple[int, int, float, float] | None = None
+    for i, (x1, coupon, _t1) in enumerate(cells):
+        if not (5.0 <= coupon <= 25.0) or x1 < page_width * 0.42:
+            continue
+        for j in range(i + 1, min(len(cells), i + 4)):
+            x2, traded_yield, _t2 = cells[j]
+            if not (5.0 <= traded_yield <= 25.0):
+                continue
+            if x2 <= x1:
+                continue
+            price_found = any(
+                x3 > x2 and 45.0 <= price <= 250.0
+                for x3, price, _t3 in cells[j + 1 : j + 5]
             )
-        except FileNotFoundError as exc:
-            raise RuntimeError("tesseract is required for NSE OCR fallback") from exc
-        except subprocess.CalledProcessError as exc:
-            raise RuntimeError(f"tesseract OCR failed on {page.name}: {exc.stderr.strip()}") from exc
-        output.append(proc.stdout)
-    return "\n".join(output)
+            if price_found:
+                rate_window = (x1, x2, coupon, traded_yield)
+                break
+        if rate_window is not None:
+            break
+    if rate_window is None:
+        return None
+
+    coupon_x, _yield_x, _coupon, traded_yield = rate_window
+
+    # Days to Maturity is the last moderate-sized integer before the coupon columns.
+    # Exclude four-digit calendar years; outstanding values are generally far above
+    # this range and therefore drop out naturally.
+    # If the outstanding-value cell OCRs cleanly, use its position as a hard
+    # right boundary for Days to Maturity. This prevents a small outstanding
+    # balance such as 9,500.00 from being mistaken for 9,500 days.
+    outstanding_x_candidates = [
+        x
+        for x, value, token in cells
+        if x < coupon_x
+        and x > page_width * 0.25
+        and value > 250.0
+        and "." in token
+    ]
+    outstanding_x = max(outstanding_x_candidates) if outstanding_x_candidates else None
+
+    day_candidates: list[tuple[int, int]] = []
+    for x, value, token in cells:
+        if x >= coupon_x or x < page_width * 0.18:
+            continue
+        if outstanding_x is not None and x >= outstanding_x:
+            continue
+        if outstanding_x is None and x > page_width * 0.49:
+            continue
+        rounded = int(round(value))
+        if abs(value - rounded) > 0.001:
+            continue
+        if not (30 <= rounded <= 15000):
+            continue
+        if 2000 <= rounded <= 2099:
+            continue
+        # Ignore very large comma-grouped transaction values.
+        if token.count(",") >= 2:
+            continue
+        day_candidates.append((x, rounded))
+    if not day_candidates:
+        return None
+
+    days = max(day_candidates, key=lambda item: item[0])[1]
+    remaining = days / 365.2425
+    if not (0.08 <= remaining <= 40.0):
+        return None
+
+    text = _line_text(words)
+    # Best-effort label for logs only. It is not used to decide whether the row is FXD.
+    issue_match = re.search(r"[A-Za-z0-9]{2,8}[\/|][A-Za-z0-9\/|.%_-]{4,25}", text)
+    code = issue_match.group(0).upper() if issue_match else f"NSE-FXD-{row_id}-{days}D"
+    return Observation(code=code, remaining_years=remaining, yield_pct=traded_yield)
+
+
+def _ocr_positional_observations(pdf_path: Path, tmpdir: Path) -> list[Observation]:
+    """Extract fixed-rate traded rows from image-only NSE PDFs using TSV positions."""
+    pages = _render_pdf_pages(pdf_path, tmpdir)
+
+    for psm in (11, 6):
+        observations: list[Observation] = []
+        in_fixed_section = False
+        saw_fixed_heading = False
+        diagnostic_rows: list[str] = []
+
+        for page_no, page in enumerate(pages, start=1):
+            words = _tesseract_words(page, psm=psm)
+            if not words:
+                continue
+            page_width = max(w.right for w in words)
+            lines = _cluster_visual_lines(words)
+
+            for line_no, line in enumerate(lines, start=1):
+                text = _line_text(line)
+                # OCR may split a long section heading across adjacent visual lines.
+                next_text = _line_text(lines[line_no]) if line_no < len(lines) else ""
+                heading_text = text + " " + next_text
+
+                if _looks_like_fixed_heading(heading_text):
+                    in_fixed_section = True
+                    saw_fixed_heading = True
+                    continue
+                # Do not include next_text here: the next visual line may be the
+                # infrastructure heading, and the current line can still be the
+                # final valid FXD trade row.
+                if in_fixed_section and _looks_like_fixed_section_end(text):
+                    in_fixed_section = False
+                    continue
+                if not in_fixed_section:
+                    continue
+
+                obs = _row_observation_from_words(
+                    line, page_width, row_id=f"P{page_no}R{line_no}"
+                )
+                if obs is not None:
+                    observations.append(obs)
+                    if len(diagnostic_rows) < 8:
+                        diagnostic_rows.append(
+                            f"{obs.code}: {obs.remaining_years:.2f}y @ {obs.yield_pct:.4f}% :: "
+                            f"{re.sub(r'\s+', ' ', text)[:260]}"
+                        )
+
+        if observations:
+            print(
+                f"Positional OCR (psm {psm}) recovered {len(observations)} traded "
+                "fixed-rate Treasury row(s)."
+            )
+            for row in diagnostic_rows:
+                print(f"  OCR row: {row}")
+            return observations
+
+        print(
+            f"Positional OCR (psm {psm}) recovered 0 traded rows; "
+            f"fixed-rate heading detected={saw_fixed_heading}."
+        )
+
+    raise ValueError("positional OCR found no usable traded fixed-rate Treasury rows")
 
 
 def pdf_to_text(pdf_bytes: bytes) -> str:
+    """Extract embedded PDF text only. Image-only PDFs return an empty string."""
+    with tempfile.TemporaryDirectory() as tmp:
+        tmpdir = Path(tmp)
+        pdf_path = tmpdir / "bond-prices.pdf"
+        txt_path = tmpdir / "bond-prices.txt"
+        pdf_path.write_bytes(pdf_bytes)
+        return _pdftotext(pdf_path, txt_path)
+
+
+def observations_from_pdf(pdf_bytes: bytes, as_of: date) -> list[Observation]:
+    """Use embedded FXD text when available, otherwise positional OCR."""
     with tempfile.TemporaryDirectory() as tmp:
         tmpdir = Path(tmp)
         pdf_path = tmpdir / "bond-prices.pdf"
@@ -183,23 +508,13 @@ def pdf_to_text(pdf_bytes: bytes) -> str:
         embedded_matches = len(list(BOND_RE.finditer(embedded)))
         if embedded_matches:
             print(f"Embedded PDF text contains {embedded_matches} FXD code(s).")
-            return embedded
+            return parse_observations(embedded, as_of)
 
-        print("Embedded PDF text contains 0 FXD codes; using OCR fallback.")
-        ocr = _ocr_pdf(pdf_path, tmpdir)
-        ocr_matches = len(list(BOND_RE.finditer(ocr)))
-        print(f"OCR text contains {ocr_matches} FXD code(s).")
-
-        if ocr_matches:
-            return ocr
-
-        # Keep the useful failure diagnostics in Actions. These snippets are from
-        # a public NSE document and make future format changes diagnosable.
-        embedded_sample = re.sub(r"\s+", " ", embedded[:1800]).strip()
-        ocr_sample = re.sub(r"\s+", " ", ocr[:1800]).strip()
-        print(f"Embedded-text sample: {embedded_sample[:1800]}")
-        print(f"OCR-text sample: {ocr_sample[:1800]}")
-        return ocr
+        print(
+            "Embedded PDF text contains 0 FXD codes; using positional OCR on "
+            "Days-to-Maturity and Traded-Yield columns."
+        )
+        return _ocr_positional_observations(pdf_path, tmpdir)
 
 
 def decimal_year(day: date) -> float:
@@ -528,8 +843,7 @@ def get_estimate(anchor: date) -> Estimate:
         print(f"Trying {url}")
         try:
             pdf = download_pdf(url)
-            text = pdf_to_text(pdf)
-            observations = parse_observations(text, wed)
+            observations = observations_from_pdf(pdf, wed)
             estimate, lower, upper = interpolate_10y(observations)
             return Estimate(wed, estimate, url, lower, upper)
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, RuntimeError) as exc:
