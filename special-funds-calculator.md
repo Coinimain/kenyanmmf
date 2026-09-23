@@ -136,11 +136,11 @@ last_modified_at: "2026-09-23"
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1110082069590452"
          crossorigin="anonymous"></script>
     <ins class="adsbygoogle"
-         style="display:block; text-align:center;"
-         data-ad-layout="in-article"
-         data-ad-format="fluid"
+         style="display:block"
          data-ad-client="ca-pub-1110082069590452"
-         data-ad-slot="5787819733"></ins>
+         data-ad-slot="2529128788"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
