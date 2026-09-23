@@ -54,6 +54,8 @@ That growth has pushed Mansa-X into the centre of Kenya’s investment conversat
 
 Here is how the fund works, what it has earned, what it costs and how it compares with an MMF.
 
+Use the [Special Funds Calculator]({{ '/special-funds-calculator/' | relative_url }}) to test Mansa-X's published annualised return against your own amount, monthly top-up and investment period.
+
 ## Mansa-X Special Fund at a glance
 
 | Feature | Mansa-X details |

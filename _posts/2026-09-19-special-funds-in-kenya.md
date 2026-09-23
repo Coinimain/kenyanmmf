@@ -53,6 +53,8 @@ Mansa-X created the scale behind this boom. Oak is emerging as the strongest cha
 
 Here is what Special Funds in Kenya are, which funds are the largest and how to decide whether one belongs in your portfolio.
 
+Use the [Special Funds Calculator]({{ '/special-funds-calculator/' | relative_url }}) to project a lump sum, monthly contributions and an editable net annual return across the 42 funds in the CMA's Q2 2026 list.
+
 ## Special Funds in Kenya at a glance
 
 | Market measure | Q2 2026 position |

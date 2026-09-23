@@ -1,0 +1,113 @@
+name: Update Kenya 10-Year Bond Yield
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # First day of every month at 9:15 a.m. Kenya time (06:15 UTC).
+    - cron: "15 6 1 * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-kenya-10y-bond
+  cancel-in-progress: false
+
+jobs:
+  update-bond-yield:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download and extract latest Kenya 10-year yield
+        env:
+          STOOQ_URL: "https://stooq.com/q/d/l/?s=10ykey.b&i=d"
+          OUT_PATH: kenya-10y-bond-data.csv
+        run: |
+          set -euo pipefail
+
+          RAW_PATH="$RUNNER_TEMP/kenya-10y-history.csv"
+
+          curl --fail --location --retry 3 --retry-delay 5 \
+            --user-agent "KenyaMMFCalculator/1.0 (+https://kenyammfcalculator.co.ke/)" \
+            "$STOOQ_URL" \
+            --output "$RAW_PATH"
+
+          if [ ! -s "$RAW_PATH" ]; then
+            echo "ERROR: Stooq returned an empty file."
+            exit 1
+          fi
+
+          python3 - <<'PY'
+          import csv
+          import os
+          from datetime import datetime
+          from pathlib import Path
+
+          raw_path = Path(os.environ["RUNNER_TEMP"]) / "kenya-10y-history.csv"
+          out_path = Path(os.environ["OUT_PATH"])
+          expected_columns = ["Date", "Open", "High", "Low", "Close"]
+
+          observations = []
+
+          with raw_path.open("r", encoding="utf-8-sig", newline="") as source:
+              reader = csv.DictReader(source)
+
+              if reader.fieldnames != expected_columns:
+                  raise SystemExit(
+                      "ERROR: Unexpected Stooq response. "
+                      f"Expected {expected_columns}, received {reader.fieldnames}."
+                  )
+
+              for row in reader:
+                  try:
+                      observation_date = datetime.strptime(
+                          row["Date"].strip(), "%Y-%m-%d"
+                      ).date()
+                      yield_percent = float(row["Close"].strip())
+                  except (AttributeError, TypeError, ValueError):
+                      continue
+
+                  if 0 < yield_percent < 100:
+                      observations.append((observation_date, yield_percent))
+
+          if not observations:
+              raise SystemExit("ERROR: No valid bond-yield observations were found.")
+
+          latest_date, latest_yield = max(observations, key=lambda item: item[0])
+          temporary_path = out_path.with_suffix(out_path.suffix + ".new")
+
+          with temporary_path.open("w", encoding="utf-8", newline="") as output:
+              writer = csv.writer(output, lineterminator="\n")
+              writer.writerow(["Date", "Yield", "Symbol", "Source", "Source URL"])
+              writer.writerow([
+                  latest_date.isoformat(),
+                  f"{latest_yield:.3f}",
+                  "10YKEY.B",
+                  "Stooq",
+                  os.environ["STOOQ_URL"],
+              ])
+
+          temporary_path.replace(out_path)
+          print(f"Latest Kenya 10-year yield: {latest_yield:.3f}% on {latest_date}")
+          PY
+
+      - name: Commit and push if changed
+        run: |
+          set -euo pipefail
+
+          OUT_PATH="kenya-10y-bond-data.csv"
+
+          if [ -z "$(git status --porcelain -- "$OUT_PATH")" ]; then
+            echo "No yield change detected. Exiting."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "$OUT_PATH"
+          git commit -m "Update Kenya 10-year bond yield"
+          git push

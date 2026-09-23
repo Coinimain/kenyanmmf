@@ -4,6 +4,12 @@
   url: "/"
   cta: "Calculate MMF returns"
 
+- title: "Special Funds Calculator"
+  type: "Investment calculator"
+  description: "Project the value of a lump sum and monthly contributions in Mansa-X, Oak, Etica and other Special Funds in Kenya."
+  url: "/special-funds-calculator/"
+  cta: "Project Special Fund returns"
+
 - title: "OMR to KES Currency Converter"
   type: "Currency converter"
   description: "Convert Omani rials to Kenyan shillings using the latest available exchange rate and check common OMR amounts."
