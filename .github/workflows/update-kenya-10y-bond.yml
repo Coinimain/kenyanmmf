@@ -47,11 +47,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install PDF text utility
+      - name: Install PDF text and OCR utilities
         if: steps.guard.outputs.run == 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y poppler-utils
+          sudo apt-get install -y poppler-utils tesseract-ocr
 
       - name: Update Kenya 10Y yield
         if: steps.guard.outputs.run == 'true'

@@ -40,10 +40,11 @@ SPEARHEAD_SPREAD = 3.0
 MAX_WEDNESDAY_FALLBACKS = 5
 USER_AGENT = "Mozilla/5.0 (compatible; KenyaMMFCalculator/1.0; +https://kenyammfcalculator.co.ke/)"
 
-# NSE's PDF text layer is not perfectly stable.  Allow spaces around slashes and
-# several tenor suffix styles (10Yr, 10Yrs, 010, etc.).
+# NSE PDFs are inconsistent when converted to text, and OCR may insert spaces
+# between letters. Accept FXD, F X D, optional series digits, and tenor suffixes.
 BOND_RE = re.compile(
-    r"\b(FXD\d*)\s*/\s*(\d{4})\s*/\s*(\d{1,3}(?:\.\d+)?)\s*(?:YRS?|YEARS?)?\b",
+    r"(?<![A-Z0-9])F\s*X\s*D\s*(\d*)\s*/\s*(\d{4})\s*/\s*"
+    r"(\d{1,3}(?:\.\d+)?)\s*(?:Y\s*R\s*S?|Y\s*E\s*A\s*R\s*S?)?\b",
     re.I,
 )
 NUMBER_RE = re.compile(r"(?<![\d.])(\d{1,3}(?:\.\d{1,6})?)(?:\s*%)?")
@@ -108,24 +109,97 @@ def download_pdf(url: str) -> bytes:
     return body
 
 
-def pdf_to_text(pdf_bytes: bytes) -> str:
-    with tempfile.TemporaryDirectory() as tmp:
-        pdf_path = Path(tmp) / "bond-prices.pdf"
-        txt_path = Path(tmp) / "bond-prices.txt"
-        pdf_path.write_bytes(pdf_bytes)
+def _pdftotext(pdf_path: Path, txt_path: Path) -> str:
+    try:
+        subprocess.run(
+            ["pdftotext", "-layout", "-nopgbrk", str(pdf_path), str(txt_path)],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError("pdftotext is required (install poppler-utils)") from exc
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"pdftotext failed: {exc.stderr.strip()}") from exc
+    return txt_path.read_text(encoding="utf-8", errors="replace")
+
+
+def _ocr_pdf(pdf_path: Path, tmpdir: Path) -> str:
+    """OCR the PDF only when its embedded text layer is unusable.
+
+    NSE sometimes publishes PDFs whose visible table is fine but whose embedded
+    text does not preserve security codes. The monthly workflow can afford an OCR
+    fallback, and we still refuse to write data unless the parsed curve passes all
+    downstream sanity checks.
+    """
+    prefix = tmpdir / "nse-page"
+    try:
+        subprocess.run(
+            ["pdftoppm", "-r", "220", "-png", str(pdf_path), str(prefix)],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError("pdftoppm is required (install poppler-utils)") from exc
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"pdftoppm failed: {exc.stderr.strip()}") from exc
+
+    pages = sorted(tmpdir.glob("nse-page-*.png"))
+    if not pages:
+        raise RuntimeError("OCR fallback could not render any PDF pages")
+
+    output: list[str] = []
+    for page in pages:
         try:
-            subprocess.run(
-                ["pdftotext", "-layout", "-nopgbrk", str(pdf_path), str(txt_path)],
+            proc = subprocess.run(
+                [
+                    "tesseract", str(page), "stdout", "-l", "eng", "--psm", "6",
+                    "-c", "preserve_interword_spaces=1",
+                ],
                 check=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
             )
         except FileNotFoundError as exc:
-            raise RuntimeError("pdftotext is required (install poppler-utils)") from exc
+            raise RuntimeError("tesseract is required for NSE OCR fallback") from exc
         except subprocess.CalledProcessError as exc:
-            raise RuntimeError(f"pdftotext failed: {exc.stderr.strip()}") from exc
-        return txt_path.read_text(encoding="utf-8", errors="replace")
+            raise RuntimeError(f"tesseract OCR failed on {page.name}: {exc.stderr.strip()}") from exc
+        output.append(proc.stdout)
+    return "\n".join(output)
+
+
+def pdf_to_text(pdf_bytes: bytes) -> str:
+    with tempfile.TemporaryDirectory() as tmp:
+        tmpdir = Path(tmp)
+        pdf_path = tmpdir / "bond-prices.pdf"
+        txt_path = tmpdir / "bond-prices.txt"
+        pdf_path.write_bytes(pdf_bytes)
+
+        embedded = _pdftotext(pdf_path, txt_path)
+        embedded_matches = len(list(BOND_RE.finditer(embedded)))
+        if embedded_matches:
+            print(f"Embedded PDF text contains {embedded_matches} FXD code(s).")
+            return embedded
+
+        print("Embedded PDF text contains 0 FXD codes; using OCR fallback.")
+        ocr = _ocr_pdf(pdf_path, tmpdir)
+        ocr_matches = len(list(BOND_RE.finditer(ocr)))
+        print(f"OCR text contains {ocr_matches} FXD code(s).")
+
+        if ocr_matches:
+            return ocr
+
+        # Keep the useful failure diagnostics in Actions. These snippets are from
+        # a public NSE document and make future format changes diagnosable.
+        embedded_sample = re.sub(r"\s+", " ", embedded[:1800]).strip()
+        ocr_sample = re.sub(r"\s+", " ", ocr[:1800]).strip()
+        print(f"Embedded-text sample: {embedded_sample[:1800]}")
+        print(f"OCR-text sample: {ocr_sample[:1800]}")
+        return ocr
 
 
 def decimal_year(day: date) -> float:
