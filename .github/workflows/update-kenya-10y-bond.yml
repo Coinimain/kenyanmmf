@@ -21,10 +21,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download and extract latest Kenya 10-year yield
+      - name: Download Kenya 10-year yield history and latest observation
         env:
           STOOQ_URL: "https://stooq.com/q/d/l/?s=10ykey.b&i=d"
-          OUT_PATH: kenya-10y-bond-data.csv
+          HISTORY_PATH: kenya-10y-bond-history.csv
+          LATEST_PATH: kenya-10y-bond-data.csv
         run: |
           set -euo pipefail
 
@@ -47,7 +48,8 @@ jobs:
           from pathlib import Path
 
           raw_path = Path(os.environ["RUNNER_TEMP"]) / "kenya-10y-history.csv"
-          out_path = Path(os.environ["OUT_PATH"])
+          history_path = Path(os.environ["HISTORY_PATH"])
+          latest_path = Path(os.environ["LATEST_PATH"])
           expected_columns = ["Date", "Open", "High", "Low", "Close"]
 
           observations = []
@@ -66,20 +68,34 @@ jobs:
                       observation_date = datetime.strptime(
                           row["Date"].strip(), "%Y-%m-%d"
                       ).date()
-                      yield_percent = float(row["Close"].strip())
+                      prices = [float(row[column].strip()) for column in expected_columns[1:]]
                   except (AttributeError, TypeError, ValueError):
                       continue
 
+                  yield_percent = prices[-1]
                   if 0 < yield_percent < 100:
-                      observations.append((observation_date, yield_percent))
+                      observations.append((observation_date, prices))
 
           if not observations:
               raise SystemExit("ERROR: No valid bond-yield observations were found.")
 
-          latest_date, latest_yield = max(observations, key=lambda item: item[0])
-          temporary_path = out_path.with_suffix(out_path.suffix + ".new")
+          observations.sort(key=lambda item: item[0])
+          latest_date, latest_prices = observations[-1]
+          latest_yield = latest_prices[-1]
 
-          with temporary_path.open("w", encoding="utf-8", newline="") as output:
+          history_temporary_path = history_path.with_suffix(history_path.suffix + ".new")
+          latest_temporary_path = latest_path.with_suffix(latest_path.suffix + ".new")
+
+          with history_temporary_path.open("w", encoding="utf-8", newline="") as output:
+              writer = csv.writer(output, lineterminator="\n")
+              writer.writerow(expected_columns)
+              for observation_date, prices in observations:
+                  writer.writerow([
+                      observation_date.isoformat(),
+                      *[format(value, ".12g") for value in prices],
+                  ])
+
+          with latest_temporary_path.open("w", encoding="utf-8", newline="") as output:
               writer = csv.writer(output, lineterminator="\n")
               writer.writerow(["Date", "Yield", "Symbol", "Source", "Source URL"])
               writer.writerow([
@@ -90,7 +106,9 @@ jobs:
                   os.environ["STOOQ_URL"],
               ])
 
-          temporary_path.replace(out_path)
+          history_temporary_path.replace(history_path)
+          latest_temporary_path.replace(latest_path)
+          print(f"Saved {len(observations)} historical observations.")
           print(f"Latest Kenya 10-year yield: {latest_yield:.3f}% on {latest_date}")
           PY
 
@@ -98,16 +116,17 @@ jobs:
         run: |
           set -euo pipefail
 
-          OUT_PATH="kenya-10y-bond-data.csv"
+          HISTORY_PATH="kenya-10y-bond-history.csv"
+          LATEST_PATH="kenya-10y-bond-data.csv"
 
-          if [ -z "$(git status --porcelain -- "$OUT_PATH")" ]; then
-            echo "No yield change detected. Exiting."
+          if [ -z "$(git status --porcelain -- "$HISTORY_PATH" "$LATEST_PATH")" ]; then
+            echo "No bond-data changes detected. Exiting."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add "$OUT_PATH"
-          git commit -m "Update Kenya 10-year bond yield"
+          git add "$HISTORY_PATH" "$LATEST_PATH"
+          git commit -m "Update Kenya 10-year bond data"
           git push
