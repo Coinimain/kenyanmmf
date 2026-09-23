@@ -40,9 +40,16 @@ SPEARHEAD_SPREAD = 3.0
 MAX_WEDNESDAY_FALLBACKS = 5
 USER_AGENT = "Mozilla/5.0 (compatible; KenyaMMFCalculator/1.0; +https://kenyammfcalculator.co.ke/)"
 
-BOND_RE = re.compile(r"\b(FXD\d*)/(\d{4})/(\d{1,3}(?:\.\d+)?)(?:YR)?\b", re.I)
+# NSE's PDF text layer is not perfectly stable.  Allow spaces around slashes and
+# several tenor suffix styles (10Yr, 10Yrs, 010, etc.).
+BOND_RE = re.compile(
+    r"\b(FXD\d*)\s*/\s*(\d{4})\s*/\s*(\d{1,3}(?:\.\d+)?)\s*(?:YRS?|YEARS?)?\b",
+    re.I,
+)
 NUMBER_RE = re.compile(r"(?<![\d.])(\d{1,3}(?:\.\d{1,6})?)(?:\s*%)?")
-DECIMAL_RE = re.compile(r"(?<![\d.])(\d{1,3}\.\d{2,6})(?!\d)")
+# Capture a complete decimal token, including comma-grouped large values.  This
+# prevents an outstanding amount such as 57,134.55 being misread as 134.55.
+DECIMAL_RE = re.compile(r"(?<![\d.])(\d{1,3}(?:,\d{3})*\.\d{2,6}|\d+\.\d{2,6})(?!\d)")
 DATE_RE = re.compile(r"\b(\d{1,2})[-\s]([A-Za-z]{3,9})[-\s](\d{2,4})\b")
 MONTHS = {
     "jan": 1, "january": 1, "feb": 2, "february": 2, "mar": 3, "march": 3,
@@ -137,39 +144,49 @@ def numeric_tokens(line: str) -> list[tuple[int, float]]:
     return out
 
 
-def traded_row_yield(line: str) -> float | None:
-    """Extract YTM from an NSE traded FXD row without depending on PDF header text.
-
-    NSE rows are structured as: ... Fixed <coupon> <yield> <dirty price>
-    <clean price> <previous price> <value traded>. Untraded rows normally contain
-    only the coupon and previous price after ``Fixed``. This is more reliable than
-    locating the word ``Yield`` because some NSE PDFs do not expose their table
-    headers cleanly through pdftotext.
-    """
-    fixed = re.search(r"\bFixed\b", line, re.I)
-    if not fixed:
-        return None
-
-    decimals: list[float] = []
-    for match in DECIMAL_RE.finditer(line[fixed.end():]):
+def decimal_values(text: str) -> list[float]:
+    values: list[float] = []
+    for match in DECIMAL_RE.finditer(text):
         try:
-            decimals.append(float(match.group(1)))
+            values.append(float(match.group(1).replace(",", "")))
         except ValueError:
             pass
+    return values
 
-    # A traded row needs coupon + yield + dirty price + clean price at minimum.
-    # An untraded row generally has coupon + previous price only.
-    if len(decimals) < 4:
-        return None
 
-    coupon, ytm, dirty, clean = decimals[:4]
-    if not (0.0 < coupon < 30.0):
-        return None
-    if not (5.0 <= ytm <= 25.0):
-        return None
-    if not (30.0 <= dirty <= 250.0 and 30.0 <= clean <= 250.0):
-        return None
-    return ytm
+def _yield_from_values(values: list[float]) -> float | None:
+    # Find coupon, YTM, dirty price and clean price as a consecutive 4-value
+    # window.  This also works when pdftotext wraps a visual row over lines.
+    for i in range(max(0, len(values) - 3)):
+        coupon, ytm, dirty, clean = values[i : i + 4]
+        if (
+            0.0 < coupon < 30.0
+            and 5.0 <= ytm <= 25.0
+            and 30.0 <= dirty <= 250.0
+            and 30.0 <= clean <= 250.0
+        ):
+            return ytm
+    return None
+
+
+def traded_row_yield(block: str) -> float | None:
+    """Extract YTM from one NSE FXD record.
+
+    NSE rows are visually laid out as coupon, traded yield, dirty price and clean
+    price, but pdftotext sometimes wraps those cells onto separate text lines.
+    Parse the whole bond block rather than assuming one physical text line.
+    """
+    fixed = re.search(r"\bFixed\b", block, re.I)
+    if fixed:
+        ytm = _yield_from_values(decimal_values(block[fixed.end():]))
+        if ytm is not None:
+            return ytm
+
+    # Fallback: FXD itself means fixed-coupon Treasury bond.  If the word Fixed is
+    # lost/reordered in the PDF text layer, scan the record but reject large
+    # outstanding-value numbers and require the coupon/YTM/price pattern.
+    values = [v for v in decimal_values(block) if v <= 250.0]
+    return _yield_from_values(values)
 
 
 def parse_nse_date(day: str, month: str, year: str) -> date | None:
@@ -207,27 +224,31 @@ def explicit_maturity_year(line: str, issue_year: int) -> float | None:
 
 
 def parse_observations(text: str, as_of: date) -> list[Observation]:
-    lines = text.splitlines()
     as_of_year = decimal_year(as_of)
     observations: list[Observation] = []
 
-    for line in lines:
-        match = BOND_RE.search(line)
-        if not match:
-            continue
+    # Treat everything from one FXD code to the next FXD code as one record.
+    # This survives NSE PDFs where a single visual table row is emitted by
+    # pdftotext as two or more physical lines.
+    matches = list(BOND_RE.finditer(text))
+    for idx, match in enumerate(matches):
+        start = match.start()
+        end = matches[idx + 1].start() if idx + 1 < len(matches) else min(len(text), start + 1800)
+        block = text[start:end]
 
-        code = match.group(0).upper()
+        raw_code = match.group(0)
+        code = re.sub(r"\s+", "", raw_code).upper()
         issue_year = int(match.group(2))
         original_tenor = float(match.group(3))
-        ytm = traded_row_yield(line)
+        ytm = traded_row_yield(block)
         if ytm is None:
             continue
 
-        maturity_date = explicit_maturity_date(line)
+        maturity_date = explicit_maturity_date(block)
         if maturity_date is not None:
             remaining = (maturity_date - as_of).days / 365.2425
         else:
-            maturity_year = explicit_maturity_year(line, issue_year)
+            maturity_year = explicit_maturity_year(block, issue_year)
             if maturity_year is None:
                 maturity_year = issue_year + original_tenor
             remaining = maturity_year - as_of_year
@@ -237,9 +258,15 @@ def parse_observations(text: str, as_of: date) -> list[Observation]:
         observations.append(Observation(code, remaining, ytm))
 
     if not observations:
+        # Print compact diagnostics in Actions so a future NSE layout change can
+        # be diagnosed from the log without downloading artifacts.
+        print(f"Diagnostic: found {len(matches)} FXD code(s) in extracted PDF text.")
+        for match in matches[:8]:
+            start = match.start()
+            excerpt = re.sub(r"\s+", " ", text[start : start + 500]).strip()
+            print(f"  FXD excerpt: {excerpt[:500]}")
         raise ValueError(
-            "no usable traded FXD bond rows were found; NSE PDF was downloaded "
-            "but no row matched the expected Fixed/coupon/yield/price structure"
+            "no usable traded FXD bond records were found after wrapped-row parsing"
         )
 
     # NSE PDFs can contain multiple trades for one security. A median traded yield per
