@@ -422,69 +422,197 @@ def _row_observation_from_words(
     return Observation(code=code, remaining_years=remaining, yield_pct=traded_yield)
 
 
-def _ocr_positional_observations(pdf_path: Path, tmpdir: Path) -> list[Observation]:
-    """Extract fixed-rate traded rows from image-only NSE PDFs using TSV positions."""
-    pages = _render_pdf_pages(pdf_path, tmpdir)
+def _ocr_positional_observations(
+    pdf_path: Path, tmpdir: Path, as_of: date
+) -> list[Observation]:
+    """Extract traded FXD rows from the NSE image PDF.
 
-    for psm in (11, 6):
-        observations: list[Observation] = []
-        in_fixed_section = False
-        saw_fixed_heading = False
-        diagnostic_rows: list[str] = []
+    The NSE PDF is an image-only document.  Tesseract's automatic page layout
+    modes (PSM 3/4) read the original embedded page image much more accurately
+    than sparse/row OCR because they preserve the very wide table structure.
+    We therefore extract page 1's source image with ``pdfimages`` and OCR only
+    that image.  The taxable fixed-rate section we need appears on page 1 above
+    the ``INFRASTRUCTURE BONDS`` heading.
+    """
 
-        for page_no, page in enumerate(pages, start=1):
-            words = _tesseract_words(page, psm=psm)
-            if not words:
-                continue
-            page_width = max(w.right for w in words)
-            lines = _cluster_visual_lines(words)
+    prefix = tmpdir / "nse-source"
+    try:
+        subprocess.run(
+            ["pdfimages", "-f", "1", "-l", "1", "-png", str(pdf_path), str(prefix)],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except FileNotFoundError as exc:
+        raise RuntimeError("pdfimages is required (install poppler-utils)") from exc
+    except subprocess.CalledProcessError as exc:
+        raise RuntimeError(f"pdfimages failed: {exc.stderr.strip()}") from exc
 
-            for line_no, line in enumerate(lines, start=1):
-                text = _line_text(line)
-                # OCR may split a long section heading across adjacent visual lines.
-                next_text = _line_text(lines[line_no]) if line_no < len(lines) else ""
-                heading_text = text + " " + next_text
+    images = sorted(tmpdir.glob("nse-source-*.png"))
+    if not images:
+        raise RuntimeError("OCR fallback could not extract the first NSE page image")
 
-                if _looks_like_fixed_heading(heading_text):
-                    in_fixed_section = True
-                    saw_fixed_heading = True
-                    continue
-                # Do not include next_text here: the next visual line may be the
-                # infrastructure heading, and the current line can still be the
-                # final valid FXD trade row.
-                if in_fixed_section and _looks_like_fixed_section_end(text):
-                    in_fixed_section = False
-                    continue
-                if not in_fixed_section:
-                    continue
+    # The live NSE PDFs currently contain one full-page image per PDF page. If
+    # that ever changes, the full-page table will still be the largest image.
+    page_image = max(images, key=lambda p: p.stat().st_size)
 
-                obs = _row_observation_from_words(
-                    line, page_width, row_id=f"P{page_no}R{line_no}"
-                )
-                if obs is not None:
-                    observations.append(obs)
-                    if len(diagnostic_rows) < 8:
-                        diagnostic_rows.append(
-                            f"{obs.code}: {obs.remaining_years:.2f}y @ {obs.yield_pct:.4f}% :: "
-                            f"{re.sub(r'\s+', ' ', text)[:260]}"
-                        )
-
-        if observations:
-            print(
-                f"Positional OCR (psm {psm}) recovered {len(observations)} traded "
-                "fixed-rate Treasury row(s)."
+    def ocr_text(psm: int) -> str:
+        try:
+            proc = subprocess.run(
+                ["tesseract", str(page_image), "stdout", "-l", "eng", "--psm", str(psm)],
+                check=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
             )
-            for row in diagnostic_rows:
+        except FileNotFoundError as exc:
+            raise RuntimeError("tesseract is required for NSE OCR fallback") from exc
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError(
+                f"tesseract OCR failed on {page_image.name}: {exc.stderr.strip()}"
+            ) from exc
+        return proc.stdout
+
+    def ocr_decimal_values(text: str) -> list[float]:
+        # Rates/prices normally use a period, but OCR occasionally substitutes
+        # a comma (for example 13,9420).  Thousands-separated values have exactly
+        # three digits after a comma and are therefore kept distinct.
+        values: list[float] = []
+        pattern = re.compile(
+            r"(?<![\d.,])(?:\d{1,3}(?:,\d{3})*\.\d{2,6}|\d+\.\d{2,6}|\d{1,3},\d{4,6})(?!\d)"
+        )
+        for match in pattern.finditer(text):
+            raw = match.group(0)
+            if "." not in raw and raw.count(",") == 1:
+                left, right = raw.split(",", 1)
+                if len(right) >= 4:
+                    raw = left + "." + right
+            else:
+                raw = raw.replace(",", "")
+            try:
+                values.append(float(raw))
+            except ValueError:
+                continue
+        return values
+
+    # Printed Days-to-Maturity followed by Outstanding Value (in millions).
+    # We primarily use the OCR'd maturity date for remaining tenor because it
+    # corrects occasional digit mistakes in the printed days cell (e.g. 3,057
+    # being OCR'd as 3,087).  The days cell remains a fallback.
+    days_outstanding_re = re.compile(
+        r"(?<!\d)(\d[\d,]{1,6})\s+(\d{1,3}(?:,\d{3})*\.\d{2})(?!\d)"
+    )
+
+    for psm in (3, 4):
+        text = ocr_text(psm)
+        lines = text.splitlines()
+
+        start_idx: int | None = None
+        end_idx: int | None = None
+        for idx, line in enumerate(lines):
+            u = _heading_normalized(line)
+            if start_idx is None:
+                if (
+                    "KENYA" in u
+                    and "TREASURY" in u
+                    and "BONDS" in u
+                    and "ABOVE" in u
+                    and "50" in u
+                ):
+                    start_idx = idx + 1
+                continue
+            if "INFRASTRUCTURE" in u and "BOND" in u:
+                end_idx = idx
+                break
+            if "BELOW" in u and "50" in u and "MILLION" in u:
+                end_idx = idx
+                break
+
+        if start_idx is None:
+            print(f"Image OCR (psm {psm}) could not find the fixed-rate section heading.")
+            continue
+        if end_idx is None:
+            end_idx = len(lines)
+
+        raw_rows: list[tuple[int, Observation]] = []
+        diagnostics: list[str] = []
+        for row_no, line in enumerate(lines[start_idx:end_idx], start=start_idx + 1):
+            # The issue code itself can OCR as FXD1/... or FxD1/... and "Yr" may
+            # become "¥r".  It is only a label; the numeric row structure decides
+            # whether a trade is usable.
+            if "FXD" not in line.upper().replace(" ", ""):
+                continue
+
+            pair_matches = list(days_outstanding_re.finditer(line))
+            if not pair_matches:
+                continue
+            pair = pair_matches[-1]
+
+            try:
+                printed_days = int(pair.group(1).replace(",", ""))
+            except ValueError:
+                continue
+
+            values = ocr_decimal_values(line[pair.end():])
+            ytm = _yield_from_values(values)
+            if ytm is None:
+                continue
+
+            maturity = explicit_maturity_date(line)
+            if maturity is not None:
+                remaining_days = (maturity - as_of).days
+            else:
+                remaining_days = printed_days
+
+            if not (30 <= remaining_days <= 15000):
+                continue
+            remaining_years = remaining_days / 365.2425
+
+            first = line.strip().split()[0] if line.strip() else ""
+            code = first.upper().replace("¥", "Y")
+            if not code.startswith("FXD"):
+                code = f"NSE-FXD-{remaining_days}D"
+
+            obs = Observation(code, remaining_years, ytm)
+            raw_rows.append((remaining_days, obs))
+            if len(diagnostics) < 10:
+                diagnostics.append(
+                    f"{code}: {remaining_days}d ({remaining_years:.2f}y) @ {ytm:.4f}%"
+                )
+
+        if raw_rows:
+            # One bond can trade several times on the same day. Collapse by
+            # maturity (not OCR'd security code) so minor OCR differences in the
+            # issue label cannot create duplicate curve points.
+            grouped: dict[int, list[Observation]] = {}
+            for remaining_days, obs in raw_rows:
+                grouped.setdefault(remaining_days, []).append(obs)
+
+            observations: list[Observation] = []
+            for remaining_days, rows in grouped.items():
+                observations.append(
+                    Observation(
+                        code=rows[0].code,
+                        remaining_years=remaining_days / 365.2425,
+                        yield_pct=statistics.median(r.yield_pct for r in rows),
+                    )
+                )
+            observations.sort(key=lambda o: o.remaining_years)
+
+            print(
+                f"Image OCR (psm {psm}) recovered {len(raw_rows)} traded rows "
+                f"across {len(observations)} fixed-rate Treasury maturities."
+            )
+            for row in diagnostics:
                 print(f"  OCR row: {row}")
             return observations
 
         print(
-            f"Positional OCR (psm {psm}) recovered 0 traded rows; "
-            f"fixed-rate heading detected={saw_fixed_heading}."
+            f"Image OCR (psm {psm}) found the fixed-rate section but no usable traded rows."
         )
 
-    raise ValueError("positional OCR found no usable traded fixed-rate Treasury rows")
-
+    raise ValueError("image OCR found no usable traded fixed-rate Treasury rows")
 
 def pdf_to_text(pdf_bytes: bytes) -> str:
     """Extract embedded PDF text only. Image-only PDFs return an empty string."""
@@ -511,10 +639,9 @@ def observations_from_pdf(pdf_bytes: bytes, as_of: date) -> list[Observation]:
             return parse_observations(embedded, as_of)
 
         print(
-            "Embedded PDF text contains 0 FXD codes; using positional OCR on "
-            "Days-to-Maturity and Traded-Yield columns."
+            "Embedded PDF text contains 0 FXD codes; using first-page image OCR."
         )
-        return _ocr_positional_observations(pdf_path, tmpdir)
+        return _ocr_positional_observations(pdf_path, tmpdir, as_of)
 
 
 def decimal_year(day: date) -> float:
