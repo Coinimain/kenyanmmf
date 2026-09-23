@@ -40,8 +40,16 @@ SPEARHEAD_SPREAD = 3.0
 MAX_WEDNESDAY_FALLBACKS = 5
 USER_AGENT = "Mozilla/5.0 (compatible; KenyaMMFCalculator/1.0; +https://kenyammfcalculator.co.ke/)"
 
-BOND_RE = re.compile(r"\b(FXD\d*)/(\d{4})/(\d{1,3}(?:\.\d+)?)\b", re.I)
+BOND_RE = re.compile(r"\b(FXD\d*)/(\d{4})/(\d{1,3}(?:\.\d+)?)(?:YR)?\b", re.I)
 NUMBER_RE = re.compile(r"(?<![\d.])(\d{1,3}(?:\.\d{1,6})?)(?:\s*%)?")
+DECIMAL_RE = re.compile(r"(?<![\d.])(\d{1,3}\.\d{2,6})(?!\d)")
+DATE_RE = re.compile(r"\b(\d{1,2})[-\s]([A-Za-z]{3,9})[-\s](\d{2,4})\b")
+MONTHS = {
+    "jan": 1, "january": 1, "feb": 2, "february": 2, "mar": 3, "march": 3,
+    "apr": 4, "april": 4, "may": 5, "jun": 6, "june": 6, "jul": 7, "july": 7,
+    "aug": 8, "august": 8, "sep": 9, "sept": 9, "september": 9, "oct": 10,
+    "october": 10, "nov": 11, "november": 11, "dec": 12, "december": 12,
+}
 
 
 @dataclass(frozen=True)
@@ -119,28 +127,6 @@ def decimal_year(day: date) -> float:
     return day.year + (day - start).days / (end - start).days
 
 
-def find_yield_column(lines: list[str]) -> int:
-    # Prefer table-header lines. A generic mention of "yield" elsewhere in the PDF
-    # should not move the detected column away from the actual market-data column.
-    header_candidates: list[int] = []
-    fallback_candidates: list[int] = []
-    for line in lines:
-        lower = line.lower()
-        positions = [m.start() for m in re.finditer(r"yield", lower)]
-        positions += [m.start() for m in re.finditer(r"\bytm\b", lower)]
-        if not positions:
-            continue
-        fallback_candidates.extend(positions)
-        if any(term in lower for term in ("security", "bond", "coupon", "price", "maturity")):
-            header_candidates.extend(positions)
-
-    candidates = header_candidates or fallback_candidates
-    if not candidates:
-        raise ValueError("could not locate a Yield/YTM column in extracted PDF text")
-    # Repeated page headers normally align; the median suppresses one-off text occurrences.
-    return int(statistics.median(candidates))
-
-
 def numeric_tokens(line: str) -> list[tuple[int, float]]:
     out: list[tuple[int, float]] = []
     for match in NUMBER_RE.finditer(line):
@@ -151,33 +137,77 @@ def numeric_tokens(line: str) -> list[tuple[int, float]]:
     return out
 
 
-def choose_yield(line: str, yield_col: int) -> float | None:
-    # Kenya government-bond yields are nowhere near prices around 100. Keep a broad
-    # sanity range, then choose the value whose printed column is nearest the Yield header.
-    candidates = [(pos, value) for pos, value in numeric_tokens(line) if 5.0 <= value <= 25.0]
-    if not candidates:
+def traded_row_yield(line: str) -> float | None:
+    """Extract YTM from an NSE traded FXD row without depending on PDF header text.
+
+    NSE rows are structured as: ... Fixed <coupon> <yield> <dirty price>
+    <clean price> <previous price> <value traded>. Untraded rows normally contain
+    only the coupon and previous price after ``Fixed``. This is more reliable than
+    locating the word ``Yield`` because some NSE PDFs do not expose their table
+    headers cleanly through pdftotext.
+    """
+    fixed = re.search(r"\bFixed\b", line, re.I)
+    if not fixed:
         return None
-    pos, value = min(candidates, key=lambda item: abs(item[0] - yield_col))
-    # Reject a value too far from the detected yield column; this avoids silently
-    # treating coupon or unrelated numeric columns as yield after a layout change.
-    if abs(pos - yield_col) > 22:
+
+    decimals: list[float] = []
+    for match in DECIMAL_RE.finditer(line[fixed.end():]):
+        try:
+            decimals.append(float(match.group(1)))
+        except ValueError:
+            pass
+
+    # A traded row needs coupon + yield + dirty price + clean price at minimum.
+    # An untraded row generally has coupon + previous price only.
+    if len(decimals) < 4:
         return None
-    return value
+
+    coupon, ytm, dirty, clean = decimals[:4]
+    if not (0.0 < coupon < 30.0):
+        return None
+    if not (5.0 <= ytm <= 25.0):
+        return None
+    if not (30.0 <= dirty <= 250.0 and 30.0 <= clean <= 250.0):
+        return None
+    return ytm
+
+
+def parse_nse_date(day: str, month: str, year: str) -> date | None:
+    month_no = MONTHS.get(month.lower())
+    if month_no is None:
+        return None
+    year_no = int(year)
+    if year_no < 100:
+        year_no += 2000
+    try:
+        return date(year_no, month_no, int(day))
+    except ValueError:
+        return None
+
+
+def explicit_maturity_date(line: str) -> date | None:
+    dates: list[date] = []
+    for match in DATE_RE.finditer(line):
+        parsed = parse_nse_date(*match.groups())
+        if parsed is not None:
+            dates.append(parsed)
+    # NSE rows print Issue Date then Maturity Date.
+    if len(dates) >= 2:
+        return dates[1]
+    return None
 
 
 def explicit_maturity_year(line: str, issue_year: int) -> float | None:
-    # If the row prints an explicit maturity year, prefer it to the issue-year + original-tenor estimate.
+    # Fallback for unexpected date formatting.
     years = [int(y) for y in re.findall(r"\b(20\d{2})\b", line)]
     future = [y for y in years if y > issue_year and 2027 <= y <= 2065]
     if not future:
         return None
-    # Maturity is generally the furthest future year printed on the row.
     return float(max(future))
 
 
 def parse_observations(text: str, as_of: date) -> list[Observation]:
     lines = text.splitlines()
-    yield_col = find_yield_column(lines)
     as_of_year = decimal_year(as_of)
     observations: list[Observation] = []
 
@@ -185,23 +215,32 @@ def parse_observations(text: str, as_of: date) -> list[Observation]:
         match = BOND_RE.search(line)
         if not match:
             continue
+
         code = match.group(0).upper()
         issue_year = int(match.group(2))
         original_tenor = float(match.group(3))
-        ytm = choose_yield(line, yield_col)
+        ytm = traded_row_yield(line)
         if ytm is None:
             continue
 
-        maturity_year = explicit_maturity_year(line, issue_year)
-        if maturity_year is None:
-            maturity_year = issue_year + original_tenor
-        remaining = maturity_year - as_of_year
+        maturity_date = explicit_maturity_date(line)
+        if maturity_date is not None:
+            remaining = (maturity_date - as_of).days / 365.2425
+        else:
+            maturity_year = explicit_maturity_year(line, issue_year)
+            if maturity_year is None:
+                maturity_year = issue_year + original_tenor
+            remaining = maturity_year - as_of_year
+
         if remaining <= 0 or remaining > 40:
             continue
         observations.append(Observation(code, remaining, ytm))
 
     if not observations:
-        raise ValueError("no usable FXD bond/yield rows were found")
+        raise ValueError(
+            "no usable traded FXD bond rows were found; NSE PDF was downloaded "
+            "but no row matched the expected Fixed/coupon/yield/price structure"
+        )
 
     # NSE PDFs can contain multiple trades for one security. A median traded yield per
     # issue avoids one large or unusual block setting the benchmark point by itself.
