@@ -17,6 +17,11 @@ URL_RE = re.compile(r"https?://[^\s)>\]]+")
 MD_LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 HTML_HREF_RE = re.compile(r'href\s*=\s*"([^"]+)"', re.IGNORECASE)
 
+HTML_URL_ATTR_RE = re.compile(
+    r'(?:href|src)\s*=\s*["\']([^"\']+)["\']',
+    re.IGNORECASE,
+)
+
 # code fence stripping (so we don't flag URLs inside code blocks)
 FENCED_BLOCK_RE = re.compile(r"```.*?```", re.DOTALL)
 
@@ -102,6 +107,13 @@ def is_inside_markdown_link(text: str, idx: int) -> bool:
             return True
     return False
 
+def is_inside_html_url_attribute(text: str, idx: int) -> bool:
+    for m in HTML_URL_ATTR_RE.finditer(text):
+        start, end = m.span(1)
+        if start <= idx <= end:
+            return True
+    return False
+
 def is_ignored_url(url: str) -> bool:
     return url.startswith(IGNORE_URL_PREFIXES)
 
@@ -171,6 +183,9 @@ def check_floating_urls(path: Path, text: str) -> int:
 
         idx = m.start()
         if is_inside_markdown_link(scrubbed, idx):
+            continue
+
+        if is_inside_html_url_attribute(scrubbed, idx):
             continue
 
         # Allow URLs wrapped in <...> (autolink)
