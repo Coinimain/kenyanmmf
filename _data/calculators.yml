@@ -21,3 +21,9 @@
   description: "Score a business across strategy, people, data, governance, technology and ROI, then get a practical action plan."
   url: "/ai-readiness-calculator/"
   cta: "Check AI readiness"
+
+- title: "Kenya Treasury Bond Calculator"
+  type: "Investment calculator"
+  description: "Calculate Treasury bond price, accrued interest, withholding tax, coupons, after-tax returns, YTM and early-sale outcomes."
+  url: "/calculators/treasury-bond-calculator/"
+  cta: "Calculate bond returns"

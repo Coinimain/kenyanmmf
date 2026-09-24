@@ -8,6 +8,7 @@ The script:
 - Linearly interpolates a 10-year yield.
 - Updates kenya-10y-bond-data.csv and kenya-10y-bond-history.csv.
 - Updates the Spearhead Africa Infrastructure row in special-funds-data.csv.
+- Updates kenya-bonds-data.csv with current NSE-traded bond rows for the calculator.
 
 It deliberately fails without writing files when the PDF cannot be parsed confidently.
 """
@@ -35,6 +36,7 @@ BONDS_PAGE = "https://www.nse.co.ke/bonds-statistics/"
 CURRENT_FILE = Path("kenya-10y-bond-data.csv")
 HISTORY_FILE = Path("kenya-10y-bond-history.csv")
 SPECIAL_FUNDS_FILE = Path("special-funds-data.csv")
+MARKET_BONDS_FILE = Path("kenya-bonds-data.csv")
 TARGET_YEARS = 10.0
 SPEARHEAD_SPREAD = 3.0
 MAX_WEDNESDAY_FALLBACKS = 5
@@ -74,6 +76,20 @@ class Estimate:
     source_url: str
     lower: Observation
     upper: Observation
+
+
+@dataclass(frozen=True)
+class MarketBond:
+    issue_code: str
+    bond_type: str
+    original_tenor_years: float
+    issue_date: date
+    maturity_date: date
+    coupon_rate: float
+    market_yield: float
+    dirty_price: float
+    clean_price: float
+    tax_rate: float
 
 
 @dataclass(frozen=True)
@@ -670,9 +686,9 @@ def decimal_values(text: str) -> list[float]:
     return values
 
 
-def _yield_from_values(values: list[float]) -> float | None:
+def _trade_window_from_values(values: list[float]) -> tuple[float, float, float, float] | None:
     # Find coupon, YTM, dirty price and clean price as a consecutive 4-value
-    # window.  This also works when pdftotext wraps a visual row over lines.
+    # window. This survives OCR noise elsewhere in the row.
     for i in range(max(0, len(values) - 3)):
         coupon, ytm, dirty, clean = values[i : i + 4]
         if (
@@ -681,8 +697,13 @@ def _yield_from_values(values: list[float]) -> float | None:
             and 30.0 <= dirty <= 250.0
             and 30.0 <= clean <= 250.0
         ):
-            return ytm
+            return coupon, ytm, dirty, clean
     return None
+
+
+def _yield_from_values(values: list[float]) -> float | None:
+    window = _trade_window_from_values(values)
+    return window[1] if window else None
 
 
 def traded_row_yield(block: str) -> float | None:
@@ -924,6 +945,150 @@ def update_history_file(estimate: Estimate) -> None:
     )
 
 
+
+def _normalize_market_code(prefix: str, year: str, tenor: str) -> str:
+    prefix = prefix.upper().replace("1FB", "IFB")
+    tenor_value = float(tenor)
+    tenor_label = f"{tenor_value:g}"
+    return f"{prefix}/{year}/{tenor_label}Yr"
+
+
+def _tenor_from_market_code(code: str) -> float | None:
+    m = re.search(r"/(\d+(?:\.\d+)?)YR$", code, re.I)
+    return float(m.group(1)) if m else None
+
+
+def _market_bonds_from_ocr_text(text: str) -> list[MarketBond]:
+    rows: list[MarketBond] = []
+    code_re = re.compile(
+        r"\b((?:FXD|IFB|1FB)\d*)/(\d{4})/(\d+(?:\.\d+)?)(?:Y?R|Y?¥R)?",
+        re.I,
+    )
+
+    in_market_section = False
+    for line in text.splitlines():
+        heading = _heading_normalized(line)
+        if not in_market_section:
+            if "GOVERNMENT OF KENYA" in heading and "TREASURY BONDS ABOVE" in heading and "50" in heading:
+                in_market_section = True
+            continue
+        if ("SELL" in heading and "BUY" in heading and "BACK" in heading) or ("BELOW" in heading and "50" in heading and "MILLION" in heading):
+            break
+
+        code_match = code_re.search(line)
+        if not code_match:
+            continue
+        code = _normalize_market_code(code_match.group(1), code_match.group(2), code_match.group(3))
+        dates = []
+        for dm in DATE_RE.finditer(line):
+            parsed = parse_nse_date(*dm.groups())
+            if parsed is not None:
+                dates.append(parsed)
+        if len(dates) < 2:
+            continue
+
+        fixed = re.search(r"\bFixed\b", line, re.I)
+        if not fixed:
+            continue
+        values = []
+        pattern = re.compile(r"(?<![\d.,])(?:\d{1,3}(?:,\d{3})*\.\d{2,6}|\d+\.\d{2,6}|\d{1,3},\d{4,6})(?!\d)")
+        for match in pattern.finditer(line[fixed.end():]):
+            raw = match.group(0)
+            if "." not in raw and raw.count(",") == 1:
+                left, right = raw.split(",", 1)
+                if len(right) >= 4:
+                    raw = left + "." + right
+            else:
+                raw = raw.replace(",", "")
+            try:
+                values.append(float(raw))
+            except ValueError:
+                pass
+        window = _trade_window_from_values(values)
+        if not window:
+            continue
+        coupon, ytm, dirty, clean = window
+        tenor = _tenor_from_market_code(code)
+        if tenor is None:
+            continue
+        bond_type = "infrastructure" if code.startswith("IFB") else "fixed"
+        tax_rate = 0.0 if bond_type == "infrastructure" else (10.0 if tenor >= 10 else 15.0)
+        rows.append(MarketBond(code, bond_type, tenor, dates[0], dates[1], coupon, ytm, dirty, clean, tax_rate))
+
+    grouped: dict[str, list[MarketBond]] = {}
+    for row in rows:
+        grouped.setdefault(row.issue_code, []).append(row)
+
+    collapsed: list[MarketBond] = []
+    for code, items in grouped.items():
+        first = items[0]
+        collapsed.append(MarketBond(
+            issue_code=code,
+            bond_type=first.bond_type,
+            original_tenor_years=first.original_tenor_years,
+            issue_date=first.issue_date,
+            maturity_date=first.maturity_date,
+            coupon_rate=statistics.median(x.coupon_rate for x in items),
+            market_yield=statistics.median(x.market_yield for x in items),
+            dirty_price=statistics.median(x.dirty_price for x in items),
+            clean_price=statistics.median(x.clean_price for x in items),
+            tax_rate=first.tax_rate,
+        ))
+    return sorted(collapsed, key=lambda x: (x.maturity_date, x.issue_code))
+
+
+def market_bonds_from_pdf(pdf_bytes: bytes) -> list[MarketBond]:
+    with tempfile.TemporaryDirectory() as tmp:
+        tmpdir = Path(tmp)
+        pdf_path = tmpdir / "bond-prices.pdf"
+        pdf_path.write_bytes(pdf_bytes)
+        prefix = tmpdir / "nse-source"
+        subprocess.run(
+            ["pdfimages", "-f", "1", "-l", "1", "-png", str(pdf_path), str(prefix)],
+            check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        )
+        images = sorted(tmpdir.glob("nse-source-*.png"))
+        if not images:
+            raise RuntimeError("could not extract NSE page image for market bond data")
+        page_image = max(images, key=lambda path: path.stat().st_size)
+        for psm in (3, 4):
+            proc = subprocess.run(
+                ["tesseract", str(page_image), "stdout", "-l", "eng", "--psm", str(psm)],
+                check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            )
+            bonds = _market_bonds_from_ocr_text(proc.stdout)
+            if bonds:
+                return bonds
+    raise ValueError("no usable current NSE bond trades found for calculator dataset")
+
+
+def update_market_bonds_file(bonds: list[MarketBond], estimate: Estimate) -> None:
+    if not bonds:
+        return
+    fields = [
+        "issue_code", "bond_type", "original_tenor_years", "issue_date",
+        "maturity_date", "coupon_rate", "market_yield", "dirty_price",
+        "clean_price", "nse_date", "source_url", "tax_rate",
+    ]
+    rows = []
+    for bond in bonds:
+        rows.append({
+            "issue_code": bond.issue_code,
+            "bond_type": bond.bond_type,
+            "original_tenor_years": f"{bond.original_tenor_years:g}",
+            "issue_date": bond.issue_date.isoformat(),
+            "maturity_date": bond.maturity_date.isoformat(),
+            "coupon_rate": f"{bond.coupon_rate:.4f}",
+            "market_yield": f"{bond.market_yield:.4f}",
+            "dirty_price": f"{bond.dirty_price:.4f}",
+            "clean_price": f"{bond.clean_price:.4f}",
+            "nse_date": estimate.as_of.isoformat(),
+            "source_url": estimate.source_url,
+            "tax_rate": f"{bond.tax_rate:g}",
+        })
+    write_csv(MARKET_BONDS_FILE, fields, rows)
+
+
 def human_date(day: date) -> str:
     return f"{day.day} {day.strftime('%b %Y')}"
 
@@ -994,6 +1159,17 @@ def main() -> int:
     update_history_file(estimate)
     update_spearhead(estimate)
 
+    market_bonds: list[MarketBond] = []
+    try:
+        market_pdf = download_pdf(estimate.source_url)
+        market_bonds = market_bonds_from_pdf(market_pdf)
+        update_market_bonds_file(market_bonds, estimate)
+        print(f"Updated {MARKET_BONDS_FILE} with {len(market_bonds)} NSE-traded bonds.")
+    except Exception as exc:
+        # The 10Y benchmark and Spearhead update remain authoritative. Preserve the
+        # previous calculator dataset if NSE OCR cannot recover the richer trade rows.
+        print(f"Note: preserving existing {MARKET_BONDS_FILE}: {exc}")
+
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
@@ -1009,6 +1185,8 @@ def main() -> int:
                 f"{estimate.upper.yield_pct:.4f}%\n"
             )
             f.write(f"- Spearhead target: **{estimate.yield_pct + SPEARHEAD_SPREAD:.2f}%**\n")
+            if market_bonds:
+                f.write(f"- Calculator bond rows: **{len(market_bonds)}**\n")
             f.write(f"- Source: {estimate.source_url}\n")
     return 0
 

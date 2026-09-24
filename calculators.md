@@ -4,7 +4,7 @@ title: "Kenya Calculators & Tools"
 seo_title: "Kenya Calculators & Tools: Finance, Currency & Business"
 description: "Use free Kenya calculators and interactive tools for money market funds, currency conversion, business decisions and more."
 permalink: /calculators/
-last_modified_at: "2026-09-17"
+last_modified_at: "2026-09-24"
 ---
 
 <main class="tools-page">

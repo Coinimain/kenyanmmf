@@ -1,0 +1,454 @@
+/* ---------- Page shell and navigation ---------- */
+.treasury-bond-page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 28px 16px 18px;
+  box-sizing: border-box;
+}
+
+.treasury-bond-page__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.treasury-bond-page__nav a {
+  color: var(--green, #2e7d32);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.treasury-bond-page__nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Hero and market benchmark ---------- */
+.treasury-bond-hero {
+  max-width: 830px;
+  margin-bottom: 28px;
+}
+
+.treasury-bond-hero__eyebrow, .treasury-bond-calculator__kicker {
+  margin: 0 0 7px;
+  color: var(--green, #2e7d32);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.treasury-bond-hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.08;
+}
+
+.treasury-bond-hero > p:not(.treasury-bond-hero__eyebrow) {
+  margin: 0;
+  color: #475569;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.treasury-bond-hero__button {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: var(--green, #2e7d32);
+  color: #fff!important;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.treasury-bond-benchmark {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 20px 0 0;
+  padding: 14px 16px;
+  border: 1px solid #dbe7dc;
+  border-radius: 12px;
+  background: #f7fbf7;
+  color: #334155;
+}
+
+.treasury-bond-benchmark strong {
+  font-size: 18px;
+  color: #166534;
+}
+
+/* ---------- Calculator shell ---------- */
+.treasury-bond-calculator {
+  border: 1px solid #dbe2ea;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, .06);
+  overflow: hidden;
+}
+
+.treasury-bond-calculator__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e7edf3;
+  background: #fbfcfd;
+}
+
+.treasury-bond-calculator__heading h2 {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.treasury-bond-calculator__data-status {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid #dbe7dc;
+  border-radius: 999px;
+  background: #f7fbf7;
+  color: #3f6212;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ---------- Form sections and fields ---------- */
+.treasury-bond-calculator__form {
+  padding: 24px;
+}
+
+.treasury-bond-calculator__section {
+  margin: 0 0 24px;
+  padding: 20px;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.treasury-bond-calculator__section legend {
+  padding: 0 7px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.treasury-bond-calculator__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.treasury-bond-calculator__field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.treasury-bond-calculator__field--wide {
+  grid-column: 1/-1;
+}
+
+.treasury-bond-calculator__field label, .treasury-bond-calculator__field-label {
+  font-size: 14px;
+  font-weight: 750;
+  color: #334155;
+}
+
+.treasury-bond-calculator__field input, .treasury-bond-calculator__field select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.treasury-bond-calculator__field input:focus, .treasury-bond-calculator__field select:focus {
+  outline: 2px solid rgba(46, 125, 50, .2);
+  border-color: var(--green, #2e7d32);
+}
+
+.treasury-bond-calculator__help {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.treasury-bond-calculator__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 8px;
+  color: #334155;
+  font-size: 14px;
+}
+
+.treasury-bond-calculator__checkbox input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.treasury-bond-calculator__note {
+  margin: 12px 0 0;
+  padding: 11px 13px;
+  border-left: 3px solid #f59e0b;
+  background: #fffbeb;
+  color: #713f12;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- Actions and validation ---------- */
+.treasury-bond-calculator__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.treasury-bond-calculator__button {
+  appearance: none;
+  border: 0;
+  border-radius: 11px;
+  background: var(--green, #2e7d32);
+  color: #fff;
+  padding: 12px 20px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.treasury-bond-calculator__button:hover {
+  filter: brightness(.96);
+}
+
+.treasury-bond-calculator__error {
+  margin: 0 24px 24px;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-weight: 650;
+}
+
+/* ---------- Results ---------- */
+.treasury-bond-results {
+  margin-top: 24px;
+  border: 1px solid #dbe2ea;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, .05);
+  overflow: hidden;
+}
+
+.treasury-bond-results__section {
+  padding: 22px 24px;
+  border-bottom: 1px solid #e8edf2;
+}
+
+.treasury-bond-results__section:last-child {
+  border-bottom: 0;
+}
+
+.treasury-bond-results__section h3 {
+  margin: 0 0 16px;
+  font-size: 21px;
+}
+
+.treasury-bond-results__section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.treasury-bond-results__section-heading a {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green, #2e7d32);
+}
+
+.treasury-bond-results__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.treasury-bond-results__item {
+  display: flex;
+  min-height: 78px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 13px;
+  border: 1px solid #e5eaf0;
+  border-radius: 12px;
+  background: #fbfcfd;
+}
+
+.treasury-bond-results__item span {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.treasury-bond-results__item strong {
+  color: #0f172a;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.treasury-bond-results__item--strong {
+  border-color: #c7dfca;
+  background: #f4faf5;
+}
+
+.treasury-bond-results__item--strong strong {
+  color: #166534;
+}
+
+/* ---------- Cash-flow and scenario tables ---------- */
+.treasury-bond-table-wrap {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.treasury-bond-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.treasury-bond-table th, .treasury-bond-table td {
+  padding: 10px 9px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.treasury-bond-table th:first-child, .treasury-bond-table td:first-child {
+  text-align: left;
+}
+
+.treasury-bond-table th {
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 800;
+}
+
+.treasury-bond-results__note {
+  margin: 14px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ---------- Supporting content ---------- */
+.treasury-bond-copy {
+  max-width: 820px;
+  margin: 34px auto 0;
+  color: #334155;
+  line-height: 1.7;
+}
+
+.treasury-bond-copy h2 {
+  margin-top: 30px;
+  color: #0f172a;
+}
+
+.treasury-bond-copy a {
+  color: var(--green, #2e7d32);
+  font-weight: 700;
+}
+
+.treasury-bond-copy code {
+  font-size: .92em;
+}
+
+.treasury-bond-copy__callout {
+  padding: 16px 18px;
+  border-left: 4px solid var(--green, #2e7d32);
+  border-radius: 0 12px 12px 0;
+  background: #f7fbf7;
+}
+
+.treasury-bond-copy ul {
+  padding-left: 20px;
+}
+
+.treasury-bond-copy li {
+  margin: 6px 0;
+}
+
+/* ---------- Checkbox alignment on desktop ---------- */
+@media (min-width: 621px) {
+  .treasury-bond-calculator__checkbox {
+    align-items: center;
+  }
+
+  .treasury-bond-calculator__checkbox input {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--green, #2e7d32);
+  }
+}
+
+/* ---------- Responsive layout ---------- */
+@media (max-width: 820px) {
+  .treasury-bond-results__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .treasury-bond-calculator__heading {
+    flex-direction: column;
+  }
+  .treasury-bond-calculator__data-status {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 620px) {
+  .treasury-bond-page {
+    padding: 20px 10px 14px;
+  }
+  .treasury-bond-calculator__form, .treasury-bond-results__section {
+    padding: 17px;
+  }
+  .treasury-bond-calculator__section {
+    padding: 15px;
+  }
+  .treasury-bond-calculator__grid, .treasury-bond-results__grid {
+    grid-template-columns: 1fr;
+  }
+  .treasury-bond-calculator__field--wide {
+    grid-column: auto;
+  }
+  .treasury-bond-calculator__heading {
+    padding: 17px;
+  }
+  .treasury-bond-results__section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .treasury-bond-hero > p:not(.treasury-bond-hero__eyebrow) {
+    font-size: 16px;
+  }
+}
+
+/* ---------- Treasury Bond Calculator ad placement ---------- */
+.treasury-bond-page__ad {
+  margin: 32px 0 36px;
+  min-height: 1px;
+}

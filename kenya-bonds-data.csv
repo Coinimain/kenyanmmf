@@ -1,0 +1,17 @@
+issue_code,bond_type,original_tenor_years,issue_date,maturity_date,coupon_rate,market_yield,dirty_price,clean_price,nse_date,source_url,tax_rate
+FXD1/2018/10Yr,fixed,10,2018-08-27,2028-08-14,12.6860,10.0000,105.8065,104.5170,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2022/10Yr,fixed,10,2022-05-16,2032-05-03,13.4900,12.4375,109.1358,104.1326,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2012/20Yr,fixed,20,2012-11-26,2032-11-01,12.0000,12.2250,103.4658,99.0154,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2018/15Yr,fixed,15,2018-05-28,2033-05-09,12.6500,12.4078,105.4837,101.0353,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2024/10Yr,fixed,10,2024-03-25,2034-03-13,16.0000,12.6500,116.0067,115.9188,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD3/2019/15Yr,fixed,15,2019-07-29,2034-07-10,12.3400,12.6440,100.6775,98.4740,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2022/15Yr,fixed,15,2022-04-25,2037-04-06,13.9420,13.0250,114.1337,105.1586,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2018/20Yr,fixed,20,2018-03-26,2038-03-01,13.2000,12.8250,102.5387,102.2124,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2019/20Yr,fixed,20,2019-04-15,2039-03-21,12.8730,13.5000,102.2580,96.2459,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+IFB1/2022/19Yr,infrastructure,19,2022-02-21,2041-01-28,12.9650,12.3750,104.3844,103.0665,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,0
+FXD1/2021/20Yr,fixed,20,2021-08-16,2041-07-22,13.4440,12.6826,106.6274,105.0023,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+IFB1/2021/21Yr,infrastructure,21,2021-09-13,2042-08-18,12.7370,12.5533,101.5037,100.9438,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,0
+FXD1/2018/25Yr,fixed,25,2018-06-25,2043-05-25,13.4000,13.5250,102.8063,99.1250,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2021/25Yr,fixed,25,2021-05-10,2046-04-09,13.9240,12.7075,114.1131,108.6812,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2022/25Yr,fixed,25,2022-10-24,2047-09-23,14.1880,13.7750,108.8688,102.7882,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10
+FXD1/2026/30Yr,fixed,30,2026-04-20,2056-03-13,12.5000,13.9100,95.3847,90.0276,2026-09-23,https://www.nse.co.ke/wp-content/uploads/BondPrices_23-SEP-2026.pdf,10

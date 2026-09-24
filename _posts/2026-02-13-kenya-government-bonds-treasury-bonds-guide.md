@@ -3,7 +3,7 @@ layout: post
 title: "Kenya Government Bonds (Treasury Bonds): How They Work, Returns, Taxes, and How to Buy on DhowCSD"
 seo_title: "Treasury Bonds in Kenya: 2026 Investment Guide"
 date: 2026-02-13
-last_modified_at: 2026-02-13
+last_modified_at: 2026-09-24
 categories: [investing, kenya, fixed-income]
 tags:
   - kenya treasury bonds
@@ -39,7 +39,7 @@ faq:
   - q: "What is netting on DhowCSD?"
     a: "Netting allows maturities (coupon or redemption payments that fall on the same settlement date) to offset what you owe for a successful bid, reducing the amount you need to top up or increasing any refund due."
 ---
-
+**Calculate a bond:** Use the [Kenya Treasury Bond Calculator](/calculators/treasury-bond-calculator/) to work out clean and dirty price, accrued interest, withholding tax, coupon cash flows, after-tax returns, duration and an early-sale scenario.
 Kenya Treasury bonds (often called **T-bonds**) are one of the most widely used fixed-income investments in the country. When you buy a Treasury bond, you’re **lending money to the Government of Kenya** for a set number of years. In return, you typically receive:
 
 - **Interest payments every six months** (semi-annual coupons), and

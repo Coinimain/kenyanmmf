@@ -3,7 +3,7 @@ layout: default
 title: "Categories"
 description: "Browse Kenya MMF Calculator categories and free tools covering money market funds, investing, NSE, tax, personal finance and business."
 permalink: /categories/
-last_modified_at: "2026-09-17"
+last_modified_at: "2026-09-24"
 ---
 
 <nav class="cats-nav" aria-label="Category navigation">
