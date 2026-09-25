@@ -1,0 +1,59 @@
+name: Update NSE market dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/update-nse-market-dashboard.yml"
+      - "scripts/update_nse_market_dashboard.py"
+  schedule:
+    # 4:30pm and 5:30pm East Africa Time, Monday-Friday.
+    - cron: "30 13 * * 1-5"
+    - cron: "30 14 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      market_date:
+        description: "Optional NSE market date (YYYY-MM-DD)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-nse-market-dashboard
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install PDF and OCR tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils tesseract-ocr imagemagick
+
+      - name: Update NSE market data
+        env:
+          NSE_DATE: ${{ github.event.inputs.market_date }}
+          # Keep roughly one month of trading history from the first successful run onward.
+          NSE_MIN_HISTORY_DAYS: "22"
+        run: python3 scripts/update_nse_market_dashboard.py
+
+      - name: Commit updated datasets
+        run: |
+          if git diff --quiet -- nse-market-prices.csv nse-market-indices.csv nse-market-summary.csv; then
+            echo "No NSE dashboard data changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nse-market-prices.csv nse-market-indices.csv nse-market-summary.csv
+          git commit -m "Update NSE market dashboard data"
+          git push

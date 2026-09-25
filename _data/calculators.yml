@@ -1,3 +1,9 @@
+- title: "NSE Market Dashboard"
+  type: "Market dashboard"
+  description: "Track latest NSE share prices, top gainers and losers, most active shares, market turnover and major indices."
+  url: "/nse-market-dashboard/"
+  cta: "View NSE market"
+
 - title: "Money Market Fund Calculator"
   type: "Investment calculator"
   description: "Estimate Kenyan money market fund returns, compare providers and see how contributions can grow over time."
