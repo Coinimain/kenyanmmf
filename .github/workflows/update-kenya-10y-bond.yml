@@ -1,10 +1,10 @@
-name: Update Kenya 10Y bond yield from NSE
+name: Update NSE bond market and 10Y benchmark
 
 on:
   schedule:
-    # GitHub cron is UTC. 06:00 UTC = 09:00 EAT.
-    # The guard below allows only the first Thursday of each month.
-    - cron: "0 6 * * 4"
+    # GitHub cron is UTC. 14:30 UTC = 17:30 EAT.
+    # Weekdays only; holidays and late/missing PDFs fall back safely.
+    - cron: "30 14 * * 1-5"
   workflow_dispatch:
 
 permissions:
@@ -22,55 +22,32 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: First Thursday guard
-        id: guard
-        shell: bash
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "Manual run: bypassing first-Thursday guard."
-            exit 0
-          fi
-
-          day_of_month="$(TZ=Africa/Nairobi date +%-d)"
-          if [ "$day_of_month" -le 7 ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "First Thursday window confirmed in EAT."
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Not the first Thursday of the month; exiting without changes."
-          fi
-
       - name: Set up Python
-        if: steps.guard.outputs.run == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install PDF text and OCR utilities
-        if: steps.guard.outputs.run == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils tesseract-ocr
 
-      - name: Update Kenya 10Y yield
-        if: steps.guard.outputs.run == 'true'
+      - name: Update NSE bond data
         env:
           TZ: Africa/Nairobi
         run: python scripts/update_kenya_10y_from_nse.py
 
       - name: Commit updated data
-        if: steps.guard.outputs.run == 'true'
         shell: bash
         run: |
           git add kenya-10y-bond-data.csv kenya-10y-bond-history.csv kenya-bonds-data.csv special-funds-data.csv
 
           if git diff --cached --quiet; then
-            echo "No data changes to commit."
+            echo "No newer validated NSE bond data to commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): update Kenya 10Y bond yield from NSE"
+          git commit -m "chore(data): update NSE bond market data"
           git push

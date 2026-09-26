@@ -454,7 +454,7 @@
     $('treasuryBondDirtyPrice').value = row.dirty_price || '';
     pricingMode.value = row.clean_price ? 'market-price' : 'yield';
     latestPriceNote.textContent = row.nse_date
-      ? `Latest NSE trade data: ${row.nse_date}. Price fields remain editable.`
+      ? `NSE trade data: ${row.nse_date}. Price fields remain editable.`
       : '';
     latestPriceNote.hidden = !latestPriceNote.textContent;
     selectValue('treasuryBondTaxMode', 'auto');
@@ -486,9 +486,25 @@
         $('treasuryBondBenchmark').textContent = `${Number(benchmark.Yield).toFixed(2)}%`;
         $('treasuryBondBenchmarkDate').textContent = benchmark.Date || '';
       }
-      dataStatus.textContent = bondRows.length
-        ? `${bondRows.length} NSE-traded bonds loaded`
-        : 'Manual mode available';
+      if (bondRows.length) {
+        const sourceDates = bondRows
+          .map(row => parseDate(row.nse_date))
+          .filter(Boolean)
+          .sort((a, b) => b.getTime() - a.getTime());
+        const sourceDate = sourceDates[0] || null;
+        if (sourceDate) {
+          const now = new Date();
+          const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+          const ageDays = Math.max(0, daysBetween(sourceDate, today));
+          dataStatus.textContent = ageDays > 4
+            ? `${bondRows.length} bonds · latest available NSE data: ${isoDate(sourceDate)}`
+            : `${bondRows.length} NSE-traded bonds · ${isoDate(sourceDate)}`;
+        } else {
+          dataStatus.textContent = `${bondRows.length} NSE-traded bonds loaded`;
+        }
+      } else {
+        dataStatus.textContent = 'Manual mode available';
+      }
     } catch (err) {
       console.error(err);
       marketSelect.innerHTML = '<option value="manual">Manual entry</option>';

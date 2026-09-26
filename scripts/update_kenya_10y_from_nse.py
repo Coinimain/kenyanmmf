@@ -2,15 +2,16 @@
 """Update Kenya 10-year government-bond yield data from NSE daily bond PDFs.
 
 The script:
-- Finds the latest Wednesday NSE BondPrices_DD-MMM-YYYY.pdf, with prior-Wednesday fallback.
+- Tries the current Nairobi weekday NSE BondPrices_DD-MMM-YYYY.pdf first, then recent weekdays.
+- Validates the PDF, the 10-year interpolation inputs and the calculator bond rows before writing.
 - Extracts traded yields for taxable fixed-coupon Treasury bonds (FXD only).
 - Uses the nearest FXD observations below and above 10 years remaining maturity.
 - Linearly interpolates a 10-year yield.
 - Updates kenya-10y-bond-data.csv and kenya-10y-bond-history.csv.
 - Updates the Spearhead Africa Infrastructure row in special-funds-data.csv.
-- Updates kenya-bonds-data.csv with current NSE-traded bond rows for the calculator.
+- Updates kenya-bonds-data.csv from the same validated NSE source date.
 
-It deliberately fails without writing files when the PDF cannot be parsed confidently.
+If no newer usable NSE file is available, the existing site data is preserved.
 """
 
 from __future__ import annotations
@@ -39,7 +40,8 @@ SPECIAL_FUNDS_FILE = Path("special-funds-data.csv")
 MARKET_BONDS_FILE = Path("kenya-bonds-data.csv")
 TARGET_YEARS = 10.0
 SPEARHEAD_SPREAD = 3.0
-MAX_WEDNESDAY_FALLBACKS = 5
+LOOKBACK_DAYS = 10
+MIN_VALID_MARKET_BONDS = 4
 USER_AGENT = "Mozilla/5.0 (compatible; KenyaMMFCalculator/1.0; +https://kenyammfcalculator.co.ke/)"
 
 # NSE PDFs are inconsistent when converted to text, and OCR may insert spaces
@@ -110,16 +112,12 @@ class OCRWord:
         return self.top + self.height / 2
 
 
-def latest_wednesday(anchor: date) -> date:
-    # Monday=0 ... Wednesday=2
-    delta = (anchor.weekday() - 2) % 7
-    return anchor - timedelta(days=delta)
-
-
-def candidate_wednesdays(anchor: date) -> Iterable[date]:
-    first = latest_wednesday(anchor)
-    for i in range(MAX_WEDNESDAY_FALLBACKS):
-        yield first - timedelta(days=7 * i)
+def candidate_market_days(anchor: date) -> Iterable[date]:
+    """Yield recent weekdays from newest to oldest."""
+    for offset in range(LOOKBACK_DAYS + 1):
+        day = anchor - timedelta(days=offset)
+        if day.weekday() < 5:
+            yield day
 
 
 def nse_url(day: date) -> str:
@@ -1089,6 +1087,64 @@ def update_market_bonds_file(bonds: list[MarketBond], estimate: Estimate) -> Non
     write_csv(MARKET_BONDS_FILE, fields, rows)
 
 
+def validate_market_bonds(bonds: list[MarketBond], source_day: date) -> None:
+    if len(bonds) < MIN_VALID_MARKET_BONDS:
+        raise ValueError(
+            f"only {len(bonds)} usable bond rows were parsed; refusing to replace the existing dataset"
+        )
+
+    seen: set[str] = set()
+    for bond in bonds:
+        if not bond.issue_code or bond.issue_code in seen:
+            raise ValueError(f"duplicate or missing issue code: {bond.issue_code!r}")
+        seen.add(bond.issue_code)
+
+        if bond.issue_date >= bond.maturity_date:
+            raise ValueError(f"invalid issue/maturity dates for {bond.issue_code}")
+        if bond.maturity_date <= source_day:
+            raise ValueError(f"matured bond unexpectedly present in current market rows: {bond.issue_code}")
+        if bond.bond_type not in {"fixed", "infrastructure"}:
+            raise ValueError(f"unexpected bond type for {bond.issue_code}: {bond.bond_type}")
+        if not (0 < bond.original_tenor_years <= 50):
+            raise ValueError(f"implausible original tenor for {bond.issue_code}")
+        if not (0 <= bond.coupon_rate <= 30):
+            raise ValueError(f"implausible coupon rate for {bond.issue_code}")
+        if not (0 < bond.market_yield <= 50):
+            raise ValueError(f"implausible market yield for {bond.issue_code}")
+        if not (1 <= bond.clean_price <= 500 and 1 <= bond.dirty_price <= 500):
+            raise ValueError(f"implausible NSE price for {bond.issue_code}")
+        if bond.tax_rate not in {0.0, 10.0, 15.0}:
+            raise ValueError(f"unexpected tax rate for {bond.issue_code}: {bond.tax_rate}")
+
+
+def latest_stored_source_date() -> date | None:
+    dates: list[date] = []
+
+    if MARKET_BONDS_FILE.exists():
+        try:
+            _fields, rows = load_csv(MARKET_BONDS_FILE)
+            for row in rows:
+                raw = (row.get("nse_date") or "").strip()
+                if raw:
+                    dates.append(date.fromisoformat(raw))
+        except (OSError, ValueError, csv.Error):
+            pass
+
+    if CURRENT_FILE.exists():
+        try:
+            fields, rows = load_csv(CURRENT_FILE)
+            date_col = find_column(fields, {"date", "as of", "as_of"})
+            if date_col:
+                for row in rows:
+                    raw = (row.get(date_col) or "").strip()
+                    if raw:
+                        dates.append(date.fromisoformat(raw))
+        except (OSError, ValueError, csv.Error):
+            pass
+
+    return max(dates) if dates else None
+
+
 def human_date(day: date) -> str:
     return f"{day.day} {day.strftime('%b %Y')}"
 
@@ -1128,26 +1184,54 @@ def update_spearhead(estimate: Estimate) -> None:
     write_csv(SPECIAL_FUNDS_FILE, fields, rows)
 
 
-def get_estimate(anchor: date) -> Estimate:
+def get_snapshot(anchor: date) -> tuple[Estimate, list[MarketBond]] | None:
     errors: list[str] = []
-    for wed in candidate_wednesdays(anchor):
-        url = nse_url(wed)
+    existing = latest_stored_source_date()
+
+    for source_day in candidate_market_days(anchor):
+        # Never move the site backwards to a source older than data already stored.
+        if existing is not None and source_day < existing:
+            break
+
+        url = nse_url(source_day)
         print(f"Trying {url}")
         try:
             pdf = download_pdf(url)
-            observations = observations_from_pdf(pdf, wed)
-            estimate, lower, upper = interpolate_10y(observations)
-            return Estimate(wed, estimate, url, lower, upper)
+            observations = observations_from_pdf(pdf, source_day)
+            estimate_value, lower, upper = interpolate_10y(observations)
+            estimate = Estimate(source_day, estimate_value, url, lower, upper)
+
+            market_bonds = market_bonds_from_pdf(pdf)
+            validate_market_bonds(market_bonds, source_day)
+            return estimate, market_bonds
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, RuntimeError) as exc:
-            errors.append(f"{wed.isoformat()}: {exc}")
+            errors.append(f"{source_day.isoformat()}: {exc}")
             print(f"  skipped: {exc}")
-    raise RuntimeError("No usable NSE Wednesday bond-price PDF found. " + " | ".join(errors))
+
+    if existing is not None:
+        message = (
+            f"No newer fully validated NSE bond-price PDF was found within {LOOKBACK_DAYS} days; "
+            f"preserved existing site data dated {existing.isoformat()}."
+        )
+        print(f"::warning::{message}")
+        if errors:
+            print("Recent attempts: " + " | ".join(errors))
+        return None
+
+    raise RuntimeError(
+        "No usable NSE bond-price PDF found and no existing bond dataset is available. "
+        + " | ".join(errors)
+    )
 
 
 def main() -> int:
     override = os.environ.get("NSE_ANCHOR_DATE", "").strip()
     anchor = date.fromisoformat(override) if override else datetime.now().astimezone().date()
-    estimate = get_estimate(anchor)
+    snapshot = get_snapshot(anchor)
+    if snapshot is None:
+        return 0
+
+    estimate, market_bonds = snapshot
 
     print(
         f"10Y estimate {estimate.as_of.isoformat()}: {estimate.yield_pct:.4f}% "
@@ -1155,25 +1239,18 @@ def main() -> int:
         f"and {estimate.upper.code} ({estimate.upper.remaining_years:.2f}y, {estimate.upper.yield_pct:.4f}%)."
     )
 
+    # Nothing is written until both the benchmark calculation and calculator rows
+    # have passed validation against the same NSE source PDF.
     update_current_file(estimate)
     update_history_file(estimate)
     update_spearhead(estimate)
-
-    market_bonds: list[MarketBond] = []
-    try:
-        market_pdf = download_pdf(estimate.source_url)
-        market_bonds = market_bonds_from_pdf(market_pdf)
-        update_market_bonds_file(market_bonds, estimate)
-        print(f"Updated {MARKET_BONDS_FILE} with {len(market_bonds)} NSE-traded bonds.")
-    except Exception as exc:
-        # The 10Y benchmark and Spearhead update remain authoritative. Preserve the
-        # previous calculator dataset if NSE OCR cannot recover the richer trade rows.
-        print(f"Note: preserving existing {MARKET_BONDS_FILE}: {exc}")
+    update_market_bonds_file(market_bonds, estimate)
+    print(f"Updated {MARKET_BONDS_FILE} with {len(market_bonds)} NSE-traded bonds.")
 
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary:
         with open(summary, "a", encoding="utf-8") as f:
-            f.write("## Kenya 10-year bond update\n\n")
+            f.write("## NSE bond market and Kenya 10-year update\n\n")
             f.write(f"- NSE date: **{estimate.as_of.isoformat()}**\n")
             f.write(f"- Interpolated 10Y yield: **{estimate.yield_pct:.4f}%**\n")
             f.write(
