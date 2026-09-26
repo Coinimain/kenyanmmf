@@ -4,7 +4,7 @@ title: "Kenya Treasury Bond Calculator"
 seo_title: "Kenya Treasury Bond Calculator: Price, Tax, YTM & Returns"
 description: "Calculate Kenya Treasury bond price, accrued interest, withholding tax, coupons, after-tax returns, YTM, duration, convexity and early-sale outcomes."
 permalink: /calculators/treasury-bond-calculator/
-last_modified_at: "2026-09-24"
+last_modified_at: "2026-09-26"
 ---
 
 <link rel="stylesheet" href="{{ '/assets/css/treasury-bond-calculator.css' | relative_url }}">
@@ -23,7 +23,7 @@ last_modified_at: "2026-09-24"
     <a class="treasury-bond-hero__button" href="#treasuryBondCalculator">Calculate a bond</a>
 
     <div class="treasury-bond-benchmark" aria-label="Current Kenya 10-year bond benchmark">
-      <span>Latest NSE-derived Kenya 10-year benchmark</span>
+      <span>Latest Kenya 10-year benchmark</span>
       <strong id="treasuryBondBenchmark">Loading…</strong>
       <span id="treasuryBondBenchmarkDate"></span>
     </div>
@@ -41,7 +41,7 @@ last_modified_at: "2026-09-24"
         <p class="treasury-bond-calculator__kicker">Bond pricing and returns</p>
         <h2 id="treasuryBondCalculatorHeading">Enter the bond details</h2>
       </div>
-      <span id="treasuryBondDataStatus" class="treasury-bond-calculator__data-status">Loading NSE bond data…</span>
+      <span id="treasuryBondDataStatus" class="treasury-bond-calculator__data-status">Loading bond data…</span>
     </div>
 
     <form id="treasuryBondForm" class="treasury-bond-calculator__form" novalidate>
@@ -49,11 +49,11 @@ last_modified_at: "2026-09-24"
         <legend>1. Choose a bond</legend>
         <div class="treasury-bond-calculator__grid">
           <div class="treasury-bond-calculator__field treasury-bond-calculator__field--wide">
-            <label for="treasuryBondMarketBond">NSE bond or manual entry</label>
+            <label for="treasuryBondMarketBond">Market bond or manual entry</label>
             <select id="treasuryBondMarketBond" disabled>
               <option value="manual">Loading bond list…</option>
             </select>
-            <p class="treasury-bond-calculator__help">The market list contains bonds with a usable traded yield and price in the latest NSE bond-price file. Choose Manual entry for another issue.</p>
+            <p class="treasury-bond-calculator__help">The market list contains bonds with a usable traded yield and price in the latest available market data. Choose Manual entry for another issue.</p>
           </div>
         </div>
       </fieldset>
@@ -121,7 +121,7 @@ last_modified_at: "2026-09-24"
             <input id="treasuryBondNextCoupon" type="date">
           </div>
         </div>
-        <p class="treasury-bond-calculator__note">If coupon dates are blank, the calculator builds a six-month schedule backwards from the maturity date. Enter the prospectus coupon dates when you need the exact CBK schedule.</p>
+        <p class="treasury-bond-calculator__note">If coupon dates are blank, the calculator builds a six-month schedule backwards from the maturity date. Enter the bond coupon dates when you need the exact payment schedule.</p>
       </fieldset>
 
       <fieldset class="treasury-bond-calculator__section">
@@ -131,7 +131,7 @@ last_modified_at: "2026-09-24"
             <label for="treasuryBondPricingMode">Purchase price source</label>
             <select id="treasuryBondPricingMode">
               <option value="yield">Calculate price from yield</option>
-              <option value="market-price">Use entered / latest NSE price</option>
+              <option value="market-price">Use entered / latest market price</option>
             </select>
           </div>
 
@@ -230,7 +230,7 @@ last_modified_at: "2026-09-24"
 
 <section class="treasury-bond-copy">
     <h2>What this Treasury bond calculator includes</h2>
-    <p>This tool combines bond pricing, accrued interest, tax, income and risk calculations in one place. It can calculate from a quoted yield or use the latest usable clean and dirty prices extracted from the Nairobi Securities Exchange bond-price file.</p>
+    <p>This tool combines bond pricing, accrued interest, tax, income and risk calculations in one place. It can calculate from a quoted yield or use the latest usable clean and dirty market prices available to the calculator.</p>
 
     <div class="treasury-bond-copy__callout">
       <strong>Tax treatment:</strong> the automatic setting uses 15% withholding tax for conventional Treasury bonds with an original tenor of up to nine years, 10% for conventional bonds with an original tenor of 10 years or more, and 0% for infrastructure bonds. Change the setting when the prospectus or your tax status requires a different treatment.
@@ -249,12 +249,12 @@ last_modified_at: "2026-09-24"
     </ul>
 
     <h2>Early sale and capital gains</h2>
-    <p>The early-sale section reprices the remaining bond cash flows at the expected sale yield, includes accrued interest, subtracts sale costs and calculates the holding-period return. It does not apply capital gains tax to the bond price gain because KRA lists gains on securities traded on a CMA-licensed securities exchange among CGT exemptions. The calculator still applies the selected withholding-tax rate to coupon income and estimated accrued interest received at sale.</p>
+    <p>The early-sale section reprices the remaining bond cash flows at the expected sale yield, includes accrued interest, subtracts sale costs and calculates the holding-period return. Capital gains tax is not applied to the bond price gain in this calculation. The calculator still applies the selected withholding-tax rate to coupon income and estimated accrued interest received at sale.</p>
 
-    <h2>Data source and limitations</h2>
-    <p>The selectable bond list is generated from the NSE bond-price PDF used by this site's automated Kenya 10-year benchmark. Only rows with a usable current trade yield and price are added automatically. Manual mode remains available for a bond that did not trade in the source file, a new issue or a bond with special cash-flow terms.</p>
+    <h2>Market data and limitations</h2>
+    <p>The selectable bond list is based on the latest available bond-market data. Only bonds with a usable current market yield and price are added automatically. Manual mode remains available for a bond that is not in the current dataset, a new issue or a bond with special cash-flow terms.</p>
 
-    <p>For amortising or unusually structured bonds, enter the bond's official prospectus dates and verify the result against the Central Bank's final pricing. The CBK states that its own calculators are guides and final pricing is determined by the Bank.</p>
+    <p>For amortising or unusually structured bonds, enter the bond's actual payment dates and verify the result against the terms of the specific bond and transaction.</p>
 
     <p>Read the <a href="{{ '/blog/kenya-government-bonds-treasury-bonds-guide/' | relative_url }}">Kenya Treasury bonds guide</a> for DhowCSD bidding, auction, settlement and bond terminology.</p>
   </section>

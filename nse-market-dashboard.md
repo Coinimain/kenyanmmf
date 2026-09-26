@@ -4,7 +4,7 @@ title: "NSE Market Dashboard Kenya"
 seo_title: "NSE Share Prices Today, Gainers, Losers & Market Dashboard"
 description: "Track the latest NSE share prices, top gainers and losers, most active shares, market turnover and major Nairobi Securities Exchange indices."
 permalink: /nse-market-dashboard/
-last_modified_at: "2026-09-25"
+last_modified_at: "2026-09-26"
 ---
 
 <link rel="stylesheet" href="{{ '/assets/css/nse-market-dashboard.css' | relative_url }}">
@@ -160,8 +160,8 @@ last_modified_at: "2026-09-25"
 
   <section class="nse-dashboard__copy">
     <h2>How the dashboard works</h2>
-    <p>The dashboard uses the daily NSE price list to show each security's volume-weighted average price (VWAP), previous price, daily high and low, volume and 52-week range. The change percentage compares VWAP with the previous price.</p>
-    <p>Top gainers and losers include securities that recorded trading volume on the latest market date. Most active ranks securities by reported volume. Historical charts build automatically as new daily price lists are added.</p>
+    <p>The dashboard uses the latest available market data to show each security's volume-weighted average price (VWAP), previous price, daily high and low, volume and 52-week range. The change percentage compares VWAP with the previous price.</p>
+    <p>Top gainers and losers include securities that recorded trading volume on the latest market date. Most active ranks securities by reported volume. Historical charts build automatically as new trading-day data is added.</p>
     <p>For broader market movement, the dashboard also tracks NASI, NSE 20, NSE 25, NSE 10 and the NSE Banking Sector Index.</p>
   </section>
 </main>

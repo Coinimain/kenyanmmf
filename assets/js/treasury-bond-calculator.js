@@ -454,7 +454,7 @@
     $('treasuryBondDirtyPrice').value = row.dirty_price || '';
     pricingMode.value = row.clean_price ? 'market-price' : 'yield';
     latestPriceNote.textContent = row.nse_date
-      ? `NSE trade data: ${row.nse_date}. Price fields remain editable.`
+      ? `Market data: ${row.nse_date}. Price fields remain editable.`
       : '';
     latestPriceNote.hidden = !latestPriceNote.textContent;
     selectValue('treasuryBondTaxMode', 'auto');
@@ -497,10 +497,10 @@
           const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
           const ageDays = Math.max(0, daysBetween(sourceDate, today));
           dataStatus.textContent = ageDays > 4
-            ? `${bondRows.length} bonds · latest available NSE data: ${isoDate(sourceDate)}`
-            : `${bondRows.length} NSE-traded bonds · ${isoDate(sourceDate)}`;
+            ? `${bondRows.length} bonds · latest available market data: ${isoDate(sourceDate)}`
+            : `${bondRows.length} bonds · ${isoDate(sourceDate)}`;
         } else {
-          dataStatus.textContent = `${bondRows.length} NSE-traded bonds loaded`;
+          dataStatus.textContent = `${bondRows.length} bonds loaded`;
         }
       } else {
         dataStatus.textContent = 'Manual mode available';
@@ -599,7 +599,7 @@
   function render(p, purchase, sale) {
     const sourceRow = marketSelect.value !== 'manual' ? bondRows[Number(marketSelect.value)] : null;
     const sourceLink = sourceRow && sourceRow.source_url
-      ? `<a href="${sourceRow.source_url}" target="_blank" rel="noopener">NSE source PDF</a>`
+      ? ``
       : '';
 
     result.innerHTML = `
@@ -662,7 +662,7 @@
         ${resultItem('Profit / loss after tax and costs', formatKES(sale.profit), true)}
         ${resultItem('Holding-period return', formatPct(sale.holdingReturnPct))}
         ${resultItem('Annualised holding-period return', formatPct(sale.annualisedReturnPct), true)}
-      </div><p class="treasury-bond-results__note">The sale calculation does not apply capital gains tax to the bond price gain. KRA lists gains on securities traded on a CMA-licensed securities exchange among CGT exemptions. Coupon and accrued-interest tax are still included.</p></section>` : ''}
+      </div><p class="treasury-bond-results__note">Capital gains tax is not applied to the bond price gain in this sale calculation. Coupon and accrued-interest tax are still included.</p></section>` : ''}
 
       <section class="treasury-bond-results__section">
         <h3>Cash-flow schedule</h3>
