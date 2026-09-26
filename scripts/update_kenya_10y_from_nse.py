@@ -882,7 +882,8 @@ def update_current_file(estimate: Estimate) -> None:
         fields, _rows = load_csv(CURRENT_FILE)
         date_col = find_column(fields, {"date", "as of", "as_of"})
         yield_col = find_column(fields, {"yield", "yield (%)", "yield_pct", "10y yield", "close"})
-        source_col = find_column(fields, {"source", "source url", "source_url"})
+        source_col = find_column(fields, {"source"})
+        source_url_col = find_column(fields, {"source url", "source_url"})
         if date_col and yield_col:
             row = {field: "" for field in fields}
             row[date_col] = d
@@ -891,8 +892,17 @@ def update_current_file(estimate: Estimate) -> None:
             for alias in ("Open", "High", "Low", "Close"):
                 if alias in row:
                     row[alias] = y
-            if source_col:
+
+            # Keep the source name and source URL in their correct columns when
+            # both exist. Older schemas with only a Source column continue to
+            # receive the URL for backwards compatibility.
+            if source_url_col:
+                row[source_url_col] = estimate.source_url
+                if source_col:
+                    row[source_col] = "NSE"
+            elif source_col:
                 row[source_col] = estimate.source_url
+
             write_csv(CURRENT_FILE, fields, [row])
             return
 
