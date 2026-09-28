@@ -7,9 +7,11 @@ on:
       - ".github/workflows/update-nse-market-dashboard.yml"
       - "scripts/update_nse_market_dashboard.py"
   schedule:
-    # 4:30pm and 5:30pm East Africa Time, Monday-Friday.
-    - cron: "30 13 * * 1-5"
-    - cron: "30 14 * * 1-5"
+    # 4:37 PM and 5:47 PM East Africa Time, Monday-Friday.
+    - cron: "37 16 * * 1-5"
+      timezone: "Africa/Nairobi"
+    - cron: "47 17 * * 1-5"
+      timezone: "Africa/Nairobi"
   workflow_dispatch:
     inputs:
       market_date:
@@ -61,9 +63,3 @@ jobs:
           git commit -m "Update NSE market dashboard data"
           git push
           echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Request GitHub Pages rebuild
-        if: steps.commit_data.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api --method POST "/repos/${{ github.repository }}/pages/builds"

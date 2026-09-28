@@ -448,10 +448,7 @@
       });
 
       fundSelect.disabled = false;
-      const latestDate = funds.reduce(function (latest, fund) {
-        return fund.lastUpdated > latest ? fund.lastUpdated : latest;
-      }, "");
-      dataStatus.textContent = funds.length + " funds · Updated " + formatDate(latestDate);
+      dataStatus.textContent = funds.length + " funds · AUM data: Q2 2026";
       dataStatus.dataset.state = "ready";
     }
 

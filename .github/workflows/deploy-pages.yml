@@ -7,8 +7,11 @@ on:
   workflow_run:
     workflows:
       - Update data.csv from Google Sheets
+      - Update special-funds-data.csv from Google Sheets
       - Update homepage last_modified_at monthly
       - Update blog index last_modified_at
+      - Update NSE bond market and 10Y benchmark
+      - Update NSE market dashboard
     types: [completed]
     branches: [main]
 
