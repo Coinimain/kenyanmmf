@@ -6,10 +6,6 @@ on:
     paths:
       - ".github/workflows/update-nse-market-dashboard.yml"
       - "scripts/update_nse_market_dashboard.py"
-  schedule:
-    # GitHub cron is UTC. 13:37 UTC = 16:37 EAT; 14:47 UTC = 17:47 EAT.
-    - cron: "37 13 * * 1-5"
-    - cron: "47 14 * * 1-5"
   workflow_dispatch:
     inputs:
       market_date:

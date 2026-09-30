@@ -1,10 +1,6 @@
 name: Update NSE bond market and 10Y benchmark
 
 on:
-  schedule:
-    # GitHub cron is UTC. 14:43 UTC = 17:43 EAT.
-    # Holidays and late/missing PDFs fall back safely.
-    - cron: "43 14 * * 1-5"
   workflow_dispatch:
 
 permissions:
