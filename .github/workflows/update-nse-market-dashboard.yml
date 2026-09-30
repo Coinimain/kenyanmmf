@@ -1,11 +1,6 @@
 name: Update NSE market dashboard
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/update-nse-market-dashboard.yml"
-      - "scripts/update_nse_market_dashboard.py"
   workflow_dispatch:
     inputs:
       market_date:
@@ -15,7 +10,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 concurrency:
   group: update-nse-market-dashboard
