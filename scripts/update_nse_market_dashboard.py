@@ -237,6 +237,26 @@ def parse_num(raw: str) -> float | None:
         return None
 
 
+def parse_market_cap(raw: str) -> float | None:
+    """Parse NSE market capitalisation reported in KES billions.
+
+    OCR occasionally reads a decimal point as a comma or drops it entirely,
+    turning values such as 4,121.653 into 4,121,653 or 4121653.
+    """
+    value = parse_num(raw)
+    if value is None:
+        return None
+
+    # A value this large is not plausible when the source unit is KES billion.
+    # Restore the three decimal places used by the NSE market-cap figure.
+    if value >= 100_000:
+        repaired = value / 1000
+        if 100 <= repaired < 100_000:
+            return repaired
+
+    return value
+
+
 def fmt_number(v: float | None, decimals: int = 2) -> str:
     if v is None:
         return ""
@@ -382,16 +402,27 @@ def crop_summary_text(page2: Path, tmpdir: Path) -> str:
 
 def parse_summary(page2: Path, tmpdir: Path, source: str, as_of: date) -> dict[str, str]:
     text = crop_summary_text(page2, tmpdir)
-    nums = []
-    for token in re.findall(r"(?<!\w)\d[\d,]*(?:\.\d+)?", text):
-        value = parse_num(token)
-        if value is not None:
-            nums.append(value)
+    tokens = re.findall(r"(?<!\w)\d[\d,]*(?:\.\d+)?", text)
+
     # Expected sequence: market cap today/previous, shares today/previous,
     # turnover today/previous, total deals today/previous.
-    if len(nums) < 8:
-        raise ValueError(f"market-summary OCR recovered only {len(nums)} numeric values")
-    a = nums[:8]
+    if len(tokens) < 8:
+        raise ValueError(f"market-summary OCR recovered only {len(tokens)} numeric values")
+
+    market_cap = parse_market_cap(tokens[0])
+    previous_market_cap = parse_market_cap(tokens[1])
+    remaining = [parse_num(token) for token in tokens[2:8]]
+
+    if market_cap is None or previous_market_cap is None or any(v is None for v in remaining):
+        raise ValueError("market-summary OCR contained an invalid numeric value")
+
+    if not (100 <= market_cap < 100_000 and 100 <= previous_market_cap < 100_000):
+        raise ValueError(
+            f"market capitalisation outside expected KES-billion range: "
+            f"{market_cap}, {previous_market_cap}"
+        )
+
+    a = [market_cap, previous_market_cap, *remaining]
     return {
         "Date": as_of.isoformat(),
         "Market Capitalization (KES bn)": fmt_number(a[0], 3),
@@ -425,6 +456,93 @@ def read_existing(path: Path) -> list[dict[str, str]]:
         return []
     with path.open("r", encoding="utf-8-sig", newline="") as f:
         return list(csv.DictReader(f))
+
+
+SUMMARY_CARRY_FIELDS = [
+    ("Market Capitalization (KES bn)", "Previous Market Capitalization (KES bn)"),
+    ("Shares Traded", "Previous Shares Traded"),
+    ("Equity Turnover (KES)", "Previous Equity Turnover (KES)"),
+    ("Total Deals", "Previous Total Deals"),
+]
+
+
+def previous_weekday(day: date) -> date:
+    candidate = day - timedelta(days=1)
+    while candidate.weekday() >= 5:
+        candidate -= timedelta(days=1)
+    return candidate
+
+
+def reconcile_summary_previous(
+    summary: dict[str, str],
+    as_of: date,
+) -> dict[str, str]:
+    """Repair OCR errors in redundant Previous market-summary fields."""
+    candidates: list[tuple[date, dict[str, str]]] = []
+
+    for row in read_existing(SUMMARY_FILE):
+        raw_date = (row.get("Date") or "").strip()
+        if not raw_date:
+            continue
+
+        try:
+            row_date = date.fromisoformat(raw_date)
+        except ValueError:
+            continue
+
+        if row_date < as_of:
+            candidates.append((row_date, row))
+
+    if not candidates:
+        return summary
+
+    prior_date, prior = max(candidates, key=lambda item: item[0])
+
+    # Normal weekday/weekend transition.
+    linked = prior_date == previous_weekday(as_of)
+
+    # A holiday can make the gap longer. In that case, only trust the
+    # carry-forward relationship when market cap independently confirms it.
+    if not linked and 0 < (as_of - prior_date).days <= 7:
+        reported_previous_cap = parse_market_cap(
+            summary.get("Previous Market Capitalization (KES bn)", "")
+        )
+        stored_prior_cap = parse_market_cap(
+            prior.get("Market Capitalization (KES bn)", "")
+        )
+
+        linked = (
+            reported_previous_cap is not None
+            and stored_prior_cap is not None
+            and abs(reported_previous_cap - stored_prior_cap) < 0.0005
+        )
+
+    if not linked:
+        print(
+            f"Warning: could not confirm {prior_date.isoformat()} as the "
+            f"previous trading session for {as_of.isoformat()}; "
+            "keeping OCR-derived previous values."
+        )
+        return summary
+
+    repairs = []
+
+    for current_field, previous_field in SUMMARY_CARRY_FIELDS:
+        expected = (prior.get(current_field) or "").strip()
+        actual = (summary.get(previous_field) or "").strip()
+
+        if expected and actual != expected:
+            summary[previous_field] = expected
+            repairs.append(f"{previous_field}: {actual} -> {expected}")
+
+    if repairs:
+        print(
+            f"Repaired market-summary carry-forward values for "
+            f"{as_of.isoformat()} from {prior_date.isoformat()}: "
+            + "; ".join(repairs)
+        )
+
+    return summary
 
 
 def write_csv_atomic(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> None:
@@ -497,6 +615,7 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
         validate_rows(prices)
         indices = parse_indices(words2, source, as_of)
         summary = parse_summary(page2, tmpdir, source, as_of)
+        summary = reconcile_summary_previous(summary, as_of)
 
     # Do not touch any dataset until every component has passed validation.
     upsert_by_date(PRICES_FILE, PRICE_FIELDS, prices, as_of)
