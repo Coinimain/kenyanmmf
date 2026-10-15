@@ -5,7 +5,7 @@ seo_title: "15 Businesses to Start With KSh50,000 in Kenya"
 description: "Compare 15 businesses to start with KSh50,000 in Kenya, with itemised budgets, working-capital rules, risks and practical launch plans."
 date: 2026-09-20
 categories: [personal-finance]
-tags: [business to start with 50k in Kenya, business ideas in Kenya with KSh50,000, small business ideas in Kenya, profitable business in Kenya, startup capital, side hustles]
+tags: [business to start with 50k in Kenya, business ideas in Kenya with KSh50000, small business ideas in Kenya, profitable business in Kenya, startup capital, side hustles]
 permalink: /blog/business-ideas-in-kenya-with-50000/
 image: /assets/images/business-ideas-in-kenya-with-50000.jpg
 image_alt: "Kenyan entrepreneurs running clothing, street-food, cleaning and digital-service businesses that can start with KSh50,000"

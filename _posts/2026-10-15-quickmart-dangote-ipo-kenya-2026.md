@@ -6,8 +6,8 @@ description: 'Quickmart and Dangote IPO Kenya 2026: learn how to apply, KSh535 D
   CDS accounts, USSD codes and closing dates.'
 date: 2026-10-15 15:00:00 +0300
 permalink: /blog/quickmart-dangote-ipo-kenya-2026/
-categories:
-  - ipo
+categories: [ipo]
+tags: [quickmart-ipo, dangote-ipo, ipo-kenya-2026, quickmart-shares, dangote-shares, cds-account, nse, kenya-stock-market, how-to-buy-shares]
 image: /assets/images/quickmart-dangote-ipo-kenya-2026.jpg
 image_alt: 'Quickmart and Dangote IPO Kenya 2026 comparison: Quickmart minimum KSh3,750, Dangote GDR minimum KSh535, application
   deadlines and CDS requirements'
