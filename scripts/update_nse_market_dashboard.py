@@ -54,6 +54,10 @@ INDEX_NAMES = [
     "NSE All Share Index (NASI)", "NSE 20 Share Index", "NSE 25 Share Index",
     "NSE 10 Share Index", "NSE Banking Sector Index"
 ]
+# The main board currently contains roughly 70 quoted securities. A lower
+# bound of 65 leaves room for legitimate listings changes while preventing a
+# partial OCR result (such as the previous 63-row extract) from being saved.
+MIN_SECURITY_ROWS = 65
 
 @dataclass(frozen=True)
 class OCRWord:
@@ -265,6 +269,9 @@ def fmt_number(v: float | None, decimals: int = 2) -> str:
 
 def clean_isin(raw: str) -> str:
     s = re.sub(r"[^A-Za-z0-9]", "", raw).upper()
+    # Tesseract sometimes duplicates the first K (kKE... -> KKE...).
+    if s.startswith("KKE"):
+        s = s[1:]
     # Common OCR error in the country prefix.
     if len(s) >= 2 and s[0] == "K" and s[1] in {"E", "F"}:
         s = "KE" + s[2:]
@@ -273,6 +280,7 @@ def clean_isin(raw: str) -> str:
 
 def clean_security(text: str) -> str:
     text = re.sub(r"\s+", " ", text).strip(" -")
+    text = re.sub(r"\bB\.0\.C\b", "B.O.C", text, flags=re.I)
     return text
 
 
@@ -296,6 +304,22 @@ def repair_price(value: float | None, raw: str, week_high: float | None) -> floa
     return value
 
 
+def repair_week_high(value: float | None, raw: str, week_low: float | None) -> float | None:
+    if value is None or week_low is None or week_low <= 0:
+        return value
+    # A dropped decimal in the 52-week high cannot be repaired by repair_price,
+    # because that value is itself the reference used for the other columns.
+    # NSE prices are printed with two decimals, so a bare 3-4 digit OCR token is
+    # safely tested as cents first (178 -> 1.78), then tenths.
+    digits = re.sub(r"\D", "", raw)
+    if re.fullmatch(r"\d{3,4}", digits) and value > 25:
+        for divisor in (100, 10):
+            candidate = value / divisor
+            if candidate >= week_low:
+                return candidate
+    return value
+
+
 def parse_security_rows(words: list[OCRWord], image_width: int, source: str, as_of: date) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     sector = ""
@@ -304,18 +328,26 @@ def parse_security_rows(words: list[OCRWord], image_width: int, source: str, as_
         n = normalized(text)
         if "NSE ALL SHARE INDEX" in n or "CORPORATE ACTIONS" in n or "UNQUOTED SECURITIES PLATFORM" in n:
             break
+        isin_words = [w for w in line if 0.35 * image_width <= w.left < 0.43 * image_width]
+        has_security_isin = any(len(clean_isin(w.text)) >= 9 for w in isin_words)
         matched_sector = next((s for s in sorted(SECTORS, key=len, reverse=True) if normalized(s) in n), None)
-        if matched_sector:
+        # Company names can contain a sector label (for example CIC Insurance,
+        # Centum Investment and Carbacid Investments). Only a label without an
+        # ISIN in the security column is a genuine section heading.
+        if matched_sector and not has_security_isin:
             sector = matched_sector.title().replace("&", "&")
             continue
         if not sector:
             continue
 
         hi52, hi52_raw = price_from_bucket(line, 0.025, 0.085, image_width)
-        lo52, lo52_raw = price_from_bucket(line, 0.085, 0.145, image_width)
+        # The name column begins at 14% of the page width. Using 14.5% here
+        # occasionally pulled the first company-name token into the numeric
+        # bucket and caused the entire row to be discarded.
+        lo52, lo52_raw = price_from_bucket(line, 0.085, 0.14, image_width)
+        hi52 = repair_week_high(hi52, hi52_raw, lo52)
         if hi52 is not None:
             lo52 = repair_price(lo52, lo52_raw, hi52)
-        isin_words = [w for w in line if 0.35 * image_width <= w.left < 0.43 * image_width]
         if hi52 is None or lo52 is None or not isin_words:
             continue
         isin = clean_isin("".join(w.text for w in isin_words))
@@ -441,8 +473,11 @@ def validate_date(words: list[OCRWord], as_of: date) -> None:
 
 
 def validate_rows(rows: list[dict[str, str]]) -> None:
-    if len(rows) < 45:
+    if len(rows) < MIN_SECURITY_ROWS:
         raise ValueError(f"only {len(rows)} listed-security rows were extracted")
+    isins = [row["ISIN"] for row in rows]
+    if len(isins) != len(set(isins)):
+        raise ValueError("duplicate listed-security ISINs were extracted")
     sectors = {r["Sector"].upper() for r in rows}
     for required in ("BANKING", "TELECOMMUNICATION"):
         if required not in sectors:
