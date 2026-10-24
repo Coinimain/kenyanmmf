@@ -188,6 +188,10 @@ Dial **`*483*250#`** from an active Kenyan mobile number if you are an eligible 
 
 The offer procedure also describes options to add GDRs or complete a partial payment, provided the **full amount is paid by 5:00 p.m. EAT on 27 October 2026**. The USSD code is for an IPO application, not ongoing GDR trading.
 
+### How to buy Dangote IPO shares through Ziidi Trader on M-PESA
+
+Kenyan investors can now access the **Dangote Petroleum Refinery IPO through Ziidi Trader on M-PESA**. The offer appears under **IPO Opportunities**, alongside the Quickmart IPO. To access it, open M-PESA, launch Ziidi Trader, navigate to **IPO Opportunities**, select **Dangote Petroleum Refinery GDR**, and tap **View Offer**. Ziidi Trader lists an offer price of **KSh 53.50 per GDR** and a closing date of **27 October 2026 at 4:00 p.m.** Follow the application instructions displayed in the app and ensure you meet the offer's CDS account requirements. For more information, read our [complete Ziidi Trader guide](/blog/ziidi-trader-complete-guide-kenya/).
+
 ### Will Dangote GDRs trade on the NSE?
 
 The offer documents provide for an intended NSE listing, but **listing is conditional**. The Kenyan GDR memorandum states that the GDRs will only be issued and listed if the minimum success threshold is met and the relevant Nigerian regulatory approval or no-objection is obtained.
