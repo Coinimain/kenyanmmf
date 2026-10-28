@@ -388,7 +388,44 @@ The challenge is that these outcomes are difficult to forecast and are often alr
 
 ### 1. Title and fraud risk
 
-A visually attractive plot is worthless if the seller cannot transfer a valid interest. Conduct official searches, verify identity and ownership, confirm consents and use an independent advocate.
+A visually attractive plot is worthless if the seller cannot transfer a valid interest. The risk of fraudulent titles and disputed ownership is serious enough to have attracted attention beyond Kenya.
+
+**Kenya was the only country explicitly flagged for "fake title deeds" in the US Trade Representative's 2025 and 2026 reports on foreign trade barriers.**
+
+In its [2025 National Trade Estimate Report](https://ustr.gov/sites/default/files/files/Press/Reports/2025NTE.pdf) (page 246), the Office of the United States Trade Representative (USTR) identified several risks facing foreign investors acquiring undeveloped land in Kenya. These included fake title deeds, multiple titles for the same plot and unauthorized land sales. The report also described the process of obtaining leasehold titles for undeveloped land as opaque and unreliable.
+
+The warning was repeated in the [2026 National Trade Estimate Report](https://ustr.gov/sites/default/files/files/Press/Releases/2026/National%20Trade%20Estimate%20Report%202026.pdf) (page 325), using essentially the same language.
+
+Notably, Kenya was the only country whose entry specifically mentioned "fake title deeds" in either report. This does not mean other countries have no land fraud. Rather, Kenya's inclusion highlights a particular concern identified by the US government in consecutive annual assessments of barriers affecting foreign investors.
+
+### What Kenya's own statistics show
+
+The [2023/24 Kenya Housing Survey Basic Report](https://www.knbs.or.ke/wp-content/uploads/2025/01/2023-24-Kenya-Housing-Survey-Basic-Report.pdf), published by the Kenya National Bureau of Statistics (KNBS), provides additional evidence of problems affecting land transactions.
+
+Under Section 10.5.3, respondents identified several reasons for the rejection of land transfer applications:
+
+| Reason for rejection | Respondents citing the issue |
+|---|---:|
+| Encumbrances | 76.2% |
+| Invalid ownership documents | 69.1% |
+| Court orders | 66.7% |
+| Land disputes | 61.9% |
+
+The survey also found that **78.8% of respondents cited land disputes as a reason for delays in property transfers**.
+
+These percentages represent reasons cited by survey respondents, not the proportion of all Kenyan land transactions affected. Invalid ownership documents also do not necessarily indicate fraud.
+
+Nevertheless, the findings reinforce the importance of verifying land ownership before investing.
+
+### Why title fraud matters for investment returns
+
+A land investment can lose money even when the property's market value increases. A defective title, competing ownership claim or prolonged legal dispute may create additional expenses, delay resale or prevent the investor from selling altogether.
+
+As demonstrated in our earlier calculation, adding just **KSh50,000 in dispute costs** reduces the estimated annualised return on a ten-year land investment from **1.07% to 0.21%**.
+
+Before purchasing land, conduct official searches, verify the seller's identity and ownership, check survey records and boundaries, confirm all required consents and engage an independent advocate.
+
+**Land appreciation is only valuable if the investor can establish ownership and eventually realise the gain.**
 
 ### 2. Liquidity risk
 

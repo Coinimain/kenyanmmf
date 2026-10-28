@@ -56,13 +56,24 @@ The comments came during a broader discussion about financial inclusion and Safa
 
 [Ziidi Trader already allows eligible customers to buy and sell NSE shares](/blog/ziidi-trader-complete-guide-kenya/) through Safaricom's **My OneApp**, with M-PESA integrated into the investment experience.
 
+
+Safaricom's [2026 Sustainable Business Report](https://www.safaricom.co.ke/images/Downloads/2026_Sustainable_Business_Report.pdf) provides a picture of Ziidi Trader's early adoption.
+
+According to the report, Ziidi Trader attracted **511,000 customer opt-ins and 84,000 trading subscribers** by the end of March 2026, following its launch in February.
+
+The broader Ziidi investment ecosystem also recorded significant growth:
+
+- **7.5 million customers** had opted into Ziidi Money Market Fund.
+- **2.2 million investors** were actively using Ziidi MMF.
+- **More than KSh 21 billion** was held in assets under management across Safaricom's wealth-management products.
+
+These figures demonstrate the scale of Safaricom's existing investment ecosystem. Introducing government bonds could expand the range of investment products available to customers already familiar with the platform.
+
 Extending that model to government bonds could simplify access to an investment class that has traditionally required a separate central securities account or an intermediary.
 
 A Treasury bond is money lent to the **Government of Kenya**. Most conventional fixed-rate bonds pay interest every six months, with principal repaid at maturity unless the bond has a different repayment structure. Bonds can also be bought and sold on the secondary market, where prices fluctuate.
 
 However, the planned My OneApp offering has not been explained in enough detail to establish whether customers will participate in new CBK auctions, trade existing bonds, or both. It is also unknown how bond ownership and settlement would be recorded.
-
-This proposal concerns government securities. It should not be confused with Safaricom's own corporate bonds or the separate **Ziidi Money Market Fund**.
 
 ## Will Ziidi Trader lower the KSh 50,000 bond minimum?
 
