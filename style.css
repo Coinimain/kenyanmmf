@@ -1912,3 +1912,37 @@ mjx-container[display="true"] {
     height: 48px;
   }
 }
+
+.business-report-cta {
+  margin: 2rem 0;
+  padding: 1.35rem;
+  background: #f5fbf7;
+  border: 1px solid #d6e9dc;
+  border-left: 5px solid #25d366;
+  border-radius: 12px;
+}
+
+.business-report-cta h2 {
+  margin: 0 0 0.75rem;
+}
+
+.business-report-cta p {
+  margin: 0.6rem 0;
+}
+
+.business-report-button {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.8rem 1rem;
+  color: #fff !important;
+  background: #128c7e;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.business-report-button:hover,
+.business-report-button:focus {
+  background: #0f766e;
+  text-decoration: none;
+}

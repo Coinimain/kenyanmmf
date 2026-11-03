@@ -400,6 +400,22 @@ They carry heavier licensing, safety, professional or enforcement risk. They dem
 
 The strongest **small business ideas in Kenya** do three things well. They solve a visible problem. They turn cash quickly. They keep fixed costs under control. Start with a customer, then choose the business. Do not start with a loan, a shop and hope.
 
+<div class="business-report-cta">
+  <h2>Need a Full Business Report?</h2>
+
+  <p>Ready to move from a business idea to real numbers? We prepare detailed Kenya business reports tailored to your chosen business, location and starting budget.</p>
+
+  <a
+    class="business-report-button"
+    href="https://wa.me/254732241958?text=Hello%20Kenya%20MMF%20Calculator%2C%20I%20found%20the%2025%20Business%20Ideas%20guide%20and%20want%20a%20custom%20business%20report.%0A%0ABusiness%20idea%3A%20%0ACounty%2Ftown%3A%20%0AStarting%20budget%3A%20"
+    target="_blank"
+    rel="noopener"
+    aria-label="Request a custom business report through WhatsApp"
+  >
+    Request a Business Report on WhatsApp
+  </a>
+</div>
+
 ## FAQs
 
 {% for item in page.faq %}
