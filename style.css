@@ -1931,14 +1931,24 @@ mjx-container[display="true"] {
 }
 
 .business-report-button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   margin-top: 0.75rem;
   padding: 0.8rem 1rem;
   color: #fff !important;
   background: #128c7e;
   border-radius: 8px;
   font-weight: 700;
+  line-height: 1.25;
   text-decoration: none;
+}
+
+.business-report-whatsapp-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  flex: 0 0 auto;
+  fill: currentColor;
 }
 
 .business-report-button:hover,
