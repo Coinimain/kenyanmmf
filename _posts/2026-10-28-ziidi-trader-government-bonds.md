@@ -4,7 +4,7 @@ title: "Safaricom Plans Government Bond Trading on My OneApp Through Ziidi Trade
 seo_title: "Ziidi Trader Government Bonds: Safaricom's CBK Plan"
 description: "Safaricom is working with CBK on government bond access through My OneApp. See what Peter Ndegwa said, what remains unknown, and how M-Akiba ended."
 date: 2026-10-28
-last_modified_at: 2026-10-28
+last_modified_at: 2026-11-05
 categories: [investing, fixed-income]
 tags:
   - Ziidi Trader government bonds
@@ -57,17 +57,15 @@ The comments came during a broader discussion about financial inclusion and Safa
 [Ziidi Trader already allows eligible customers to buy and sell NSE shares](/blog/ziidi-trader-complete-guide-kenya/) through Safaricom's **My OneApp**, with M-PESA integrated into the investment experience.
 
 
-Safaricom's [2026 Sustainable Business Report](https://www.safaricom.co.ke/images/Downloads/2026_Sustainable_Business_Report.pdf) provides a picture of Ziidi Trader's early adoption.
+The platform has recorded strong growth since its launch in February 2026.
 
-According to the report, Ziidi Trader attracted **511,000 customer opt-ins and 84,000 trading subscribers** by the end of March 2026, following its launch in February.
+According to Safaricom's FY26 Sustainable Business Report, the platform attracted **511,000 customer opt-ins** by March 31, 2026.
 
-The broader Ziidi investment ecosystem also recorded significant growth:
+Six months later, Safaricom's HY27 Investor Presentation reported **approximately one million Ziidi Trader opt-ins** as of September 2026, nearly double the earlier figure.
 
-- **7.5 million customers** had opted into Ziidi Money Market Fund.
-- **2.2 million investors** were actively using Ziidi MMF.
-- **More than KSh 21 billion** was held in assets under management across Safaricom's wealth-management products.
+The growing registration base highlights the platform's potential reach as Safaricom works with the Central Bank of Kenya to introduce government bond trading.
 
-These figures demonstrate the scale of Safaricom's existing investment ecosystem. Introducing government bonds could expand the range of investment products available to customers already familiar with the platform.
+However, the proposed government bond service has not yet launched, and Safaricom has not announced its investment minimum or launch date.
 
 Extending that model to government bonds could simplify access to an investment class that has traditionally required a separate central securities account or an intermediary.
 
