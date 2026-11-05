@@ -3174,3 +3174,74 @@ Date,Sector,Security,ISIN,Trading Status,52W High,52W Low,High,Low,VWAP,Previous
 2026-11-04,Real Estate Investment Trust,LAPTRUST IMARA I-REIT NAV.16.95,KE9100008870,,20,20,,,20,20,0,0,,https://www.nse.co.ke/wp-content/uploads/04-NOV-26.pdf
 2026-11-04,Real Estate Investment Trust,TRIFIC Green USD I-REIT NAV USD 1.00,KE9930007092,eq,1.28,1.23,,,1.27,1.27,0,0,,https://www.nse.co.ke/wp-content/uploads/04-NOV-26.pdf
 2026-11-04,Telecommunication,Safaricom Plc Ord 0.05,KE1000001402,,39.5,17,34.5,33.1,33.95,33.7,0.25,0.74,8551567,https://www.nse.co.ke/wp-content/uploads/04-NOV-26.pdf
+2026-11-05,Agricultural,Eaagads Ltd Ord 1.25 sue,KE0000000208,,37,10,29,27,28.35,28.05,0.3,1.07,149,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Agricultural,Kakuzi Plc Ord.5.00,KE0000000281,,460,240,436,435,400.5,400.5,0,0,26,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Agricultural,Kapchorua Tea Kenya Plc Ord 5.00sme,KE4000001760,,424.25,81,324,323,323.75,323.25,0.5,0.15,416,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Agricultural,Sasini Plc Ord 1.00,KE0000000430,,33.9,13.6,23.7,22,22.25,23.25,-1,-4.3,7558,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Agricultural,The Limuru Tea Co. Plc Ord 10.00sme,KE0000000356,,570,310,,,552,552,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Agricultural,Williamson Tea Kenya Plc Ord 5.00,KE0000000505,,350,120,153,150,150.75,152.75,-2,-1.31,9974,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Automobiles & Accessories,Car & General (K) Ltd Ord 5.00,KE0000000109,,409,18.5,264,249,255.5,252.75,2.75,1.09,4962,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,ABSA Bank Kenya Plc Ord 0.50,KE0000000067,,36.5,15,31.7,30,30.85,30,0.85,2.83,158520,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,BK Group Plc Ord 0.80,KE5000008986,,70,28.75,61.25,60,60.5,61,-0.5,-0.82,4446,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,Diamond Trust Bank Kenya Ltd Ord 4.00,KE0000000158,,198.5,66,190,182,185,182.25,2.75,1.51,13921,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,Equity Group Holdings Plc Ord 0.50,KE0000000554,,109,41.2,103,97,99.5,97.25,2.25,2.31,684336,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,Family Bank Limited Ord 1.00,KE9930006987,,50,22,28.95,26.65,27,26.9,0.1,0.37,115192,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,HFCB Group Plc Ord 5.00,KE0000000240,,13.6,5.3,12.7,12.3,12.5,12.5,0,0,40966,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,I&M Group Plc Ord 1.00,KE0000000125,,92,29.5,86,83,84.25,83,1.25,1.51,62804,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,KCB Group Ple Ord 1.00,KE0000000315,,101,35,90.5,88,89.75,87.75,2,2.28,179308,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,NCBA Group Ple Ord 5.00,KE0000000406,,100,48,92,88,89.75,88,1.75,1.99,59118,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,Stanbic Holdings Plc ord.5.00,KE0000000091,,300,147,265,259.5,260.75,262.75,-2,-0.76,6434,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,Standard Chartered Bank Kenya Ltd Ord 5.00,KE0000000448,,370,260,304.5,301,303,304,-1,-0.33,31377,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Banking,The Co-operative Bank of Kenya Ltd Ord 1.00,KE1000001568,,39.95,13.8,37.5,35.5,36.7,36.8,-0.1,-0.27,174408,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Deacons (East Africa) Plc Ord 2.50,KE5000005438,,0.45,0.45,,,0.45,0.45,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Eveready East Africa Ltd Ord.1.00sue,KE0000000588,,1.88,0.75,1,0.94,0.95,0.96,-0.01,-1.04,196879,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Express Kenya Plc Ord 5.00,KE0000000224,,10,2.7,7.62,7.16,7.4,7.68,-0.28,-3.65,945,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Homeboyz Entertainment Plc 0.50sue,KE7000001433,,4.66,4.66,,,4.66,4.66,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Kenya Airways Ltd Ord 1.00,KE0000000307,,9.18,1.56,5.64,5.6,5.62,5.62,0,0,101551,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Longhorn Publishers Ple Ord 1.00,KE2000002275,,3.46,2.32,2.61,2.57,2.58,2.4,0.18,7.5,25804,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Nairobi Business Ventures Plc Ord. 0.50sue,KE5000000090,,5,1.14,1.4,1.3,1.33,1.36,-0.03,-2.21,18193,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Nation Media Group Plc Ord. 2.50,KE0000000380,,22.4,10.05,14.9,13.6,13.9,13.9,0,0,11658,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Sameer Africa Plc Ord 5.00,KE0000000232,,21.5,2.7,16,15.3,16,15.8,0.2,1.27,16082,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Standard Group Ple Ord 5.00,KE0000000455,,10.8,5.2,6.2,5.62,5.9,6.12,-0.22,-3.59,3668,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,TPS Eastern Africa Ltd Ord 1.00,KE0000000539,,19.8,13.05,18.4,17.2,17.45,17.4,0.05,0.29,1175,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,Uchumi Supermarket Plc Ord 5.00,KE0000000489,,2.93,0.23,1.38,1.29,1.31,1.33,-0.02,-1.5,283613,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Commercial And Services,WPP Scangroup Plc Ord 1.00,KE0000000562,,3.95,1.8,2,1.88,1.9,1.9,0,0,22153,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Construction & Allied,ARMCement Plc Ord 1.00,KE0000000034,,5.55,5.55,,,5.55,5.55,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Construction & Allied,Bamburi Cement Plc Ord 5.00,KE0000000059,,84,21.3,,,54,54,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Construction & Allied,Crown Paints Kenya Plc Ord 5.00,KE0000000141,,70.75,29,61.75,57.5,61,57.5,3.5,6.09,121050,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Construction & Allied,E.A.Cables Ltd Ord 0.50,KE0000000174,5,3.27,0.72,,,1.71,1.71,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Construction & Allied,E.A.Portland Cement Co. Ltd Ord 5.00,KE0000000190,eq,125.75,28,120,110,114,114,0,0,593,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,KenGen Co. Ple Ord. 2.50,KE0000000547,xd,13.1,4.5,10,9.96,10,9.98,0.02,0.2,766323,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,Kenya Pipeline Company Plc Ord 0.02,KE9900006215,cd,16.6,8.7,12,10.5,11.6,11.25,0.35,3.11,5064075,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,Kenya Power & Lighting Co Plc Ord 2.50,KE0000000349,cd,25,5.7,22,21.9,22,21.95,0.05,0.23,477567,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,Kenya Power & Lighting Plc 4% Pref 20.00,KE4000001877,,5.78,4,,,5.26,5.26,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,Kenya Power & Lighting Plc 7% Pref 20.00,KE4000002982,,6,6,,,6,6,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,TotalEnergies Marketing Kenya Plc Ord 5.00,KE0000000463,,52,21,46,45,45.9,44.7,1.2,2.68,15918,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Energy & Petroleum,Umeme Ltd Ord 0.50,UG0000001145,,24.75,5.22,6.1,5.7,6,6,0,0,247754,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Exchange Traded Funds,ABSA New Gold ETF,ZAE000060067,,6800,881,5145,5000,4825,4825,0,0,60,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Exchange Traded Funds,Satrix MSCI World Feeder ETF,ZAE000246104,,1895,761,995,946,954,954,0,0,58,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,Britam Holdings Plc Ord 0.10,KE2000002192,,22.3,5.92,18,17.7,17.8,17.8,0,0,35870,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,CIC Insurance Group Plc Ord.1.00,KE2000002317,,6.62,2.55,4.8,4.5,4.7,4.69,0.01,0.21,139989,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,Jubilee Holdings Ltd Ord 5.00,KE0000000273,,437.75,182,407.5,390.25,403.25,405,-1.75,-0.43,2159,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,Kenya Re Insurance Corporation Ltd Ord 2.50,KE0000000604,,5.08,1.5,4.24,4.15,4.16,4.16,0,0,843454,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,Liberty Kenya Holdings Ltd Ord. 1.00,KE2000002168,,12.2,8.14,9.7,8.8,9.06,9.42,-0.36,-3.82,9702,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Insurance,Sanlam Allianz Holdings Kenya Ple Ord 5.00,KE0000000414,,12.65,5.5,9.96,9.5,9.82,9.96,-0.14,-1.41,69758,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment,Centum Investment Co Plc Ord 0.50,KE0000000265,xd,19.5,10.85,17,16.5,16.65,16.65,0,0,29792,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment,Home Afrika Ltd Ord 1.00,KE2000007258,,1.83,0.48,1.03,0.99,1,1,0,0,264650,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment,Kurwitu Ventures Ltd Ord 100.00sne,KE4000001216,,1500,1220,1490,1490,1355,1355,0,0,3,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment,Olympia Capital Holdings Ltd Ord 5.00,KE0000000166,,150,1.91,13.5,13.5,13.5,15,-1.5,-10,4321,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment,Trans-Century Plc Ord 0.50,KE2000002184,s,1.78,0.29,,,1.12,1.12,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Investment Services,Nairobi Securities Exchange Plc Ord 4.00,KE3000009674,,35,6.5,34,33.5,33.65,33.65,0,0,211091,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Africa Mega Agricorp Plc Ord 5.00sue,KE0000000331,,395,10.4,327,303.25,313.75,305,8.75,2.87,239,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,B.O.C Kenya Plc Ord 5.00,KE0000000042,,205,76,186,179,184.75,181,3.75,2.07,643,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,British American Tobacco Kenya Plc Ord 10.00,KE0000000075,,629,345,575,547,550,548,2,0.36,6998,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Carbacid Investments Plc Ord 1.00,KE0000000117,cd,48.75,18,43.5,41.8,42.6,41.9,0.7,1.67,61477,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,East African Breweries Plc Ord 2.00,KE0000000216,xq,351,167,273,270,271.5,272,-0.5,-0.18,7039,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Flame Tree Group Holdings Ltd Ord 0.825,KE4000001323,,3.11,0.9,2.12,2.05,2.06,2.09,-0.03,-1.44,23243,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Mumias Sugar Co. Ltd Ord 2.00,KE0000000372,,0.27,0.27,,,0.27,0.27,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Shri Krishana Overseas Plc,KE9900001216,,21.6,5.8,14,13.4,14,13.85,0.15,1.08,8964,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Manufacturing & Allied,Unga Group Ltd Ord 5.00,KE0000000497,,50,18.05,38,34.6,36.2,36.05,0.15,0.42,7938,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Real Estate Investment Trust,ALP Industrial REIT NAV USD 1.0431,KE9900006322,cg,1.02,1,,,1.02,1.02,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Real Estate Investment Trust,LAPTRUST IMARA I-REIT NAV.16.95,KE9100008870,,20,20,,,20,20,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Real Estate Investment Trust,TRIFIC Green USD I-REIT NAV USD 1.00,KE9930007092,eq,1.28,1.23,,,1.27,1.27,0,0,,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
+2026-11-05,Telecommunication,Safaricom Plc Ord 0.05,KE1000001402,,39.5,17,36,34.6,35.2,33.95,1.25,3.68,4741543,https://www.nse.co.ke/wp-content/uploads/05-NOV-26.pdf
