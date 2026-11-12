@@ -275,6 +275,13 @@ def clean_isin(raw: str) -> str:
     # Common OCR error in the country prefix.
     if len(s) >= 2 and s[0] == "K" and s[1] in {"E", "F"}:
         s = "KE" + s[2:]
+
+    # Umeme's UG prefix is occasionally read as U6 by Tesseract.
+    # An ISIN always starts with a two-letter country code, so this
+    # targeted repair is safe for the known NSE Uganda-listed counter.
+    if len(s) == 12 and s.startswith("U6"):
+        s = "UG" + s[2:]
+
     return s
 
 
@@ -320,6 +327,22 @@ def repair_week_high(value: float | None, raw: str, week_low: float | None) -> f
     return value
 
 
+def repair_week_low(value: float | None, raw: str, week_high: float | None) -> float | None:
+    # Repair a dropped decimal point in the 52-week low.
+    # Example: OCR can read 1.91 as 191.
+    if value is None or week_high is None or week_high <= 0:
+        return value
+
+    digits = re.sub(r"\D", "", raw)
+    if re.fullmatch(r"\d{3,4}", digits) and value > week_high:
+        for divisor in (100, 10):
+            candidate = value / divisor
+            if 0 < candidate <= week_high:
+                return candidate
+
+    return repair_price(value, raw, week_high)
+
+
 def parse_security_rows(words: list[OCRWord], image_width: int, source: str, as_of: date) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     sector = ""
@@ -347,7 +370,7 @@ def parse_security_rows(words: list[OCRWord], image_width: int, source: str, as_
         lo52, lo52_raw = price_from_bucket(line, 0.085, 0.14, image_width)
         hi52 = repair_week_high(hi52, hi52_raw, lo52)
         if hi52 is not None:
-            lo52 = repair_price(lo52, lo52_raw, hi52)
+            lo52 = repair_week_low(lo52, lo52_raw, hi52)
         if hi52 is None or lo52 is None or not isin_words:
             continue
         isin = clean_isin("".join(w.text for w in isin_words))
@@ -493,6 +516,211 @@ def read_existing(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(f))
 
 
+MAX_SECURITY_CONTINUITY_GAP_DAYS = 10
+
+# Confirmed real removals/delistings can be allowed explicitly here.
+# Example:
+# ALLOWED_MISSING_ISINS_BY_DATE = {
+#     "2026-12-01": {"KE0000000000"},
+# }
+ALLOWED_MISSING_ISINS_BY_DATE: dict[str, set[str]] = {}
+
+_GENERIC_SECURITY_NAME_TOKENS = {
+    "PLC", "PLE", "LTD", "LIMITED", "ORD", "ORDINARY", "SHARE", "SHARES"
+}
+
+
+def previous_security_session(as_of: date) -> tuple[date | None, list[dict[str, str]]]:
+    # Return the latest stored security rows before as_of.
+    by_date: dict[date, list[dict[str, str]]] = {}
+
+    for row in read_existing(PRICES_FILE):
+        raw_date = (row.get("Date") or "").strip()
+        if not raw_date:
+            continue
+        try:
+            row_date = date.fromisoformat(raw_date)
+        except ValueError:
+            continue
+        if row_date < as_of:
+            by_date.setdefault(row_date, []).append(row)
+
+    if not by_date:
+        return None, []
+
+    prior_date = max(by_date)
+    gap = (as_of - prior_date).days
+    if gap > MAX_SECURITY_CONTINUITY_GAP_DAYS:
+        print(
+            f"Warning: previous stored security session is {prior_date.isoformat()} "
+            f"({gap} days before {as_of.isoformat()}); skipping strict ISIN continuity."
+        )
+        return None, []
+
+    return prior_date, by_date[prior_date]
+
+
+def allowed_missing_isins(as_of: date) -> set[str]:
+    allowed = {
+        clean_isin(value)
+        for value in ALLOWED_MISSING_ISINS_BY_DATE.get(as_of.isoformat(), set())
+        if value
+    }
+
+    # One-off emergency override for a confirmed legitimate removal without
+    # requiring a code edit. Comma-separated ISINs.
+    raw = os.environ.get("NSE_ALLOWED_MISSING_ISINS", "")
+    allowed.update(
+        clean_isin(value.strip())
+        for value in raw.split(",")
+        if value.strip()
+    )
+    return allowed
+
+
+def security_name_tokens(name: str) -> set[str]:
+    return {
+        token
+        for token in normalized(name).split()
+        if token not in _GENERIC_SECURITY_NAME_TOKENS
+    }
+
+
+def security_name_is_degraded(current: str, previous: str) -> bool:
+    # Detect obvious OCR truncation without blocking legitimate name changes.
+    current_tokens = security_name_tokens(current)
+    previous_tokens = security_name_tokens(previous)
+
+    if not current_tokens:
+        return True
+
+    # A strict subset catches cases such as:
+    # "Plc Ord 1.00" <- "ARMCement Plc Ord 1.00"
+    # "Scangroup Plc Ord 1.00" <- "WPP Scangroup Plc Ord 1.00"
+    return bool(previous_tokens) and current_tokens < previous_tokens
+
+
+def reconcile_security_rows(
+    primary_rows: list[dict[str, str]],
+    recovery_rows: list[dict[str, str]],
+    as_of: date,
+) -> list[dict[str, str]]:
+    # PSM 3 remains authoritative. PSM 11 is used only to recover an ISIN
+    # that existed in the previous session but vanished from primary OCR.
+    prior_date, previous_rows = previous_security_session(as_of)
+    if not previous_rows:
+        return primary_rows
+
+    previous_by_isin: dict[str, dict[str, str]] = {}
+    for row in previous_rows:
+        isin = clean_isin(row.get("ISIN") or "")
+        if isin:
+            previous_by_isin[isin] = row
+
+    for row in primary_rows:
+        row["ISIN"] = clean_isin(row.get("ISIN") or "")
+
+    current_by_isin = {
+        row["ISIN"]: row for row in primary_rows if row.get("ISIN")
+    }
+
+    # Repair obvious name truncation and sector drift for known ISINs.
+    for isin, row in list(current_by_isin.items()):
+        previous = previous_by_isin.get(isin)
+        if not previous:
+            continue
+
+        previous_name = (previous.get("Security") or "").strip()
+        current_name = (row.get("Security") or "").strip()
+
+        if previous_name and security_name_is_degraded(current_name, previous_name):
+            print(
+                f"Repaired degraded security name for {isin}: "
+                f"{current_name!r} -> {previous_name!r}"
+            )
+            row["Security"] = previous_name
+
+        previous_sector = (previous.get("Sector") or "").strip()
+        current_sector = (row.get("Sector") or "").strip()
+        if previous_sector and current_sector != previous_sector:
+            print(
+                f"Repaired sector for {isin}: "
+                f"{current_sector!r} -> {previous_sector!r}"
+            )
+            row["Sector"] = previous_sector
+
+    allowed = allowed_missing_isins(as_of)
+    previous_isins = set(previous_by_isin)
+    current_isins = set(current_by_isin)
+
+    missing = previous_isins - current_isins - allowed
+
+    if missing and recovery_rows:
+        recovery_by_isin: dict[str, dict[str, str]] = {}
+        for row in recovery_rows:
+            isin = clean_isin(row.get("ISIN") or "")
+            if isin:
+                row["ISIN"] = isin
+                recovery_by_isin[isin] = row
+
+        for isin in sorted(missing):
+            recovered = recovery_by_isin.get(isin)
+            if not recovered:
+                continue
+
+            previous = previous_by_isin[isin]
+            recovered = dict(recovered)
+
+            # PSM 11 can recover the missing ISIN/price row while losing section
+            # headings. Keep previous identity metadata, but retain today's
+            # prices/status/volume from the recovery pass.
+            recovered["ISIN"] = isin
+            recovered["Security"] = previous.get("Security") or recovered.get("Security") or ""
+            recovered["Sector"] = previous.get("Sector") or recovered.get("Sector") or ""
+
+            primary_rows.append(recovered)
+            current_by_isin[isin] = recovered
+
+            print(
+                f"Recovered missing security {isin} "
+                f"({recovered['Security']}) with PSM 11."
+            )
+
+    current_isins = {
+        clean_isin(row.get("ISIN") or "")
+        for row in primary_rows
+        if row.get("ISIN")
+    }
+    unresolved = previous_isins - current_isins - allowed
+
+    if unresolved:
+        details = ", ".join(
+            f"{isin} ({previous_by_isin[isin].get('Security', 'unknown')})"
+            for isin in sorted(unresolved)
+        )
+        raise ValueError(
+            f"security continuity check failed against {prior_date.isoformat()}: "
+            f"previously listed security rows still missing after PSM 11 recovery: {details}. "
+            "If this is a confirmed legitimate delisting/removal, add the ISIN to "
+            "ALLOWED_MISSING_ISINS_BY_DATE or NSE_ALLOWED_MISSING_ISINS."
+        )
+
+    new_isins = current_isins - previous_isins
+    if new_isins:
+        current_lookup = {
+            clean_isin(row.get("ISIN") or ""): row
+            for row in primary_rows
+            if row.get("ISIN")
+        }
+        details = ", ".join(
+            f"{isin} ({current_lookup[isin].get('Security', 'unknown')})"
+            for isin in sorted(new_isins)
+        )
+        print(f"New security ISINs detected for {as_of.isoformat()}: {details}")
+
+    return primary_rows
+
+
 SUMMARY_CARRY_FIELDS = [
     ("Market Capitalization (KES bn)", "Previous Market Capitalization (KES bn)"),
     ("Shares Traded", "Previous Shares Traded"),
@@ -619,7 +847,9 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
             print(f"{as_of.isoformat()} is a weekend; no update needed.")
         return False
 
-    if not local_pdf and as_of in existing_market_dates():
+    force = os.environ.get("NSE_FORCE", "").strip().lower() in {"1", "true", "yes"}
+
+    if not local_pdf and as_of in existing_market_dates() and not force:
         if not quiet_missing:
             print(f"NSE dashboard already contains {as_of.isoformat()}; no update needed.")
         return False
@@ -641,12 +871,55 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
         words1 = tesseract_words(page1_ocr, 3)
         words2 = tesseract_words(page2_ocr, 3)
         validate_date(words1, as_of)
-        prices = parse_security_rows(words1, 2480, source, as_of) + parse_security_rows(words2, 2480, source, as_of)
+
+        price_width = 2480
+        prices = (
+            parse_security_rows(words1, price_width, source, as_of)
+            + parse_security_rows(words2, price_width, source, as_of)
+        )
+
         # Use actual detected width when OCR coordinates show a different render size.
         if words1:
             inferred_width = max(w.left + w.width for w in words1)
             if inferred_width > 1500 and not (45 <= len(prices) <= 120):
-                prices = parse_security_rows(words1, inferred_width, source, as_of) + parse_security_rows(words2, inferred_width, source, as_of)
+                price_width = inferred_width
+                prices = (
+                    parse_security_rows(words1, price_width, source, as_of)
+                    + parse_security_rows(words2, price_width, source, as_of)
+                )
+
+        # Only pay the cost of the second OCR pass when primary OCR appears to
+        # have lost a security that existed in the previous stored session.
+        prior_date, prior_rows = previous_security_session(as_of)
+        prior_isins = {
+            clean_isin(row.get("ISIN") or "")
+            for row in prior_rows
+            if row.get("ISIN")
+        }
+        current_isins = {
+            clean_isin(row.get("ISIN") or "")
+            for row in prices
+            if row.get("ISIN")
+        }
+        missing_primary = (
+            prior_isins - current_isins - allowed_missing_isins(as_of)
+        )
+
+        recovery_prices: list[dict[str, str]] = []
+        if missing_primary:
+            missing_text = ", ".join(sorted(missing_primary))
+            print(
+                f"Primary PSM 3 OCR is missing prior ISIN(s) {missing_text}; "
+                "running targeted PSM 11 recovery pass."
+            )
+            recovery_words1 = tesseract_words(page1_ocr, 11)
+            recovery_words2 = tesseract_words(page2_ocr, 11)
+            recovery_prices = (
+                parse_security_rows(recovery_words1, price_width, source, as_of)
+                + parse_security_rows(recovery_words2, price_width, source, as_of)
+            )
+
+        prices = reconcile_security_rows(prices, recovery_prices, as_of)
         validate_rows(prices)
         indices = parse_indices(words2, source, as_of)
         summary = parse_summary(page2, tmpdir, source, as_of)

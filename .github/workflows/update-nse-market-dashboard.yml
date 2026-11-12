@@ -32,6 +32,7 @@ jobs:
       - name: Update NSE market data
         env:
           NSE_DATE: ${{ github.event.inputs.market_date }}
+          NSE_FORCE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.market_date != '' && '1' || '0' }}
           # Keep roughly one month of trading history from the first successful run onward.
           NSE_MIN_HISTORY_DAYS: "22"
         run: python3 scripts/update_nse_market_dashboard.py
