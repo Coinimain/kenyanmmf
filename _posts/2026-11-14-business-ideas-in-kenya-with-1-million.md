@@ -37,8 +37,6 @@ Rent takes the first bite, rquipment follows, and stock takes another. The doors
 
 This guide compares **15 businesses to start with KSh1 million or more in Kenya**. It covers retail, services, distribution, manufacturing and energy.
 
-The figures are November 2026 planning ranges. They include a rented site, basic setup, opening stock or equipment, compliance and working capital. Land purchase, loan interest and unusually expensive locations sit outside the ranges unless stated.
-
 For a wider list across several capital bands, read our guide to [25 business ideas in Kenya](/blog/business-ideas-in-kenya/). If your budget is much smaller, use the separate guide to [15 businesses to start with KSh50,000 in Kenya](/blog/business-ideas-in-kenya-with-50000/).
 
 ## Best businesses to start with KSh1 million at a glance
