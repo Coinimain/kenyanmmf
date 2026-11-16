@@ -59,9 +59,9 @@ Your **total return** considers both price changes and dividends, after costs. A
 
 ## Buy the business, not just the share price
 
-In two investment speeches, Ndindi Nyoro makes a practical point: evaluate a share as though you were considering buying the whole business. He puts particular emphasis on the P/E and P/B ratios.
+Here is a practical point to remember: evaluate a share as though you were considering buying the whole business. Two important metrics to check are the P/E and P/B ratios.
 
-That is a helpful starting point, but those two figures are not the whole analysis. A business with weak cash flow, heavy debt or declining earnings can look inexpensive on paper and still be a poor investment.
+However, those two figures are not the whole analysis. A business with weak cash flow, heavy debt or declining earnings can look inexpensive on paper and still be a poor investment.
 
 Ask yourself: **Would I want to own this company if I could not sell its shares for several years?** If you cannot explain how it makes money, who its customers are and what could damage its profits, do more research before buying.
 
