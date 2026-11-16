@@ -330,7 +330,7 @@ The same rule applies to a company that has just listed: **understand the busine
 
 The right question is not simply **"Which NSE share is going up?"** It is **"Which business can I understand, value sensibly and afford to hold through uncertainty?"**
 
-Start with **P/E and P/B**, the two ratios highlighted in the speeches, then test the numbers against ROE, earnings quality, cash flow, dividends, debt, liquidity and risks. Add analyst fair-value estimates only after understanding their assumptions.
+Start with **P/E and P/B**, then test the numbers against ROE, earnings quality, cash flow, dividends, debt, liquidity and risks. Add analyst fair-value estimates only after understanding their assumptions.
 
 For live market research, begin with the [NSE Market Dashboard](/nse-market-dashboard/). Use the checklist above to assess any share before deciding whether its current price offers value.
 
