@@ -387,8 +387,10 @@ def parse_security_rows(words: list[OCRWord], image_width: int, source: str, as_
         high, high_raw = price_from_bucket(line, 0.50, 0.60, image_width)
         low, low_raw = price_from_bucket(line, 0.60, 0.68, image_width)
         vwap, vwap_raw = price_from_bucket(line, 0.68, 0.78, image_width)
-        previous, previous_raw = price_from_bucket(line, 0.78, 0.86, image_width)
-        volume, _ = price_from_bucket(line, 0.86, 0.99, image_width)
+        # The NSE right-aligns volumes: wide numbers can begin before 86%.
+        # Split the previous-price/volume columns at 83% instead.
+        previous, previous_raw = price_from_bucket(line, 0.78, 0.83, image_width)
+        volume, _ = price_from_bucket(line, 0.83, 0.99, image_width)
 
         high = repair_price(high, high_raw, hi52)
         low = repair_price(low, low_raw, hi52)
@@ -507,6 +509,17 @@ def validate_rows(rows: list[dict[str, str]]) -> None:
             raise ValueError(f"required sector missing from parsed PDF: {required}")
     if not any("SAFARICOM" in r["Security"].upper() for r in rows):
         raise ValueError("Safaricom row was not recovered; refusing to update")
+
+    # A traded row with price highs/lows but no volume means OCR lost data.
+    # Do not silently publish a misleading 'most active' ranking.
+    missing_volumes = [
+        (r.get("Security") or r.get("ISIN") or "unknown")
+        for r in rows
+        if ((r.get("High") or "").strip() or (r.get("Low") or "").strip())
+        and not (r.get("Volume") or "").strip()
+    ]
+    if missing_volumes:
+        raise ValueError("traded securities missing volume: " + ", ".join(missing_volumes))
 
 
 def read_existing(path: Path) -> list[dict[str, str]]:
