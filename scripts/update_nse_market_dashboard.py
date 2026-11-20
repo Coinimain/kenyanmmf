@@ -853,6 +853,108 @@ def existing_market_dates() -> set[date]:
     return dates
 
 
+def rows_missing_traded_volume(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """A positive high/low but blank volume indicates likely incomplete OCR."""
+    return [
+        row for row in rows
+        if ((row.get("High") or "").strip() or (row.get("Low") or "").strip())
+        and not (row.get("Volume") or "").strip()
+    ]
+
+
+def recover_single_volume_cell(
+    isin: str,
+    image: Path,
+    words: list[OCRWord],
+    temp_dir: Path,
+) -> int | None:
+    """Crop only the right-hand volume cell, then retry at 3x scale.
+
+    This handles single-character share volumes (e.g. three shares) that
+    Tesseract may omit from whole-page OCR. No number is invented from prices.
+    """
+    width, height = image_dimensions(image)
+    rows_with_isin: list[tuple[float, list[OCRWord]]] = []
+    for line in cluster_lines(words):
+        isin_words = [w for w in line if 0.35 * width <= w.left < 0.43 * width]
+        line_isin = clean_isin("".join(w.text for w in isin_words))
+        if len(line_isin) >= 9 and isin_words:
+            y = sum(w.center_y for w in isin_words) / len(isin_words)
+            rows_with_isin.append((y, isin_words))
+
+    matches = [(y, ws) for y, ws in rows_with_isin
+               if clean_isin("".join(w.text for w in ws)) == isin]
+    if len(matches) != 1:
+        return None  # Cannot safely locate this security's volume cell.
+    center, isin_words = matches[0]
+    char_height = sorted(w.height for w in isin_words)[len(isin_words) // 2]
+    # Avoid including adjacent rows: NSE rows are tightly spaced.
+    nearest = min((abs(y - center) for y, _ in rows_with_isin if abs(y - center) > 1),
+                  default=char_height * 3.2)
+    half_height = max(9, min(20, int(char_height * 1.3), int(nearest * 0.42)))
+    y0 = max(0, int(center - half_height))
+    y1 = min(height, int(center + half_height))
+    x0 = int(width * 0.835)  # Leave previous-price column outside the crop.
+    x1 = int(width * 0.995)
+    if y1 <= y0 or x1 <= x0:
+        return None
+
+    crop = temp_dir / f"nse-volume-{isin}.png"
+    tool = imagemagick_tool()
+    run([tool, str(image), "-crop", f"{x1-x0}x{y1-y0}+{x0}+{y0}",
+         "+repage", "-resize", "300%", str(crop)])
+
+    candidates: list[int] = []
+    for psm in (7, 6):
+        raw = run([
+            "tesseract", str(crop), "stdout", "-l", "eng",
+            "--psm", str(psm), "-c", "tessedit_char_whitelist=0123456789,",
+        ]).stdout.strip().replace(" ", "")
+        if re.fullmatch(r"[0-9][0-9,]*", raw):
+            value = int(raw.replace(",", ""))
+            if value > 0:
+                candidates.append(value)
+
+    # Disagreements between two OCR modes are unsafe to publish.
+    if candidates and len(set(candidates)) == 1:
+        return candidates[0]
+    return None
+
+
+def recover_missing_traded_volumes(
+    prices: list[dict[str, str]],
+    recovery_prices: list[dict[str, str]],
+    source_pages: list[tuple[Path, list[OCRWord]]],
+    temp_dir: Path,
+) -> None:
+    """Fill missing volumes, but leave failed/ambiguous rows for validation."""
+    missing = rows_missing_traded_volume(prices)
+    if not missing:
+        return
+    by_isin = {
+        clean_isin(r.get("ISIN") or ""): r
+        for r in recovery_prices if r.get("ISIN")
+    }
+    for row in missing:
+        isin = clean_isin(row.get("ISIN") or "")
+        candidate = (by_isin.get(isin) or {}).get("Volume", "").strip()
+        value: int | None = int(candidate) if candidate.isdigit() and int(candidate) > 0 else None
+        method = "PSM 11"
+        if value is None:
+            method = "volume-cell OCR"
+            for page, words in source_pages:
+                value = recover_single_volume_cell(isin, page, words, temp_dir)
+                if value is not None:
+                    break
+        if value is not None:
+            row["Volume"] = str(value)
+            print(f"Recovered missing trading volume for {row['Security']} ({isin}): "
+                  f"{value:,} shares via {method}.")
+        else:
+            print(f"Warning: unable to recover volume for {row['Security']} "
+                  f"({isin}); strict validation will stop this update.")
+
+
 def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
     local_pdf = bool(os.environ.get("NSE_PDF_PATH", "").strip())
     if as_of.weekday() >= 5 and not local_pdf:
@@ -918,12 +1020,15 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
             prior_isins - current_isins - allowed_missing_isins(as_of)
         )
 
+        # Also retry missing volume values. Even a 1- or 3-share trade is
+        # meaningful; Tesseract can miss a single digit in a right-aligned cell.
+        missing_volume_primary = rows_missing_traded_volume(prices)
         recovery_prices: list[dict[str, str]] = []
-        if missing_primary:
-            missing_text = ", ".join(sorted(missing_primary))
+        if missing_primary or missing_volume_primary:
             print(
-                f"Primary PSM 3 OCR is missing prior ISIN(s) {missing_text}; "
-                "running targeted PSM 11 recovery pass."
+                f"Primary PSM 3 needs recovery: {len(missing_primary)} missing ISIN(s), "
+                f"{len(missing_volume_primary)} missing traded-volume cell(s). "
+                "Running PSM 11."
             )
             recovery_words1 = tesseract_words(page1_ocr, 11)
             recovery_words2 = tesseract_words(page2_ocr, 11)
@@ -931,8 +1036,12 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
                 parse_security_rows(recovery_words1, price_width, source, as_of)
                 + parse_security_rows(recovery_words2, price_width, source, as_of)
             )
-
         prices = reconcile_security_rows(prices, recovery_prices, as_of)
+        # Reconcile ISINs first; recovery may add a previously missing row.
+        recover_missing_traded_volumes(
+            prices, recovery_prices,
+            [(page1_ocr, words1), (page2_ocr, words2)], tmpdir,
+        )
         validate_rows(prices)
         indices = parse_indices(words2, source, as_of)
         summary = parse_summary(page2, tmpdir, source, as_of)
