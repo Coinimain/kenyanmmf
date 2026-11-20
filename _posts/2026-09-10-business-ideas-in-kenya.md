@@ -162,9 +162,9 @@ Buy from traceable suppliers. Keep invoices. A counterfeit complaint damages the
 
 ## Businesses to start with KSh100,000 to KSh500,000
 
-This band opens physical-service businesses. It also introduces rent, staff, security and equipment repairs.
+This band opens physical-service businesses. It also introduces rent, staff, security and equipment repairs. Keep working capital separate. Opening day is the beginning of spending.
 
-Keep working capital separate. Opening day is the beginning of spending.
+If your budget is KSh500,000, read our [guide to eight businesses to start with KSh500,000 in Kenya](/blog/business-ideas-in-kenya-with-500000/). It includes complete sample budgets, cash reserves and a worked break-even example.
 
 ### 11. Barbershop
 
