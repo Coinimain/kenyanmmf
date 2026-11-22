@@ -135,6 +135,8 @@
 <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon" />
 <link rel="canonical" href="{{ canonical_url }}" />
 
+{% feed_meta %}
+
   <!-- Open Graph / Twitter -->
   <meta property="og:site_name" content="{{ site_name }}" />
   <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}" />
