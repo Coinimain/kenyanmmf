@@ -12,6 +12,9 @@ kramdown:
 plugins:
   - jekyll-sitemap
   - jekyll-feed
+  
+feed:
+  posts_limit: 20
 
 social:
   x: "https://x.com/KeMMFCalculator"
