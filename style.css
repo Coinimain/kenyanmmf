@@ -1944,15 +1944,48 @@ mjx-container[display="true"] {
   text-decoration: none;
 }
 
-.business-report-whatsapp-icon {
-  width: 1.3rem;
-  height: 1.3rem;
-  flex: 0 0 auto;
-  fill: currentColor;
-}
-
 .business-report-button:hover,
 .business-report-button:focus {
   background: #0f766e;
   text-decoration: none;
+}
+
+.business-report-actions {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.business-report-form-link {
+  display: inline-block;
+  font-weight: 600;
+  text-underline-offset: 0.15em;
+}
+
+.business-request-page {
+  max-width: 780px;
+  margin: 2rem auto 3rem;
+}
+
+.business-request-form {
+  margin: 0;
+}
+
+.business-request-form iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 2650px;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .business-request-form iframe {
+    height: 3050px;
+  }
+}
+
+.business-request-help {
+  line-height: 1.6;
 }

@@ -1,0 +1,19 @@
+<div class="business-report-cta">
+  <h2>{{ include.heading }}</h2>
+
+  <p>{{ include.description }}</p>
+  {% if include.details %}
+  <p>{{ include.details }}</p>
+  {% endif %}
+
+  <div class="business-report-actions">
+    <a
+      class="business-report-button"
+      href="{{ '/business-plan-request/' | relative_url }}"
+      aria-label="Request a custom business {{ include.type }} using the form"
+    >
+      <span>Request a Custom Business {{ include.type | capitalize }}</span>
+    </a>
+    <a class="business-report-form-link" href="https://wa.me/message/S3SRL3EID754C1" target="_blank" rel="noopener noreferrer">Have a question first? Chat with us on WhatsApp</a>
+  </div>
+</div>
