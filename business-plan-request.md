@@ -14,7 +14,7 @@ no_ads: true
     <iframe
       title="Kenya Business Reports custom business plan request form"
       src="https://docs.google.com/forms/d/e/1FAIpQLSeP-XiyfRQgFZgFk9ZUbk3JBq_xhHDYt9EH17WHnGQr9sJvTQ/viewform?embedded=true"
-      width="640"
+      width="100%"
       height="2650"
       loading="lazy"
       referrerpolicy="strict-origin-when-cross-origin"

@@ -1981,7 +1981,9 @@ mjx-container[display="true"] {
 }
 
 @media (max-width: 640px) {
-  .business-request-form iframe {
+  .business-request-form iframe[src*="viewform"] {
+    width: 100% !important;
+    max-width: 100% !important;
     height: 3050px;
   }
 }
