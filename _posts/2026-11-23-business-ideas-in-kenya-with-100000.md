@@ -351,9 +351,7 @@ If you can invest substantially more, compare our [KSh500,000 business guide](/b
 
 ## Get a business plan tailored to your budget and town
 
-A national list helps you shortlist. It cannot tell you whether a cosmetics shelf in Thika, a supply route in Juja or a cleaning service in Kilifi has enough paying customers.
-
-For **KSh3,500**, Kenya MMF Calculator offers a **custom business report** tailored to your business type, launch location and budget, with a practical startup budget, operating assumptions and one correction. You can review a watermarked preview before payment.
+Our list of business ideas helps you make a shortlist, it cannot tell you whether a cosmetics shelf in Thika, a supply route in Nairobi or a cleaning service in Nakuru has enough paying customers.
 
 {% include business-report-cta.html
    heading="Need a Business Plan for Your KSh100,000 Idea?"
