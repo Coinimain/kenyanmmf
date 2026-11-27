@@ -118,8 +118,12 @@
     https://region1.google-analytics.com
     https://analytics.google.com;
 
-  frame-src 'self' https://docs.google.com;
-  child-src 'self' https://docs.google.com;
+  {% if page.url == '/business-plan-request/' %}
+    frame-src 'self' https://docs.google.com https://accounts.google.com;
+  {% else %}
+    frame-src 'self' https://docs.google.com;
+  {% endif %}
+    child-src 'self' https://docs.google.com;
 
   upgrade-insecure-requests;
 " />
