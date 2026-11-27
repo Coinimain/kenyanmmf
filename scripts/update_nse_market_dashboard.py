@@ -442,6 +442,92 @@ def parse_indices(words: list[OCRWord], source: str, as_of: date) -> list[dict[s
     return out
 
 
+def parse_indices_with_recovery(
+    words: list[OCRWord], page2: Path, tmpdir: Path, source: str, as_of: date
+) -> list[dict[str, str]]:
+    """Retry a cropped index panel when the primary OCR misses a row.
+
+    NSE's page-two index table always lists NASI, NSE 20, NSE 25, NSE 10,
+    and the Banking Sector Index in that order. Existing parse_indices()
+    validates all five; this fallback does not relax that requirement.
+    """
+    try:
+        return parse_indices(words, source, as_of)
+    except ValueError as exc:
+        if "found only" not in str(exc) or "NSE index closes" not in str(exc):
+            raise
+        original_error = exc
+        print(f"Index OCR incomplete: {exc}. Retrying the index panel with alternate OCR.")
+
+    pattern = re.compile(
+        r"\b(Up|Down)\s+([0-9.,]+)\s+points?\s+to\s+close\s+at\s+([0-9.,]+)",
+        re.I,
+    )
+
+    def signatures(ocr_words: list[OCRWord]) -> list[tuple[float, float]]:
+        pairs = []
+        for line in cluster_lines(ocr_words):
+            m = pattern.search(line_text(line))
+            if not m:
+                continue
+            change, close = parse_num(m.group(2)), parse_num(m.group(3))
+            if change is not None and close is not None:
+                pairs.append((change if m.group(1).lower() == "up" else -change, close))
+        return pairs
+
+    primary_pairs = signatures(words)
+
+    # Crop the left-hand index box rather than OCRing the entire crowded PDF.
+    # NSE's 2480x3507 page layout places the five index closes in this zone.
+    width, height = image_dimensions(page2)
+    x0, y0 = int(width * 0.125), int(height * 0.235)
+    x1, y1 = int(width * 0.445), int(height * 0.410)
+    if x1 <= x0 or y1 <= y0:
+        raise original_error
+    panel = tmpdir / "nse-index-recovery.png"
+    tool = imagemagick_tool()
+    run([
+        tool, str(page2), "-crop", f"{x1-x0}x{y1-y0}+{x0}+{y0}",
+        "+repage", str(panel),
+    ])
+
+    for scale in (1, 2):
+        candidate_image = panel
+        if scale == 2:
+            candidate_image = tmpdir / "nse-index-recovery-2x.png"
+            run([tool, str(panel), "-resize", "200%", str(candidate_image)])
+        for psm in (6, 3, 11):
+            candidate_words = tesseract_words(candidate_image, psm)
+            recovered_pairs = signatures(candidate_words)
+            if len(recovered_pairs) != 5:
+                continue
+
+            # The known primary readings must agree with the recovered five;
+            # otherwise don't publish a questionable number or shifted index.
+            if any(
+                not any(
+                    abs(old_change - new_change) <= 0.015
+                    and abs(old_close - new_close) <= 0.015
+                    for new_change, new_close in recovered_pairs
+                )
+                for old_change, old_close in primary_pairs
+            ):
+                print(f"Rejected index OCR PSM {psm}, scale {scale}x: "
+                      "readings disagree with the primary OCR.")
+                continue
+
+            recovered = parse_indices(candidate_words, source, as_of)
+            if len(recovered) == 5:
+                print(f"Recovered all five NSE index closes using "
+                      f"cropped panel PSM {psm}, scale {scale}x.")
+                return recovered
+
+    # Keep the existing fail-closed behavior; do not invent a fifth index value.
+    raise ValueError(
+        f"{original_error}; cropped-panel OCR also could not verify all five indices"
+    ) from original_error
+
+
 def crop_summary_text(page2: Path, tmpdir: Path) -> str:
     # Crop is expressed as percentages so small template-size changes remain safe.
     # ImageMagick is installed in the Actions workflow specifically for this crop.
@@ -1043,7 +1129,7 @@ def process_day(as_of: date, *, quiet_missing: bool = False) -> bool:
             [(page1_ocr, words1), (page2_ocr, words2)], tmpdir,
         )
         validate_rows(prices)
-        indices = parse_indices(words2, source, as_of)
+        indices = parse_indices_with_recovery(words2, page2, tmpdir, source, as_of)
         summary = parse_summary(page2, tmpdir, source, as_of)
         summary = reconcile_summary_previous(summary, as_of)
 
